@@ -4,19 +4,19 @@ CFFI bind sdl3
 ** Usage
 *** for windows
 #+BEGIN_SRC lisp
-(push #P"/path/to/cl-sdl3" asdf:*central-registry*)
-(ql:quickload :sdl3)
+  (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
+  (ql:quickload :sdl3)
 #+END_SRC
 
 *** for linux
 #+BEGIN_SRC lisp
-git clone https://github.com/libsdl-org/SDL.git
-cd SDL
-cmake -S . -B build
-make -C build && make -C build install
-cp -rf build/libSDL3.so* /usr/lib/x86_64-linux-gnu/
-(push #P"/path/to/cl-sdl3" asdf:*central-registry*)
-(ql:quickload :sdl3)
+  git clone https://github.com/libsdl-org/SDL.git
+  cd SDL
+  cmake -S . -B build
+  make -C build && make -C build install
+  cp -rf build/libSDL3.so* /usr/lib/x86_64-linux-gnu/
+  (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
+  (ql:quickload :sdl3)
 #+END_SRC
 
 *** for darwin
@@ -24,8 +24,9 @@ TO TEST
 
 *** runtest
 #+BEGIN_SRC lisp
-(ql:quickload :sdl3/tests)
-(sdl3.render.test::runtest)
+  (ql:quickload :sdl3/tests)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/01-clear/
+  (sdl3.render.test::do-clear-demo)
 #+END_SRC
 
 ** TODO

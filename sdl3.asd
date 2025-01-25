@@ -5,8 +5,8 @@
   :depends-on (:alexandria
 	       :cffi-libffi)
   :components ((:module "src"
-                :components
-                ((:file "package")
+		:components
+		((:file "package")
 		 (:file "util")
 		 (:file "lib")
 		 (:module "init"
@@ -202,8 +202,9 @@
   :depends-on (:sdl3)
   :components ((:module "test"
 		:components
-		((:module "rendertest"
+		((:file "util")
+		 (:module "rendertest"
 		  :components
 		  ((:file "package")
-		   (:file "test"))))))
+		   (:file "01clear"))))))
   :description "test function here")
