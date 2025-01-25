@@ -3,10 +3,13 @@ CFFI bind sdl3
 
 ** Usage
 *** for windows
+#+BEGIN_SRC lisp
 (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
 (ql:quickload :sdl3)
+#+END_SRC
 
 *** for linux
+#+BEGIN_SRC lisp
 git clone https://github.com/libsdl-org/SDL.git
 cd SDL
 cmake -S . -B build
@@ -14,9 +17,16 @@ make -C build && make -C build install
 cp -rf build/libSDL3.so* /usr/lib/x86_64-linux-gnu/
 (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
 (ql:quickload :sdl3)
+#+END_SRC
 
 *** for darwin
 TO TEST
 
+*** runtest
+#+BEGIN_SRC lisp
+(ql:quickload :sdl3/tests)
+(sdl3.render.test::runtest)
+#+END_SRC
+
 ** TODO
-add test and demo
+add more test and demo

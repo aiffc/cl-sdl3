@@ -1,11 +1,11 @@
 (in-package :sdl3)
-;; todo
+
 (defexport-fun "SDL_GetNumRenderDrivers" :int)
 
 (defexport-fun "SDL_GetRenderDriver" :string 
   (index :int))
 
-(defexport-fun "SDL_CreateWindowAndRenderer" :bool
+(defwrap-fun "SDL_CreateWindowAndRenderer" :bool
   (title :string)
   (width :int)
   (height :int)

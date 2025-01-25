@@ -1,6 +1,6 @@
 (defsystem "sdl3"
   :version "0.0.1"
-  :author ""
+  :author "YJC"
   :license ""
   :depends-on (:alexandria
 	       :cffi-libffi)
@@ -180,15 +180,30 @@
 		 (:module "render"
 		  :components
 		  ((:file "type")
-		   (:file "func")))
+		   (:file "func")
+		   (:file "wrap")))
 		 (:module "events"
 		  :components
 		  ((:file "type")
 		   (:file "func")))
-		 (:module "main")
-		 (:module "stdinc")))
-	       (:module "test"
+		 (:module "main"
+		  :components
+		  ((:file "type")
+		   (:file "func")
+		   (:file "wrap")))
+		 (:module "stdinc"))))
+  :description "common lisp bind sdl3 use cffi")
+
+
+(defsystem "sdl3/tests"
+  :version "0.0.1"
+  :author "YJC"
+  :license ""
+  :depends-on (:sdl3)
+  :components ((:module "test"
 		:components
-		((:file "test"))))
-  :description ""
-  :in-order-to ((test-op (test-op "sdl3/tests"))))
+		((:module "rendertest"
+		  :components
+		  ((:file "package")
+		   (:file "test"))))))
+  :description "test function here")

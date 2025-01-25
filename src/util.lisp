@@ -53,8 +53,14 @@
 	     ,@body)
 	   (export ',lsym)))))
 
-;; (defconstant +endian+
-;;   (let ((x (make-array 2 :element-type '(unsigned-byte 8) :initial-contents '(0 #xff))))
-;;     (if (= (ldb (byte 8 8) 0) 0)
-;; 	:big-endian
-;; 	:little-endian)))
+(defmacro defwrap-fun (name ret &body body)
+  (if (listp name)
+      `(progn 
+	 (format t "generate wrap function ~a.~%" (second ',name))
+	 (cffi:defcfun ,name ,ret
+	   ,@body))
+      (let ((lsym (create-symbol '% (read-from-string (sdl->lsp name)))))
+	`(progn 
+	   (format t "auto wrap generate function ~a.~%" ',lsym)
+	   (cffi:defcfun (,name ,lsym) ,ret
+	     ,@body)))))
