@@ -44,9 +44,30 @@
 		  :components
 		  ((:file "type")
 		   (:file "func")))
-		 (:module "gamepad")
-		 (:module "joystick")
-		 (:module "haptic")
+		 (:module "sensor"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
+		 (:module "power"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
+		 (:module "guid"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
+		 (:module "gamepad"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
+		 (:module "joystick"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
+		 (:module "haptic"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
 		 (:module "audio"
 		  :components
 		  ((:file "type")
@@ -127,14 +148,6 @@
 		 (:module "metal"
 		  :components
 		  ((:file "func")))
-		 (:module "power"
-		  :components
-		  ((:file "type")
-		   (:file "func")))
-		 (:module "sensor"
-		  :components
-		  ((:file "type")
-		   (:file "func")))
 		 (:module "process"
 		  :components
 		  ((:file "func")))
@@ -160,10 +173,6 @@
 		 (:module "misc"
 		  :components
 		  ((:file "func")))
-		 (:module "guid"
-		  :components
-		  ((:file "type")
-		   (:file "func")))
 		 (:module "video"
 		  :components
 		  ((:file "type")
