@@ -16,7 +16,7 @@
   :portrait
   :portrait_flipped)
 
-(cffi:defcstruct display-mode
+(deflsp-type display-mode
   (display-id display-id)
   (format pixel-format)
   (w :int)

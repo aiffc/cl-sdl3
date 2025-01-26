@@ -28,11 +28,11 @@
   :axis
   :hat)
 
-(cffi:defcstruct %gamepad-biding-input-axis
+(deflsp-type %gamepad-biding-input-axis
   (axis :int)
   (axis-min :int)
   (axis-max :int))
-(cffi:defcstruct %gamepad-biding-input-hat
+(deflsp-type %gamepad-biding-input-hat
   (hat :int)
   (hat-mask :int))
 (cffi:defcunion %gamepad-binding-input
@@ -84,7 +84,7 @@
   (axis-min :int)
   (axis-max :int))
 
-(cffi:defcstruct gamepad-binding
+(deflsp-type gamepad-binding
   (input-type gamepad-binding-type)
   (input (:union %gamepad-binding-input))
   (output-type gamepad-binding-type)

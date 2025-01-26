@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcstruct io-stream-interface
+(deflsp-type io-stream-interface
   (version :uint32)
   (size :pointer)
   (seek :pointer)

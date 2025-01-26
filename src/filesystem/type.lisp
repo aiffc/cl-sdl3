@@ -20,7 +20,7 @@
   :directory
   :other)
 
-(cffi:defcstruct path-info
+(deflsp-type path-info
   (type path-type)
   (size :uint64)
   (create-time stime)

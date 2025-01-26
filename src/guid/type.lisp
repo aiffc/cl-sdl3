@@ -1,4 +1,4 @@
 (in-package :sdl3)
 
-(cffi:defcstruct guid
+(deflsp-type guid
   (data :uint8 :count 16))

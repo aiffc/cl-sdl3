@@ -76,7 +76,7 @@
 ;; SDL_PIXELFORMAT_BGRX32
 ;; SDL_PIXELFORMAT_XBGR32
 
-(cffi:defcstruct pixel-format-detail
+(deflsp-type pixel-format-detail
   (fmt pixel-format)
   (bits-per-pixel :uint8)
   (bytes-per-pixel :uint8)
@@ -94,19 +94,19 @@
   (b-shift :uint8)
   (a-shift :uint8))
 
-(cffi:defcstruct fcolor 
+(deflsp-type fcolor 
   (r :float)
   (g :float)
   (b :float)
   (a :float))
 
-(cffi:defcstruct color 
+(deflsp-type color 
   (r :uint8)
   (g :uint8)
   (b :uint8)
   (a :uint8))
 
-(cffi:defcstruct palette
+(deflsp-type palette
   (ncolors :int)
   (colors (:pointer (:struct color)))
   (version :uint32)

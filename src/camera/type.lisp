@@ -2,7 +2,7 @@
 
 (cffi:defctype camera-id :uint32)
 
-(cffi:defcstruct camera-spec
+(deflsp-type camera-spec
   (format pixel-format)
   (color-spec colorspace)
   (width :int)

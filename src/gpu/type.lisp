@@ -9,7 +9,7 @@
   (:msl      #x16)
   (:metallib #x32))
 
-(cffi:defcstruct gpu-compute-pipeline-create-info
+(deflsp-type gpu-compute-pipeline-create-info
   (code-size size-t)                       
   (code (:pointer :uint8))
   (entrypoint :string)
@@ -29,7 +29,7 @@
   :vertex
   :instance)
 
-(cffi:defcstruct gpu-vertex-buffer-description
+(deflsp-type gpu-vertex-buffer-description
   (slot :uint32)
   (pitch :uint32)
   (input-rate gpu-vertex-input-rate)
@@ -68,13 +68,13 @@
   :half2
   :half4)
 
-(cffi:defcstruct gpu-vertex-attribute
+(deflsp-type gpu-vertex-attribute
   (location :uint32)
   (buffer-slot :uint32)
   (format gpu-vertex-element-format)
   (offset :uint32))
 
-(cffi:defcstruct gpu-vertex-input-state
+(deflsp-type gpu-vertex-input-state
   (vertex-buffer-descriptions (:pointer (:struct gpu-vertex-buffer-description)))
   (num-vertex-buffers :uint32)
   (vertex-attributes (:pointer (:struct gpu-vertex-attribute)))
@@ -100,7 +100,7 @@
   :counter-clockwise
   :clockwise)
 
-(cffi:defcstruct gpu-rasterizer-state
+(deflsp-type gpu-rasterizer-state
   (fill-mode gpu-fill-mode)
   (cull-mode gpu-cull-mode)
   (front-face gpu-front-face)
@@ -118,7 +118,7 @@
   :4
   :8)
 
-(cffi:defcstruct gpu-multisample-state
+(deflsp-type gpu-multisample-state
   (sample-count gpu-sample-count)
   (sample-mask :uint32)
   (enable-mask :bool)
@@ -148,13 +148,13 @@
   :increment-and-wrap
   :decrement-and-wrap)
 
-(cffi:defcstruct gpu-stencil-op-state
+(deflsp-type gpu-stencil-op-state
   (fail-op gpu-stencil-op)
   (pass-op gpu-stencil-op)
   (depth-fail-op gpu-stencil-op)
   (compare-op gpu-compare-op))
 
-(cffi:defcstruct gpu-depth-stencil-state
+(deflsp-type gpu-depth-stencil-state
   (compare-op gpu-compare-op)
   (back-stencil-state (:struct gpu-stencil-op-state))
   (front-stencil-state (:struct gpu-stencil-op-state))
@@ -304,7 +304,7 @@
   (:b #x4)
   (:a #x8))
 
-(cffi:defcstruct gpu-color-target-blend-state
+(deflsp-type gpu-color-target-blend-state
   (src-color-blendfactor gpu-blend-factor)
   (dst-color-blendfactor gpu-blend-factor)
   (color-blend-op gpu-blend-op)
@@ -317,11 +317,11 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct gpu-color-target-description
+(deflsp-type gpu-color-target-description
   (format gpu-texture-format)
   (blend-state (:struct gpu-color-target-blend-state)))
 
-(cffi:defcstruct gpu-graphics-pipeline-target-info
+(deflsp-type gpu-graphics-pipeline-target-info
   (color-target-descriptions (:pointer (:struct gpu-color-target-description)))
   (num-color-targets :uint32)
   (depth-stencil-format gpu-texture-format)
@@ -330,7 +330,7 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcstruct gpu-graphics-pipeline-create-info
+(deflsp-type gpu-graphics-pipeline-create-info
   (vertex-shader :pointer)
   (fragment-shader :pointer)
   (vertex-input-state (:struct gpu-vertex-input-state))
@@ -354,7 +354,7 @@
   :mirrored-repeat
   :clamp-to-edge)
 
-(cffi:defcstruct gpu-sampler-create-info
+(deflsp-type gpu-sampler-create-info
   (min-filter gpu-filter)
   (mag-filter gpu-filter)
   (mipmap-mode gpu-sampler-mipmap-mode)
@@ -376,7 +376,7 @@
   :vertex
   :fragment)
 
-(cffi:defcstruct gpu-shader-create-info
+(deflsp-type gpu-shader-create-info
   (code-size size-t)
   (code (:pointer :uint8))
   (entrypoint :string)
@@ -404,7 +404,7 @@
   (:compute-storage-write                   #x32)
   (:compute-storage-simultaneous-read-write #x64))
 
-(cffi:defcstruct gpu-texture-create-info
+(deflsp-type gpu-texture-create-info
   (type gpu-texture-type)
   (format gpu-texture-format)
   (usage gpu-texture-usage-flags)
@@ -423,7 +423,7 @@
   (:compute-storage-read        #x16)
   (:compute-storage-write       #x32))
 
-(cffi:defcstruct gpu-buffer-create-info
+(deflsp-type gpu-buffer-create-info
   (usage gpu-buffer-usage-flags)
   (size :uint32)
   (props properties-id))
@@ -432,7 +432,7 @@
   :upload
   :download)
 
-(cffi:defcstruct gpu-transfer-buffer-create-info
+(deflsp-type gpu-transfer-buffer-create-info
   (usage gpu-transfer-buffer-usage)
   (size :uint32)
   (props properties-id))
@@ -448,7 +448,7 @@
   :reslove
   :reslove-and-store)
 
-(cffi:defcstruct gpu-color-tage-info
+(deflsp-type gpu-color-tage-info
   (texture :pointer)
   (mip-level :uint32)
   (layer-or-depth-plane :uint32)
@@ -463,7 +463,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct gpu-depth-stencil-target-info
+(deflsp-type gpu-depth-stencil-target-info
   (texture :pointer)
   (clear-depth :float)
   (load-op gpu-load-op)
@@ -475,7 +475,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct gpu-viewport
+(deflsp-type gpu-viewport
   (x :float)
   (y :float)
   (w :float)
@@ -483,7 +483,7 @@
   (min-depth :float)
   (max-depth :float))
 
-(cffi:defcstruct gpu-buffer-binding
+(deflsp-type gpu-buffer-binding
   (buffer :pointer)
   (offset :uint32))
 
@@ -491,14 +491,14 @@
   :16bit
   :32bit)
 
-(cffi:defcstruct gpu-storage-buffer-read-write-binding
+(deflsp-type gpu-storage-buffer-read-write-binding
   (buffer :pointer)
   (cycle :bool)
   (padding1 :uint8)
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcstruct gpu-storage-texture-read-write-binding
+(deflsp-type gpu-storage-texture-read-write-binding
   (texture :pointer)
   (mip-level :uint32)
   (layer :uint32)
@@ -507,20 +507,20 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcstruct gpu-texture-sampler-binding
+(deflsp-type gpu-texture-sampler-binding
   (texture :pointer)
   (sampler :pointer))
 
-(cffi:defcstruct gpu-transfer-buffer-location
+(deflsp-type gpu-transfer-buffer-location
   (buffer :pointer)
   (offset :uint32))
 
-(cffi:defcstruct gpu-buffer-region
+(deflsp-type gpu-buffer-region
   (buffer :pointer)
   (offset :uint32)
   (size :uint32))
 
-(cffi:defcstruct gpu-texture-location
+(deflsp-type gpu-texture-location
   (texture :pointer)
   (mip-level :uint32)
   (layer :uint32)
@@ -528,11 +528,11 @@
   (y :uint32)
   (z :uint32))
 
-(cffi:defcstruct gpu-buffer-location
+(deflsp-type gpu-buffer-location
   (buffer :pointer)
   (offset :uint32))
 
-(cffi:defcstruct gpu-texture-region
+(deflsp-type gpu-texture-region
   (texture :pointer)
   (mip-level :uint32)
   (layer :uint32)
@@ -543,13 +543,13 @@
   (h :uint32)
   (d :uint32))
 
-(cffi:defcstruct gpu-texture-transfer-info
+(deflsp-type gpu-texture-transfer-info
   (buffer :pointer)
   (offset :uint32)
   (pixels-per-row :uint32)
   (rows-per-layer :uint32))
 
-(cffi:defcstruct gpu-blit-region
+(deflsp-type gpu-blit-region
   (texture :pointer)
   (mip-level :uint32)
   (layer-or-depth-plane :uint32)
@@ -558,7 +558,7 @@
   (w :uint32)
   (h :uint32))
 
-(cffi:defcstruct gpu-blit-info
+(deflsp-type gpu-blit-info
   (source (:struct gpu-blit-region))
   (destination (:struct gpu-blit-region))
   (load-op gpu-load-op)

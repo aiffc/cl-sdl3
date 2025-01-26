@@ -2,7 +2,7 @@
 
 (cffi:defctype properties-id :uint32)
 
-(cffi:defcstruct storage-interface
+(deflsp-type storage-interface
   (version :uint32)
   (close :pointer)
   (ready :pointer)

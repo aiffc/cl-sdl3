@@ -11,7 +11,7 @@
   :asyncio_failure
   :asyncio_canceled)
 
-(cffi:defcstruct async-io-outcome
+(deflsp-type async-io-outcome
   (asyncio :pointer)
   (type async-io-task-type)
   (result async-io-result)

@@ -5,7 +5,7 @@
   :streaming
   :target)
 
-(cffi:defcstruct texture
+(deflsp-type texture
   (format pixel-format)
   (w :int)
   (h :int)
@@ -18,7 +18,7 @@
   :overscan
   :integer_scale)
 
-(cffi:defcstruct vertex
+(deflsp-type vertex
   (position (:struct fpoint))
   (color (:struct fcolor))
   (tex-coord (:struct fpoint)))

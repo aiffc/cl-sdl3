@@ -3,12 +3,13 @@
   :author "YJC"
   :license ""
   :depends-on (:alexandria
+	       :defclass-std
 	       :cffi-libffi)
   :components ((:module "src"
 		:components
 		((:file "package")
-		 (:file "util")
 		 (:file "lib")
+		 (:file "util")
 		 (:module "init"
 		  :components
 		  ((:file "type")
@@ -31,7 +32,8 @@
 		 (:module "rect"
 		  :components
 		  ((:file "type")
-		   (:file "func")))
+		   (:file "func")
+		   (:file "wrap")))
 		 (:module "keyboard"
 		  :components
 		  ((:file "type")

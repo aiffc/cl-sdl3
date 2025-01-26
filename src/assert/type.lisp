@@ -7,7 +7,7 @@
   :ignore
   :always_ignore)
 
-(cffi:defcstruct assert-data 
+(deflsp-type assert-data 
   (always-ignore :bool)
   (trigger-count :uint)
   (condition :string)

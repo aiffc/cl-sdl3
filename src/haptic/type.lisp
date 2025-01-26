@@ -2,11 +2,11 @@
 
 (cffi:defctype haptic-id :uint32)
 
-(cffi:defcstruct haptic-direction
+(deflsp-type haptic-direction
   (type :uint8)
   (dir :int32 :count 3))
 
-(cffi:defcstruct haptic-constant
+(deflsp-type haptic-constant
   (type :uint16)
   (direction (:struct haptic-direction))
   (length :uint32)
@@ -19,7 +19,7 @@
   (fade-length :int16)
   (fade-level :int16))
 
-(cffi:defcstruct haptic-periodic
+(deflsp-type haptic-periodic
   (type :uint16)
   (direction (:struct haptic-direction))
   (length :uint32)
@@ -35,7 +35,7 @@
   (fade-length :int16)
   (fade-level :int16))
 
-(cffi:defcstruct haptic-condition
+(deflsp-type haptic-condition
   (type :uint16)
   (direction (:struct haptic-direction))
   (length :uint32)
@@ -49,7 +49,7 @@
   (deadband :uint16 :count 3)
   (center :int16 :count 3))
 
-(cffi:defcstruct haptic-ramp
+(deflsp-type haptic-ramp
   (type :uint16)
   (direction (:struct haptic-direction))
   (length :uint32)
@@ -63,13 +63,13 @@
   (fade-length :int16)
   (fade-level :int16))
 
-(cffi:defcstruct haptic-left-right
+(deflsp-type haptic-left-right
   (type :uint16)
   (length :uint32)
   (large-magnitude :uint16)
   (small-magnitude :uint16))
 
-(cffi:defcstruct haptic-custom
+(deflsp-type haptic-custom
   (type :uint16)
   (direction (:struct haptic-direction))
   (length :uint32)

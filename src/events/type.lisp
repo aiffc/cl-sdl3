@@ -1,9 +1,9 @@
 (in-package :sdl3)
 
-(cffi:defcstruct common-event 
+(deflsp-type common-event 
   (type :uint32)
   (reserved :uint32)
-  (reserved :uint64))
+  (timestamp :uint64))
 
 (cffi:defcenum event-type
   (:first 0)
@@ -125,7 +125,7 @@
   (:last #xffff)
   (:enum-padding #x7fffffff))
 
-(cffi:defcstruct display-event 
+(deflsp-type display-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -133,7 +133,7 @@
   (data-1 :int32)
   (data-2 :int32))
 
-(cffi:defcstruct window-event 
+(deflsp-type window-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -141,13 +141,13 @@
   (data-1 :int32)
   (data-2 :int32))
 
-(cffi:defcstruct keyboard-device-event 
+(deflsp-type keyboard-device-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which keyboard-id))
 
-(cffi:defcstruct keyboard-event 
+(deflsp-type keyboard-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -160,7 +160,7 @@
   (down :bool)
   (repeat :bool))
 
-(cffi:defcstruct text-editing-event
+(deflsp-type text-editing-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -169,7 +169,7 @@
   (start :int32)
   (length :int32))
 
-(cffi:defcstruct text-editing-candidates-event
+(deflsp-type text-editing-candidates-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -182,20 +182,20 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcstruct text-input-event
+(deflsp-type text-input-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (window window-id)
   (text :string))
 
-(cffi:defcstruct mouse-device-event
+(deflsp-type mouse-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which mouse-id))
 
-(cffi:defcstruct mouse-motion-event
+(deflsp-type mouse-motion-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -207,7 +207,7 @@
   (xrel :float)
   (yrel :float))
 
-(cffi:defcstruct mouse-button-event 
+(deflsp-type mouse-button-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -224,7 +224,7 @@
   :normal
   :flipped)
 
-(cffi:defcstruct mouse-wheel-event 
+(deflsp-type mouse-wheel-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -237,13 +237,13 @@
   (mouse-y :float))
 
 (cffi:defctype joystick-id :uint32)
-(cffi:defcstruct joy-device-event 
+(deflsp-type joy-device-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which joystick-id))
 
-(cffi:defcstruct joy-axis-event 
+(deflsp-type joy-axis-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -255,7 +255,7 @@
   (value :int16)
   (padding4 :uint16))
 
-(cffi:defcstruct joy-ball-event
+(deflsp-type joy-ball-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -267,7 +267,7 @@
   (xrel :int16)
   (yrel :int16))
 
-(cffi:defcstruct joy-hat-event
+(deflsp-type joy-hat-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -277,7 +277,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct joy-button-event
+(deflsp-type joy-button-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -287,7 +287,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct joy-battery-event
+(deflsp-type joy-battery-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -295,13 +295,13 @@
   (state power-state)
   (percent :int))
 
-(cffi:defcstruct gamepad-device-event
+(deflsp-type gamepad-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which joystick-id))
 
-(cffi:defcstruct gamepad-axis-event 
+(deflsp-type gamepad-axis-event 
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -313,7 +313,7 @@
   (value :int16)
   (padding4 :uint16))
 
-(cffi:defcstruct gamepad-button-event
+(deflsp-type gamepad-button-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -323,7 +323,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcstruct gamepad-touchpad-event
+(deflsp-type gamepad-touchpad-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -334,7 +334,7 @@
   (y :float)
   (pressure :float))
 
-(cffi:defcstruct gamepad-sensor-event
+(deflsp-type gamepad-sensor-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -343,7 +343,7 @@
   (data :float :count 3)
   (sensor-timestamp :uint64))
 
-(cffi:defcstruct audio-device-event
+(deflsp-type audio-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -353,13 +353,13 @@
   (panding2 :uint8)
   (panding3 :uint8))
 
-(cffi:defcstruct camera-device-event
+(deflsp-type camera-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which camera-id))
 
-(cffi:defcstruct sensor-event
+(deflsp-type sensor-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -367,12 +367,12 @@
   (data :float :count 6)
   (sensor-timestamp :uint64))
 
-(cffi:defcstruct quit-event
+(deflsp-type quit-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64))
 
-(cffi:defcstruct user-event
+(deflsp-type user-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -383,7 +383,7 @@
 
 (cffi:defctype touch-id :uint64)
 (cffi:defctype finger-id :uint64)
-(cffi:defcstruct touch-finger-event
+(deflsp-type touch-finger-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -397,7 +397,7 @@
   (window-id window-id))
 
 (cffi:defctype pen-id :uint32)
-(cffi:defcstruct pen-proximity-event
+(deflsp-type pen-proximity-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -413,7 +413,7 @@
   (:button-5 #x20)
   (:eraser-tip  #x40000000))
 
-(cffi:defcstruct pen-touch-event
+(deflsp-type pen-touch-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -425,7 +425,7 @@
   (eraser :bool)
   (down :bool))
 
-(cffi:defcstruct pen-motion-event
+(deflsp-type pen-motion-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -435,7 +435,7 @@
   (x :float)
   (y :float))
 
-(cffi:defcstruct pen-button-event
+(deflsp-type pen-button-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -457,7 +457,7 @@
   :tangential_pressure
   :count)
 
-(cffi:defcstruct pen-axis-event
+(deflsp-type pen-axis-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -469,13 +469,13 @@
   (axis pen-axis)
   (value :float))
 
-(cffi:defcstruct render-event
+(deflsp-type render-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (window-id window-id))
 
-(cffi:defcstruct drop-event
+(deflsp-type drop-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -485,7 +485,7 @@
   (source :string)
   (data :string))
 
-(cffi:defcstruct clipboard-event
+(deflsp-type clipboard-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)

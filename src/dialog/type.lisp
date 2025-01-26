@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcstruct dialog-file-filter
+(deflsp-type dialog-file-filter
   (name :string)
   (pattern :string))
 

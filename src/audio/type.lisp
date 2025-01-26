@@ -13,7 +13,7 @@
   (:f32le    #x8120) 
   (:f32be    #x9120))
 
-(cffi:defcstruct audio-spec
+(deflsp-type audio-spec
   (format audio-format)
   (channels :int)
   (freq :int))

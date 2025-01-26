@@ -1,21 +1,23 @@
 (in-package :sdl3)
 
-(cffi:defcstruct rect
+(deflsp-type rect
   (x :int)
   (y :int)
   (w :int)
   (h :int))
 
-(cffi:defcstruct frect
+(deflsp-type frect
   (x :float)
   (y :float)
   (w :float)
   (h :float))
 
-(cffi:defcstruct point
+(deflsp-type point
   (x :int)
   (y :int))
 
-(cffi:defcstruct fpoint
+(deflsp-type fpoint
   (x :float)
   (y :float))
+
+

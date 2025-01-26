@@ -8,7 +8,7 @@
   :touch_device_indirect_absolute
   :touch_device_indirect_relative)
 
-(cffi:defcstruct finger 
+(deflsp-type finger 
   (id touch-id)
   (x :float)
   (y :float)

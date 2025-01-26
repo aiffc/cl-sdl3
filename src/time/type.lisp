@@ -11,7 +11,7 @@
   (:24hr 0)
   (:12hr 1))
 
-(cffi:defcstruct data-time
+(deflsp-type data-time
   (year :int)
   (month :int)
   (day :int)

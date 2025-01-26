@@ -41,13 +41,13 @@
 
 (defmacro defexport-fun (name ret &body body)
   (if (listp name)
-      `(progn 
+      `(eval-when (:compile-toplevel :load-toplevel :execute) 
 	 (format t "generate function ~a.~%" (second ',name))
 	 (cffi:defcfun ,name ,ret
 	   ,@body)
 	 (export ',(second name)))
       (let ((lsym (create-symbol (read-from-string (sdl->lsp name)))))
-	`(progn 
+	`(eval-when (:compile-toplevel :load-toplevel :execute) 
 	   (format t "auto generate function ~a.~%" ',lsym)
 	   (cffi:defcfun (,name ,lsym) ,ret
 	     ,@body)
@@ -55,12 +55,70 @@
 
 (defmacro defwrap-fun (name ret &body body)
   (if (listp name)
-      `(progn 
+      `(eval-when (:compile-toplevel :load-toplevel :execute) 
 	 (format t "generate wrap function ~a.~%" (second ',name))
 	 (cffi:defcfun ,name ,ret
 	   ,@body))
       (let ((lsym (create-symbol '% (read-from-string (sdl->lsp name)))))
-	`(progn 
-	   (format t "auto wrap generate function ~a.~%" ',lsym)
+	`(eval-when (:compile-toplevel :load-toplevel :execute) 
+	   (format t "auto generate wrap function ~a.~%" ',lsym)
 	   (cffi:defcfun (,name ,lsym) ,ret
 	     ,@body)))))
+
+
+(defun gen-map (lst1 lst2)
+  (mapcar (lambda (a b)
+	    (list 'setf a b))
+	  lst1 lst2))
+
+(defun gen-key-map (lst1 lst2)
+  (apply 'append
+	 (mapcar (lambda (a b)
+		   (list (alexandria-1:make-keyword a) b))
+		 lst1
+		 lst2)))
+
+(defun generate-translate-to-foreign (ctype c-type cslots lslots)
+  (let ((setfmt (gen-map cslots lslots)))
+    `(defmethod cffi:translate-into-foreign-memory (value (type ,c-type) ptr)
+       (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
+	 (with-slots ,lslots value
+	   ,@setfmt)))))
+
+(defun generate-translate-from-foreign (ctype c-type cslots lslots)
+  (let ((keymap (gen-key-map lslots cslots)))
+    `(defmethod cffi:translate-from-foreign (ptr (type ,c-type))
+       (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
+	 (make-instance ',ctype ,@keymap)))))
+
+(defun generate-expand-to-foreign (ctype c-type cslots lslots)
+  (let ((setfmt (gen-map cslots lslots)))
+    `(defmethod cffi:translate-into-foreign-memory (value (type ,c-type) ptr)
+       (quote (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
+		(with-slots ,lslots value
+		  ,@setfmt))))))
+
+(defun generate-expand-from-foreign (ctype c-type cslots lslots)
+  (let ((keymap (gen-key-map lslots cslots)))
+    `(defmethod cffi:translate-from-foreign (ptr (type ,c-type))
+       (quote (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
+		(make-instance ',ctype ,@keymap))))))
+
+
+(defmacro deflsp-type (name &body body)
+  (let* ((cslots (mapcar #'first body))
+	 (lsp-funs (mapcar (lambda (s)
+			     "all class function add %"
+			     (create-symbol '% s))
+			   cslots))
+	 (translate-type (create-symbol 'c- name)))
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
+       (format t "~a ~a~%" ',name ',lsp-funs)
+       (defclass-std:defclass/std ,name () (,lsp-funs))
+       (cffi:defcstruct (,name :class ,translate-type) ,@body)
+       ,(generate-translate-to-foreign name translate-type cslots lsp-funs)
+       ,(generate-translate-from-foreign name translate-type cslots lsp-funs)
+       ,(generate-expand-to-foreign name translate-type cslots lsp-funs)
+       ,(generate-expand-from-foreign name translate-type cslots lsp-funs)
+       (export ',name)
+       (export ',lsp-funs))))

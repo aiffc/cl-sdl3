@@ -19,15 +19,15 @@
   :wired
   :wireless)
 
-(cffi:defcstruct virtual-joystick-touchpad-desc
+(deflsp-type virtual-joystick-touchpad-desc
   (nfingers :uint16)
   (padding :uint16 :count 3))
 
-(cffi:defcstruct virtual-joystick-sensor-desc
+(deflsp-type virtual-joystick-sensor-desc
   (type sensor-type)
   (rate :float))
 
-(cffi:defcstruct virtual-joystick-desc
+(deflsp-type virtual-joystick-desc
   (version :uint32)
   (type :uint16)
   (padding :uint16)

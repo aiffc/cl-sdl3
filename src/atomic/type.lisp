@@ -2,8 +2,8 @@
 
 (cffi:defctype spin-lock :int)
 
-(cffi:defcstruct atomic-int
+(deflsp-type atomic-int
   (value :int))
 
-(cffi:defcstruct atomic-u32
+(deflsp-type atomic-u32
   (value :uint32))

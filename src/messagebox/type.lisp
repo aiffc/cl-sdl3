@@ -11,7 +11,7 @@
   (:messagebox-button-returnkey-default #x00000001)
   (:messagebox-button-escapekey-default #x00000002))
 
-(cffi:defcstruct message-box-color 
+(deflsp-type message-box-color 
   (r :uint8)
   (g :uint8)
   (b :uint8))
@@ -24,15 +24,15 @@
   :messagebox-color-button-selected
   :messagebox-color-count)
 
-(cffi:defcstruct message-box-color-scheme
+(deflsp-type message-box-color-scheme
   (colors (:struct message-box-color) :count 5)) ;; messagebox-color-count
 
-(cffi:defcstruct message-box-button-data 
+(deflsp-type message-box-button-data 
   (flags message-box-button-flags)
   (button-id :int)
   (text :string))
 
-(cffi:defcstruct message-box-data
+(deflsp-type message-box-data
   (flags message-box-flags)
   (window :pointer)
   (title :string)
