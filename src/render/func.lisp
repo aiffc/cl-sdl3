@@ -5,7 +5,7 @@
 (defexport-fun "SDL_GetRenderDriver" :string 
   (index :int))
 
-(defwrap-fun "SDL_CreateWindowAndRenderer" :bool
+(defwrap-fun "SDL_CreateWindowAndRenderer" :bool ()
   (title :string)
   (width :int)
   (height :int)
@@ -279,7 +279,7 @@
   (renderer :pointer)
   (x :float)
   (y :float))
-(defexport-fun "SDL_RenderPoints" :bool
+(defwrap-fun "SDL_RenderPoints" :bool (:render-multi fpoint)
   (renderer :pointer)
   (points (:pointer (:struct fpoint)))
   (count :int))
@@ -290,22 +290,22 @@
   (y0 :float)
   (x1 :float)
   (y1 :float))
-(defexport-fun "SDL_RenderLines" :bool
+(defwrap-fun "SDL_RenderLines" :bool (:render-multi fpoint)
   (renderer :pointer)
   (points (:pointer (:struct fpoint)))
   (count :int))
 
-(defexport-fun "SDL_RenderRect" :bool
+(defwrap-fun "SDL_RenderRect" :bool (:render-single frect)
   (renderer :pointer)
   (rect (:pointer (:struct frect))))
-(defexport-fun "SDL_RenderRects" :bool
+(defwrap-fun "SDL_RenderRects" :bool (:render-multi frect)
   (renderer :pointer)
   (rects (:pointer (:struct frect)))
   (count :int))
-(defexport-fun "SDL_RenderFillRect" :bool
+(defwrap-fun "SDL_RenderFillRect" :bool (:render-single frect)
   (renderer :pointer)
   (rects (:pointer (:struct frect))))
-(defexport-fun "SDL_RenderFillRects" :bool
+(defwrap-fun "SDL_RenderFillRects" :bool (:render-multi frect)
   (renderer :pointer)
   (rects (:pointer (:struct frect)))
   (count :int))

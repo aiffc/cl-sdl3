@@ -1,3 +1,4 @@
+
 (in-package :sdl3)
 
 (deflsp-type rect

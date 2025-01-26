@@ -10,6 +10,8 @@
 		((:file "package")
 		 (:file "lib")
 		 (:file "util")
+		 (:file "translate-type")
+		 (:file "translate-fun")
 		 (:module "init"
 		  :components
 		  ((:file "type")
@@ -208,5 +210,8 @@
 		 (:module "rendertest"
 		  :components
 		  ((:file "package")
-		   (:file "01clear"))))))
+		   (:file "01clear")
+		   (:file "02primitives")
+		   (:file "03lines")
+		   (:file "04points"))))))
   :description "test function here")

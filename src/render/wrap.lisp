@@ -11,5 +11,35 @@
 (export 'create-window-and-renderer)
 
 
-;; (defexport-fun "SDL_RenderDebugTextFormat" :bool
-;;   (renderer :pointer))
+;; (defun render-points (renderer points &aux (count (length points)))
+;;   (cffi:with-foreign-object (ptr '(:struct fpoint) count)
+;;     (dotimes (i count)
+;;       (setf (cffi:mem-aref ptr '(:struct fpoint) i)
+;; 	    (elt points i)))
+;;     (%render-points renderer ptr count)))
+;; (export 'rende-points)
+
+;; (defun render-lines (renderer points &aux (count (length points)))
+;;   (cffi:with-foreign-object (ptr '(:struct fpoint) count)
+;;     (dotimes (i count)
+;;       (setf (cffi:mem-aref ptr '(:struct fpoint) i)
+;; 	    (elt points i)))
+;;     (%render-lines renderer ptr count)))
+;; (export 'render-lines)
+
+
+
+;; (defwrap-fun "SDL_RenderRect" :bool
+;;   (renderer :pointer)
+;;   (rect (:pointer (:struct frect))))
+;; (defwrap-fun "SDL_RenderRects" :bool
+;;   (renderer :pointer)
+;;   (rects (:pointer (:struct frect)))
+;;   (count :int))
+;; (defwrap-fun "SDL_RenderFillRect" :bool
+;;   (renderer :pointer)
+;;   (rects (:pointer (:struct frect))))
+;; (defwrap-fun "SDL_RenderFillRects" :bool
+;;   (renderer :pointer)
+;;   (rects (:pointer (:struct frect)))
+;;   (count :int))

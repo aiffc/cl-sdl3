@@ -2,13 +2,13 @@
 
 (defexport-fun "SDL_SetMainReady" :void)
 
-(defwrap-fun "SDL_RunApp" :int
+(defwrap-fun "SDL_RunApp" :int ()
   (argc :int)
   (argv (:pointer :string))
   (mainFunction :pointer)
   (reserved :pointer))
 
-(defwrap-fun "SDL_EnterAppMainCallbacks" :int
+(defwrap-fun "SDL_EnterAppMainCallbacks" :int ()
   (argc :int)
   (argv (:pointer :string))
   (appinit :pointer)

@@ -27,6 +27,12 @@ TO TEST
   (ql:quickload :sdl3/tests)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/01-clear/
   (sdl3.render.test::do-clear-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/02-primitives/
+  (sdl3.render.test::do-primitives-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/03-lines/
+  (sdl3.render.test::do-lines-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/04-points/
+  (sdl3.render.test::do-points-demo)
 #+END_SRC
 
 ** TODO
