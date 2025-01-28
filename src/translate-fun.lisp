@@ -31,64 +31,186 @@
 			    (string+ #\- (char-downcase (char name i))))
 			   (t (char name i))))))))
 
-(defmacro defexport-fun (name ret &body body)
+(defmacro defexport-fun (name ret &body body
+				    &aux (lsp-name (create-symbol (read-from-string (sdl->lsp name)))))
   "function define use this just can use outside"
-  (if (listp name)
-      `(eval-when (:compile-toplevel :load-toplevel :execute) 
-	 (format t "generate function ~a.~%" (second ',name))
-	 (cffi:defcfun ,name ,ret
-	   ,@body)
-	 (export ',(second name)))
-      (let ((lsym (create-symbol (read-from-string (sdl->lsp name)))))
-	`(eval-when (:compile-toplevel :load-toplevel :execute) 
-	   (format t "auto generate function ~a.~%" ',lsym)
-	   (cffi:defcfun (,name ,lsym) ,ret
-	     ,@body)
-	   (export ',lsym)))))
+  `(eval-when (:compile-toplevel :load-toplevel :execute) 
+     (cffi:defcfun ,(if (listp name)
+			name
+			`(,name ,lsp-name)) 
+	 ,ret
+       ,@body)
+     (export ',(if (listp name)
+		   (second name)
+		   lsp-name))))
 
+(defun parse-ctype (tp)
+  "parse pointer"
+  (cond ((equal tp '(:pointer :pointer)) `(quote ,tp))
+	((and (listp (second tp))
+	      (or (eql (first (second tp)) :struct)
+		  (eql (first (second tp)) :union)
+		  (eql (first (second tp)) :pointer)))
+	 `(quote ,(second tp)))
+	((keywordp (second tp)) (second tp))
+	(t  `(quote ,(second tp)))))
 
-(defun gen-render-multi-fun (name fun-name ctype)
-  "auto warp function with a handle and input array"
-  `(progn 
-     (defun ,name (renderer vals &aux (count (length vals)))
-       (cffi:with-foreign-object (ptr '(:struct ,ctype) count)
-	 (dotimes (i count)
-	   (setf (cffi:mem-aref ptr '(:struct ,ctype) i)
-		 (elt vals i)))
-	 (,fun-name renderer ptr count)))
-     (export ',name)))
+(defun get-input-map (lst)
+  "function use to get input arguments in lst"
+  (remove 'nil 
+	  (mapcar #'(lambda (arg)
+		      (if (eql (getf arg :direction) :input)
+			  (remove 'nil
+				  (list (create-symbol '% (first arg)) 
+					(parse-ctype (second arg))
+					(getf arg :bind-count)))
+			  nil))
+		  lst)))
+(defun get-output-map (lst)
+  "function use to get input arguments in lst"
+  (remove 'nil 
+	  (mapcar #'(lambda (arg)
+		      (if (eql (getf arg :direction) :output)
+			  (list (first arg) (parse-ctype (second arg)))
+			  nil))
+		  lst)))
+(defun get-export-fun-args (args ptr-args)
+  "remove all ptr-args from args"
+  (if (null ptr-args)
+      args
+      (reverse (set-difference args ptr-args))))
 
-(defun gen-render-single-fun (name fun-name ctype)
-  "auto warp function with a handle and a input pointer"
-  `(progn
-     (defun ,name (renderer val)
-       (cffi:with-foreign-object (ptr '(:struct ,ctype))
-	 (setf (cffi:mem-ref ptr '(:struct ,ctype)) val)
-	 (,fun-name renderer ptr)))
-     (export ',name)))
+(defun translate-output-map (lst)
+  (mapcar #'(lambda (val
+		     &aux (tp (second val)))
+	      `(cffi:mem-ref ,(first val)
+			     ,(if (equal tp ''(:pointer :pointer)) 
+				  :pointer
+				  tp)))
+	  lst))
 
-(defun do-translate (export-fun execute-fun ctype 
-		     &optional (translate-type :render-multi))
-  (cond ((eql translate-type :render-multi)
-	 (gen-render-multi-fun export-fun execute-fun ctype))
-	((eql translate-type :render-single)
-	 (gen-render-single-fun export-fun execute-fun ctype))))
+(defun get-input-args (lst)
+  "function use to get input arguments in lst"
+  (remove 'nil 
+	  (mapcar #'(lambda (arg)
+		      (if (eql (getf arg :direction) :input)
+			  (first arg)
+			  nil))
+		  lst)))
 
-(defmacro defwrap-fun (name ret (&optional (translate nil) (ctype nil)) &body body)
+(defun generate-setf (input-map input-args)
+  (when (/= (length input-map) (length  input-args))
+    (error "input map and input args are not equal"))
+  (mapcar #'(lambda (im ia
+		     &aux (tp (cadadr im)))
+	      `(setf (cffi:mem-ref ,(first im) 
+				   ,(cond ((equal '(:pointer :pointer) tp) :pointer)
+					  ((keywordp tp) tp)
+					  (t `(quote ,tp))))
+		     ,ia))
+	  input-map
+	  input-args))
+
+(defun generate-multi-setf (input-map input-args)
+  (when (/= (length input-map) (length  input-args))
+    (error "input map and input args are not equal"))
+  (mapcar #'(lambda (im ia
+		     &aux (tp (second im)))
+	      (if (= (length im) 3) ;; if count is 3 it has count
+		  `(dotimes (i ,(first (last im)))
+		     (setf (cffi:mem-aref ,(first im) 
+					  ,(cond ((and (listp tp)
+						       (equal (second tp) '(:pointer :pointer)))
+						  :pointer)
+						 (t tp))
+					  i)
+			   (elt ,ia i)))
+		  `(setf (cffi:mem-ref ,(first im) 
+				       ,(cond ((and (listp tp)
+						    (equal (second tp) '(:pointer :pointer)))
+					       :pointer)
+					      (t tp)))
+			 ,ia)))
+	  input-map
+	  input-args))
+
+(defun get-bind-let (args)
+  (remove 'nil 
+	   (mapcar #'(lambda (arg &aux 
+				    (bind-v (getf arg :bind-val)))
+		       (when bind-v
+			 `(,(first arg) (length ,bind-v))))
+		   args)))
+
+(defun do-translate (export-fun 
+		     execute-fun
+		     args
+		     return-ret
+		     ret
+		     translate-return)
+  (let* ((execute-fun-args (mapcar #'(lambda (arg)
+				       (if (eql (getf arg :direction) :input)
+					   (create-symbol '% (first arg))
+					   (first arg)))
+				   args))
+	 (bind-let (get-bind-let args) )
+	 (input-map (get-input-map args))
+	 (input-args (get-input-args args))
+	 (output-map (get-output-map args))
+	 (output-ptrs (mapcar 'first output-map))
+	 (alloc-map (append input-map output-map))
+	 (export-fun-args (get-export-fun-args (remove 'nil
+						       (mapcar #'(lambda (arg)
+								   (when (not (getf arg :bind-val))
+								     (first arg))) args))
+					       output-ptrs)))
+    `(progn
+       (defun ,export-fun (,@export-fun-args)
+	 (let (,@bind-let)
+	   (cffi:with-foreign-objects (,@alloc-map)
+	     ,@(when input-map
+		 (generate-multi-setf input-map input-args))
+	     ,(if return-ret
+		  `(let ((ret (,execute-fun ,@execute-fun-args)))
+		     (values ,(if translate-return
+				  `(cffi:mem-ref ret ',(second ret))
+				  `ret)
+			     ,@ (translate-output-map output-map)))
+		  `(progn 
+		     (,execute-fun ,@execute-fun-args)
+		     (values ,@ (translate-output-map output-map)))))))
+       (export ',export-fun))))
+
+(defun gen-cffi-struct-body (body)
+  "remove some custom args"
+  (mapcar #'(lambda (bd)
+	      (list (first bd) (second bd)))
+	  body))
+
+(defmacro defwrap-fun (name ret
+		       (&optional
+			  (translate nil)
+			  (retur-ret nil)
+			  (translate-return nil))
+		       &body body
+		       &aux (cffi-body (gen-cffi-struct-body body)))
   "function define use this, this function need wrap, the translate indiced the function auto translate"
-  (if (listp name)
-      (let* ((lsp-fun (second name))
-	    (%lsp-fun (create-symbol '% lsp-fun)))
-	`(eval-when (:compile-toplevel :load-toplevel :execute) 
-	   (format t "generate wrap function ~a.~%" %lsp-fun)
-	   (cffi:defcfun (,(first name) ,%lsp-fun) ,ret
-	     ,@body)
-	   ,(when translate (do-translate lsp-fun %lsp-fun ctype translate))))
-      (let* ((lsp-fun (read-from-string (sdl->lsp name))) ;; export lsp-fun
-	     (%lsp-fun (create-symbol '% lsp-fun)))
-	`(eval-when (:compile-toplevel :load-toplevel :execute) 
-	   (format t "auto generate wrap function ~a.~%" ',lsp-fun)
-	   (cffi:defcfun (,name ,%lsp-fun) ,ret
-	     ,@body)
-	   ,(when translate (do-translate lsp-fun %lsp-fun ctype translate))))))
+  (let* ((lsp-fun (if (listp name)
+		      (second name)
+		      (read-from-string (sdl->lsp name)))) ;; export lsp-fun
+	 (%lsp-fun (create-symbol '% lsp-fun)))
+    `(eval-when (:compile-toplevel :load-toplevel :execute) 
+       (cffi:defcfun ,(if (listp name)
+			  `(,(first name) ,%lsp-fun)
+			  `(,name ,%lsp-fun))
+	   ,ret
+	 ,@cffi-body)
+       ,(when translate
+	  (do-translate
+	    lsp-fun
+	    %lsp-fun
+	    body
+	    retur-ret
+	    ret
+	    translate-return)))))
 

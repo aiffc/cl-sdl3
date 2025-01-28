@@ -5,13 +5,14 @@
 (defexport-fun "SDL_GetRenderDriver" :string 
   (index :int))
 
-(defwrap-fun "SDL_CreateWindowAndRenderer" :bool ()
+(defwrap-fun "SDL_CreateWindowAndRenderer" :bool
+    (t t)
   (title :string)
   (width :int)
   (height :int)
   (flags window-flags)
-  (window (:pointer :pointer))
-  (renderer (:pointer :pointer)))
+  (window (:pointer :pointer) :direction :output)
+  (renderer (:pointer :pointer) :direction :output))
 
 (defexport-fun "SDL_CreateRenderer" :pointer
   (window :pointer)
@@ -35,16 +36,17 @@
 (defexport-fun "SDL_GetRendererProperties" properties-id
   (render :pointer))
 
-(defexport-fun "SDL_GetRenderOutputSize" :bool
+(defwrap-fun "SDL_GetRenderOutputSize" :bool (t t)
   (render :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
-(defexport-fun "SDL_GetCurrentRenderOutputSize" :bool
+(defwrap-fun "SDL_GetCurrentRenderOutputSize" :bool (t t)
   (render :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
+;; we process texture as an object so don't wrap texture funcstion
 (defexport-fun "SDL_CreateTexture" (:pointer (:struct texture))
   (render :pointer)
   (fmt pixel-format)
@@ -66,10 +68,11 @@
 (defexport-fun "SDL_GetRendererFromTexture" :pointer
   (texture (:pointer (:struct texture))))
 
-(defexport-fun "SDL_GetTextureSize" :bool
+(defwrap-fun "SDL_GetTextureSize" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (w (:pointer :float))
-  (h (:pointer :float)))
+  (w (:pointer :float) :direction :output)
+  (h (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetTextureColorMod" :bool
   (texture (:pointer (:struct texture)))
@@ -82,16 +85,18 @@
   (g :float)
   (b :float))
 
-(defexport-fun "SDL_GetTextureColorMod" :bool
+(defwrap-fun "SDL_GetTextureColorMod" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8)))
-(defexport-fun "SDL_GetTextureColorModFloat" :bool
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output))
+(defwrap-fun "SDL_GetTextureColorModFloat" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-    (r (:pointer :float))
-  (g (:pointer :float))
-  (b (:pointer :float)))
+  (r (:pointer :float) :direction :output)
+  (g (:pointer :float) :direction :output)
+  (b (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetTextureAlphaMod" :bool
   (texture (:pointer (:struct texture)))
@@ -99,60 +104,69 @@
 (defexport-fun "SDL_SetTextureAlphaModFloat" :bool
   (texture (:pointer (:struct texture)))
   (alpha :float))
-(defexport-fun "SDL_GetTextureAlphaMod" :bool
+(defwrap-fun "SDL_GetTextureAlphaMod" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (alpha (:pointer :uint8)))
-(defexport-fun "SDL_GetTextureAlphaModFloat" :bool
+  (alpha (:pointer :uint8) :direction :output))
+(defwrap-fun "SDL_GetTextureAlphaModFloat" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (alpha (:pointer :float)))
+  (alpha (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetTextureBlendMode" :bool
   (texture (:pointer (:struct texture)))
   (mode blend-mode))
-(defexport-fun "SDL_GetTextureBlendMode" :bool
+(defwrap-fun "SDL_GetTextureBlendMode" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (mode (:pointer blend-mode)))
+  (mode (:pointer blend-mode) :direction :output))
 
 (defexport-fun "SDL_SetTextureScaleMode" :bool
   (texture (:pointer (:struct texture)))
   (mode scale-mode))
-(defexport-fun "SDL_GetTextureScaleMode" :bool
+(defwrap-fun "SDL_GetTextureScaleMode" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (mode (:pointer scale-mode)))
+  (mode (:pointer scale-mode) :direction :output))
 
-(defexport-fun "SDL_UpdateTexture" :bool
+(defwrap-fun "SDL_UpdateTexture" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (rect (:pointer (:struct rect)))
+  (rect (:pointer (:struct rect)) :direction :input)
   (pixels :pointer)
   (pitch :int))
 
-(defexport-fun ("SDL_UpdateYUVTexture" update-yuv-texture) :bool
+(defwrap-fun "SDL_UpdateYUVTexture" :bool
+    (t t)
+  (texture (:pointer (:struct texture)))
+  (rect (:pointer (:struct rect)) :direction :input)
+  (yplane (:pointer :uint8) :direction :input :bind-count ypitch)
+  (ypitch :int :bind-val yplane)
+  (uplane (:pointer :uint8) :direction :input :bind-count upitch)
+  (upitch :int :bind-val uplane)
+  (vplane (:pointer :uint8) :direction :input :bind-count vpitch)
+  (vpitch :int :bind-val vplane))
+(defwrap-fun "SDL_UpdateNVTexture" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
   (rect (:pointer (:struct rect)))
-  (yplane (:pointer :uint8))
-  (ypitch :int)
-  (uplane (:pointer :uint8))
-  (upitch :int)
-  (vplane (:pointer :uint8))
-  (vpitch :int))
-(defexport-fun ("SDL_UpdateNVTexture" update-nvt-texture) :bool
-  (texture (:pointer (:struct texture)))
-  (rect (:pointer (:struct rect)))
-  (yplane (:pointer :uint8))
-  (ypitch :int)
-  (uvplane (:pointer :uint8))
-  (uvpitch :int))
+  (yplane (:pointer :uint8) :direction :input :bind-count ypitch)
+  (ypitch :int :bind-val yplane)
+  (uvplane (:pointer :uint8) :direction :input :bind-count uvpitch)
+  (uvpitch :int :bind-val uvplane))
 
-(defexport-fun "SDL_LockTexture" :bool
+(defwrap-fun "SDL_LockTexture" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (rect (:pointer (:struct rect)))
+  (rect (:pointer (:struct rect)) :direction :input)
   (pixels (:pointer :pointer))
   (pitch (:pointer :int)))
 
-(defexport-fun "SDL_LockTextureToSurface" :bool
+(defwrap-fun "SDL_LockTextureToSurface" :bool
+    (t t)
   (texture (:pointer (:struct texture)))
-  (rect (:pointer (:struct rect)))
-  (psurface (:pointer :pointer)))
+  (rect (:pointer (:struct rect)) :direction :input)
+  (psurface (:pointer :pointer) :direction :input))
 
 (defexport-fun "SDL_UnlockTexture" :void
   (texture (:pointer (:struct texture))))
@@ -170,52 +184,59 @@
   (h :int)
   (mode renderer-logical-presentation))
 
-(defexport-fun "SDL_GetRenderLogicalPresentation" :bool
+(defwrap-fun "SDL_GetRenderLogicalPresentation" :bool
+    (t t)
   (renderer :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int))
-  (mode (:pointer renderer-logical-presentation)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output)
+  (mode (:pointer renderer-logical-presentation) :direction :output))
 
-(defexport-fun "SDL_GetRenderLogicalPresentationRect" :bool
+(defwrap-fun "SDL_GetRenderLogicalPresentationRect" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_RenderCoordinatesFromWindow" :bool
+(defwrap-fun "SDL_RenderCoordinatesFromWindow" :bool
+    (t t)
   (renderer :pointer)
   (window-x :float)
   (window-y :float)
-  (x (:pointer :float))
-  (y (:pointer :float)))
+  (x (:pointer :float) :direction :output)
+  (y (:pointer :float) :direction :output))
 
-(defexport-fun "SDL_RenderCoordinatesToWindow" :bool
+(defwrap-fun "SDL_RenderCoordinatesToWindow" :bool
+    (t t)
   (renderer :pointer)
   (x :float)
   (y :float)
-  (window-x (:pointer :float))
-  (window-y (:pointer :float)))
+  (window-x (:pointer :float) :direction :output)
+  (window-y (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetRenderViewport" :bool
   (renderer :pointer)
   (rect (:pointer (:struct rect))))
 
-(defexport-fun "SDL_GetRenderViewport" :bool
+(defwrap-fun "SDL_GetRenderViewport" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_RenderViewportSet" :bool
   (renderer :pointer))
 
-(defexport-fun "SDL_GetRenderSafeArea" :bool
+(defwrap-fun "SDL_GetRenderSafeArea" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_SetRenderClipRect" :bool
   (renderer :pointer)
   (rect (:pointer (:struct rect))))
 
-(defexport-fun "SDL_GetRenderClipRect" :bool
+(defwrap-fun "SDL_GetRenderClipRect" :bool
+  (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_RenderClipEnabled" :bool
   (renderer :pointer))
@@ -225,10 +246,11 @@
   (x :float)
   (y :float))
 
-(defexport-fun "SDL_GetRenderScale" :bool
+(defwrap-fun "SDL_GetRenderScale" :bool
+    (t t)
   (renderer :pointer)
-  (x (:pointer :float))
-  (y (:pointer :float)))
+  (x (:pointer :float) :direction :output)
+  (y (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetRenderDrawColor" :bool
   (renderer :pointer)
@@ -244,33 +266,37 @@
   (b :float)
   (a :float))
 
-(defexport-fun "SDL_GetRenderDrawColor" :bool
+(defwrap-fun "SDL_GetRenderDrawColor" :bool
+    (t t)
   (renderer :pointer)
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8))
-  (a (:pointer :uint8)))
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output)
+  (a (:pointer :uint8) :direction :output))
 
-(defexport-fun "SDL_GetRenderDrawColorFloat" :bool
+(defwrap-fun "SDL_GetRenderDrawColorFloat" :bool
+    (t t)
   (renderer :pointer)
-  (r (:pointer :float))
-  (g (:pointer :float))
-  (b (:pointer :float))
-  (a (:pointer :float)))
+  (r (:pointer :float) :direction :output)
+  (g (:pointer :float) :direction :output)
+  (b (:pointer :float) :direction :output)
+  (a (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_SetRenderColorScale" :bool
   (renderer :pointer)
   (mode scale-mode))
-(defexport-fun "SDL_GetRenderColorScale" :bool
+(defwrap-fun "SDL_GetRenderColorScale" :bool
+    (t t)
   (renderer :pointer)
-  (mode (:pointer scale-mode)))
+  (mode (:pointer scale-mode) :direction :output))
 
 (defexport-fun "SDL_SetRenderDrawBlendMode" :bool
   (renderer :pointer)
   (mode blend-mode))
-(defexport-fun "SDL_GetRenderDrawBlendMode" :bool
+(defwrap-fun "SDL_GetRenderDrawBlendMode" :bool
+    (t t)
   (renderer :pointer)
-  (mode (:pointer blend-mode)))
+  (mode (:pointer blend-mode) :direction :output))
 
 (defexport-fun "SDL_RenderClear" :bool
   (renderer :pointer))
@@ -279,10 +305,11 @@
   (renderer :pointer)
   (x :float)
   (y :float))
-(defwrap-fun "SDL_RenderPoints" :bool (:render-multi fpoint)
+(defwrap-fun "SDL_RenderPoints" :bool
+    (t)
   (renderer :pointer)
-  (points (:pointer (:struct fpoint)))
-  (count :int))
+  (points (:pointer (:struct fpoint)) :direction :input :bind-count count)
+  (count :int :bind-val points))
 
 (defexport-fun "SDL_RenderLine" :bool
   (renderer :pointer)
@@ -290,52 +317,61 @@
   (y0 :float)
   (x1 :float)
   (y1 :float))
-(defwrap-fun "SDL_RenderLines" :bool (:render-multi fpoint)
+(defwrap-fun "SDL_RenderLines" :bool
+    (t t)
   (renderer :pointer)
-  (points (:pointer (:struct fpoint)))
-  (count :int))
+  (points (:pointer (:struct fpoint)) :direction :input :bind-count count)
+  (count :int :bind-val points))
 
-(defwrap-fun "SDL_RenderRect" :bool (:render-single frect)
+(defwrap-fun "SDL_RenderRect" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct frect))))
-(defwrap-fun "SDL_RenderRects" :bool (:render-multi frect)
+  (rect (:pointer (:struct frect)) :direction :input))
+(defwrap-fun "SDL_RenderRects" :bool
+    (t t)
   (renderer :pointer)
-  (rects (:pointer (:struct frect)))
-  (count :int))
-(defwrap-fun "SDL_RenderFillRect" :bool (:render-single frect)
+  (rects (:pointer (:struct frect)) :direction :input :bind-count count)
+  (count :int :bind-val rects))
+(defwrap-fun "SDL_RenderFillRect" :bool
+    (t t)
   (renderer :pointer)
-  (rects (:pointer (:struct frect))))
-(defwrap-fun "SDL_RenderFillRects" :bool (:render-multi frect)
+  (rects (:pointer (:struct frect)) :direction :input))
+(defwrap-fun "SDL_RenderFillRects" :bool
+    (t t)
   (renderer :pointer)
-  (rects (:pointer (:struct frect)))
-  (count :int))
+  (rects (:pointer (:struct frect)) :direction :input :bind-count count)
+  (count :int :bind-val rects))
 
-(defexport-fun "SDL_RenderTexture" :bool
+(defwrap-fun "SDL_RenderTexture" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (src (:pointer (:struct frect)))
-  (dst (:pointer (:struct frect))))
-(defexport-fun "SDL_RenderTextureRotated" :bool
+  (src (:pointer (:struct frect)) :direction :input)
+  (dst (:pointer (:struct frect)) :direction :input))
+(defwrap-fun "SDL_RenderTextureRotated" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (src (:pointer (:struct frect)))
-  (dst (:pointer (:struct frect)))
+  (src (:pointer (:struct frect)) :direction :input)
+  (dst (:pointer (:struct frect)) :direction :input)
   (angle :double)
-  (center (:pointer (:struct fpoint)))
+  (center (:pointer (:struct fpoint)) :direction :input)
   (flip flip-mode))
-(defexport-fun "SDL_RenderTextureAffine" :bool
+(defwrap-fun "SDL_RenderTextureAffine" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (src (:pointer (:struct frect)))
-  (right (:pointer (:struct fpoint)))
-  (origin (:pointer (:struct fpoint))))
-(defexport-fun "SDL_RenderTextureTiled" :bool
+  (src (:pointer (:struct frect)) :direction :input)
+  (right (:pointer (:struct fpoint)) :direction :input)
+  (origin (:pointer (:struct fpoint)) :direction :input))
+(defwrap-fun "SDL_RenderTextureTiled" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (src (:pointer (:struct frect)))
+  (src (:pointer (:struct frect)) :direction :input)
   (scale :double)
-  (dst (:pointer (:struct frect))))
-(defexport-fun "SDL_RenderTexture9Grid" :bool
+  (dst (:pointer (:struct frect)) :direction :input))
+(defwrap-fun "SDL_RenderTexture9Grid" :bool
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
   (left-widht :float)
@@ -343,24 +379,26 @@
   (top-height :float)
   (button-height :float)
   (scale :double)
-  (dst (:pointer (:struct frect))))
+  (dst (:pointer (:struct frect)) :direction :input))
 
-(defexport-fun "SDL_RenderGeometry" :bool
+(defwrap-fun "SDL_RenderGeometry" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (vertices (:pointer (:struct vertex)))
-  (num-vertices :int)
-  (indices (:pointer :int))
-  (num-indices :int))
-(defexport-fun "SDL_RenderGeometryRaw" :bool
+  (vertices (:pointer (:struct vertex)) :direction :input :bind-count num-vertices)
+  (num-vertices :int :bind-val vertices)
+  (indices (:pointer :int) :direction :input :bind-count num-indices)
+  (num-indices :int :bind-val indices))
+(defwrap-fun "SDL_RenderGeometryRaw" :bool
+    (t t)
   (renderer :pointer)
   (texture (:pointer (:struct texture)))
-  (xy (:pointer :float))
-  (xy-stride :int)
-  (color (:pointer (:struct fcolor)))
-  (color-stride :int)
-  (uv (:pointer :float))
-  (uv-stride :int)
+  (xy (:pointer :float) :direction :input :bind-count xy-stride)
+  (xy-stride :int :bind-val xy)
+  (color (:pointer (:struct fcolor)) :direction :input :bind-count color-stride)
+  (color-stride :int :bind-val color)
+  (uv (:pointer :float) :direction :input :bind-count uv-stride)
+  (uv-stride :int :bind-val uv)
   (num-vertices :int)
   (indices :pointer)
   (num-indices :int)
@@ -396,9 +434,10 @@
 (defexport-fun "SDL_SetRenderVSync" :bool
   (renderer :pointer)
   (vsync :int))
-(defexport-fun "SDL_GetRenderVSync" :bool
-  (renderer :pointer)
-  (vsync (:pointer :int)))
+(defwrap-fun "SDL_GetRenderVSync" :bool
+    (t t)
+    (renderer :pointer)
+  (vsync (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_RenderDebugText" :bool
   (renderer :pointer)
