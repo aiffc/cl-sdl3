@@ -9,7 +9,7 @@
   (reserved :pointer))
 
 (defwrap-fun "SDL_EnterAppMainCallbacks" :int ()
-  (argc :int)
+  (argc :int :bind-val argv)
   (argv (:pointer :string))
   (appinit :pointer)
   (appiter :pointer)

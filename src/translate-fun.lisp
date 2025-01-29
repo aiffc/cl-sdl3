@@ -32,7 +32,8 @@
 			   (t (char name i))))))))
 
 (defmacro defexport-fun (name ret &body body
-				    &aux (lsp-name (create-symbol (read-from-string (sdl->lsp name)))))
+			 &aux (lsp-name (when (atom name)
+					  (create-symbol (read-from-string (sdl->lsp name))))))
   "function define use this just can use outside"
   `(eval-when (:compile-toplevel :load-toplevel :execute) 
      (cffi:defcfun ,(if (listp name)
@@ -136,11 +137,11 @@
 
 (defun get-bind-let (args)
   (remove 'nil 
-	   (mapcar #'(lambda (arg &aux 
-				    (bind-v (getf arg :bind-val)))
-		       (when bind-v
-			 `(,(first arg) (length ,bind-v))))
-		   args)))
+	  (mapcar #'(lambda (arg &aux 
+				   (bind-v (getf arg :bind-val)))
+		      (when bind-v
+			`(,(first arg) (length ,bind-v))))
+		  args)))
 
 (defun do-translate (export-fun 
 		     execute-fun
@@ -158,12 +159,22 @@
 	 (input-args (get-input-args args))
 	 (output-map (get-output-map args))
 	 (output-ptrs (mapcar 'first output-map))
-	 (alloc-map (append input-map output-map))
-	 (export-fun-args (get-export-fun-args (remove 'nil
-						       (mapcar #'(lambda (arg)
-								   (when (not (getf arg :bind-val))
-								     (first arg))) args))
-					       output-ptrs)))
+	 (ret-lst (find-if #'(lambda (arg)
+			       (find :ret-count arg))
+			   args))
+	 (ret-count-val (first ret-lst))
+	 (ret-count-type (getf ret-lst  :ret-count))
+	 (alloc-map (append input-map 
+			    output-map
+			    (when ret-lst
+			      (list `(,ret-count-val :int))))) ;; usually count use int
+	 (export-fun-args (get-export-fun-args
+			   (remove 'nil
+				   (mapcar #'(lambda (arg)
+					       (when (not (or (getf arg :bind-val)
+							      (getf arg :ret-count)))
+						 (first arg))) args))
+			   output-ptrs)))
     `(progn
        (defun ,export-fun (,@export-fun-args)
 	 (let (,@bind-let)
@@ -172,9 +183,10 @@
 		 (generate-multi-setf input-map input-args))
 	     ,(if return-ret
 		  `(let ((ret (,execute-fun ,@execute-fun-args)))
-		     (values ,(if translate-return
-				  `(cffi:mem-ref ret ',(second ret))
-				  `ret)
+		     (values ,(cond (ret-lst `(loop :for i :from 0 :below (cffi:mem-ref ,ret-count-val :int)
+						    :collect (cffi:mem-aref ret ,ret-count-type i)))
+				    (translate-return `(cffi:mem-ref ret ',(second ret)))
+				    (t `ret))
 			     ,@ (translate-output-map output-map)))
 		  `(progn 
 		     (,execute-fun ,@execute-fun-args)

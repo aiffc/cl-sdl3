@@ -1,7 +1,8 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_ReportAssertion" assert-state
-  (data (:pointer (:struct assert-data)))
+(defwrap-fun "SDL_ReportAssertion" assert-state
+    (t t)
+  (data (:pointer (:struct assert-data)) :direction :input)
   (func :string)
   (file :string)
   (line :int))

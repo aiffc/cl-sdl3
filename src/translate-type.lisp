@@ -48,7 +48,6 @@
 			   cslots))
 	 (translate-type (create-symbol 'c- name)))
     `(eval-when (:compile-toplevel :load-toplevel :execute)
-       (format t "~a ~a~%" ',name ',lsp-funs)
        (defclass-std:defclass/std ,name () (,lsp-funs))
        (cffi:defcstruct (,name :class ,translate-type) ,@body)
        ,(generate-translate-to-foreign name translate-type cslots lsp-funs)

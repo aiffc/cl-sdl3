@@ -42,9 +42,10 @@
 (defexport-fun "SDL_SurfaceHasAlternateImages" :bool
   (surface :pointer))
 
-(defexport-fun "SDL_GetSurfaceImages" (:pointer :pointer)
+(defwrap-fun "SDL_GetSurfaceImages" (:pointer :pointer)
+    (t t)
   (surface :pointer)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :pointer))
 
 (defexport-fun "SDL_RemoveSurfaceAlternateImages" :void
   (surface :pointer))
@@ -86,9 +87,10 @@
 (defexport-fun "SDL_SurfaceHasColorKey" :bool
   (surface :pointer))
 
-(defexport-fun "SDL_GetSurfaceColorKey" :bool
+(defwrap-fun "SDL_GetSurfaceColorKey" :bool
+    (t t)
   (surface :pointer)
-  (key (:pointer :uint32)))
+  (key (:pointer :uint32) :direction :output))
 
 (defexport-fun "SDL_SetSurfaceColorMod" :bool
   (surface :pointer)
@@ -96,11 +98,12 @@
   (g :uint8)
   (b :uint8))
 
-(defexport-fun "SDL_GetSurfaceColorMod" :bool
+(defwrap-fun "SDL_GetSurfaceColorMod" :bool
+    (t t)
   (surface :pointer)
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8)))
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output))
 
 (defexport-fun "SDL_SetSurfaceAlphaMod" :bool
   (surface :pointer)
@@ -114,17 +117,20 @@
   (surface :pointer)
   (mode blend-mode))
 
-(defexport-fun "SDL_GetSurfaceBlendMode" :bool
+(defwrap-fun "SDL_GetSurfaceBlendMode" :bool
+    (t t)
   (surface :pointer)
-  (mode (:pointer blend-mode)))
+  (mode (:pointer blend-mode) :direction :output))
 
-(defexport-fun "SDL_SetSurfaceClipRect" :bool
+(defwrap-fun "SDL_SetSurfaceClipRect" :bool
+    (t t)
   (surface :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_GetSurfaceClipRect" :bool
+(defwrap-fun "SDL_GetSurfaceClipRect" :bool
+    (t t)
   (surface :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_FlipSurface" :bool
   (surface :pointer)
@@ -196,60 +202,69 @@
   (b :float)
   (a :float))
 
-(defexport-fun "SDL_FillSurfaceRect" :bool
+(defwrap-fun "SDL_FillSurfaceRect" :bool
+    (t t)
   (surface :pointer)
-  (rect (:pointer (:struct rect)))
+  (rect (:pointer (:struct rect)) :direction :input)
   (color :uint32))
 
-(defexport-fun "SDL_FillSurfaceRects" :bool
+(defwrap-fun "SDL_FillSurfaceRects" :bool
+    (t t)
   (surface :pointer)
-  (rect (:pointer (:struct rect)))
-  (count :int)
+  (rect (:pointer (:struct rect)) :direction :input :bind-count count)
+  (count :int :bind-val rect)
   (color :uint32))
 
-(defexport-fun "SDL_BlitSurface" :bool
+(defwrap-fun "SDL_BlitSurface" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect))))
+  (drect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_BlitSurfaceUnchecked" :bool
+(defwrap-fun "SDL_BlitSurfaceUnchecked" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect))))
+  (drect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_BlitSurfaceScaled" :bool
+(defwrap-fun "SDL_BlitSurfaceScaled" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect)))
+  (drect (:pointer (:struct rect)) :direction :input)
   (mode scale-mode))
 
-(defexport-fun "SDL_BlitSurfaceUncheckedScaled" :bool
+(defwrap-fun "SDL_BlitSurfaceUncheckedScaled" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect)))
+  (drect (:pointer (:struct rect)) :direction :input)
   (mode scale-mode))
 
-(defexport-fun "SDL_BlitSurfaceTiled" :bool
+(defwrap-fun "SDL_BlitSurfaceTiled" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect))))
+  (drect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_BlitSurfaceTiledWithScale" :bool
+(defwrap-fun "SDL_BlitSurfaceTiledWithScale" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (scale :float)
   (mode scale-mode)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect))))
+  (drect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_BlitSurface9Grid" :bool
+(defwrap-fun "SDL_BlitSurface9Grid" :bool
+    (t t)
   (ssurface :pointer)
-  (srect (:pointer (:struct rect)))
+  (srect (:pointer (:struct rect)) :direction :input)
   (left-widht :int)
   (right-widht :int)
   (top-height :int)
@@ -257,7 +272,7 @@
   (scale :float)
   (mode scale-mode)
   (dsurface :pointer)
-  (drect (:pointer (:struct rect))))
+  (drect (:pointer (:struct rect)) :direction :input))
 
 (defexport-fun ("SDL_MapSurfaceRGB" map-surface-rgb) :uint32
   (surface :pointer)
@@ -272,23 +287,25 @@
   (b :uint8)
   (a :uint8))
 
-(defexport-fun "SDL_ReadSurfacePixel" :bool
+(defwrap-fun "SDL_ReadSurfacePixel" :bool
+    (t t)
   (surface :pointer)
   (x :int)
   (y :int)
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8))
-  (a (:pointer :uint8)))
+  (r (:pointer :uint8) :direcion :output)
+  (g (:pointer :uint8) :direcion :output)
+  (b (:pointer :uint8) :direcion :output)
+  (a (:pointer :uint8) :direcion :output))
 
-(defexport-fun "SDL_ReadSurfacePixelFloat" :bool
+(defwrap-fun "SDL_ReadSurfacePixelFloat" :bool
+    (t t)
   (surface :pointer)
   (x :int)
   (y :int)
-  (r (:pointer :float))
-  (g (:pointer :float))
-  (b (:pointer :float))
-  (a (:pointer :float)))
+  (r (:pointer :float) :direction :output)
+  (g (:pointer :float) :direction :output)
+  (b (:pointer :float) :direction :output)
+  (a (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_WriteSurfacePixel" :bool
   (surface :pointer)

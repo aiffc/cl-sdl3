@@ -7,27 +7,32 @@
 
 (defexport-fun "SDL_GetCurrentAudioDriver" :string)
 
-(defexport-fun "SDL_GetAudioPlaybackDevices" (:pointer audio-device-id)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetAudioPlaybackDevices" (:pointer audio-device-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'audio-device-id))
 
-(defexport-fun "SDL_GetAudioRecordingDevices" (:pointer audio-device-id)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetAudioRecordingDevices" (:pointer audio-device-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'audio-device-id))
 
 (defexport-fun "SDL_GetAudioDeviceName" :string
   (dvid audio-device-id))
 
-(defexport-fun "SDL_GetAudioDeviceFormat" :bool
+(defwrap-fun "SDL_GetAudioDeviceFormat" :bool
+    (t t)
   (dvid audio-device-id)
-  (spec (:pointer (:struct audio-spec)))
-  (sample-frames (:pointer :int)))
+  (spec (:pointer (:struct audio-spec)) :direction :output)
+  (sample-frames (:pointer :int) :direction :input))
 
-(defexport-fun "SDL_GetAudioDeviceChannelMap" (:pointer :int)
+(defwrap-fun "SDL_GetAudioDeviceChannelMap" (:pointer :int)
+    (t t)
   (dvid audio-device-id)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :int))
 
-(defexport-fun "SDL_OpenAudioDevice" audio-device-id
+(defwrap-fun "SDL_OpenAudioDevice" audio-device-id
+    (t t)
   (dvid audio-device-id)
-  (spec (:pointer (:struct audio-spec))))
+  (spec (:pointer (:struct audio-spec)) :direction :input))
 
 (defexport-fun "SDL_IsAudioDevicePhysical" :bool
   (dvid audio-device-id))
@@ -73,22 +78,25 @@
 (defexport-fun "SDL_GetAudioStreamDevice" audio-device-id
   (stream :pointer))
 
-(defexport-fun "SDL_CreateAudioStream" :pointer
-  (src-spec (:pointer (:struct audio-spec)))
-  (dsp-spec (:pointer (:struct audio-spec))))
+(defwrap-fun "SDL_CreateAudioStream" :pointer
+    (t t)
+  (src-spec (:pointer (:struct audio-spec)) :direction :input)
+  (dsp-spec (:pointer (:struct audio-spec)) :direction :input))
 
 (defexport-fun "SDL_GetAudioStreamProperties" properties-id
   (stream :pointer))
 
-(defexport-fun "SDL_GetAudioStreamFormat" :bool
+(defwrap-fun "SDL_GetAudioStreamFormat" :bool
+    (t t)
   (stream :pointer)
-  (src-spec (:pointer (:struct audio-spec)))
-  (dsp-spec (:pointer (:struct audio-spec))))
+  (src-spec (:pointer (:struct audio-spec)) :direction :input)
+  (dsp-spec (:pointer (:struct audio-spec)) :direction :input))
 
-(defexport-fun "SDL_SetAudioStreamFormat" :bool
+(defwrap-fun "SDL_SetAudioStreamFormat" :bool
+    (t t)
   (stream :pointer)
-  (src-spec (:pointer (:struct audio-spec)))
-  (dsp-spec (:pointer (:struct audio-spec))))
+  (src-spec (:pointer (:struct audio-spec)) :direction :input)
+  (dsp-spec (:pointer (:struct audio-spec)) :direction :input))
 
 (defexport-fun "SDL_GetAudioStreamFrequencyRatio" :float
   (stream :pointer))
@@ -104,23 +112,27 @@
   (stream :pointer)
   (gain :float))
 
-(defexport-fun "SDL_GetAudioStreamInputChannelMap" (:pointer :int)
+(defwrap-fun "SDL_GetAudioStreamInputChannelMap" (:pointer :int)
+    (t t)
   (stream :pointer)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :int))
 
-(defexport-fun "SDL_GetAudioStreamOutputChannelMap" (:pointer :int)
+(defwrap-fun "SDL_GetAudioStreamOutputChannelMap" (:pointer :int)
+    (t t)
   (stream :pointer)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :int))
 
-(defexport-fun "SDL_SetAudioStreamInputChannelMap" :bool
+(defwrap-fun "SDL_SetAudioStreamInputChannelMap" :bool
+    (t t)
   (stream :pointer)
-  (chmap (:pointer :int))
-  (count :int))
+  (chmap (:pointer :int) :direction :input :bind-count count)
+  (count :int :bind-val chmap))
 
-(defexport-fun "SDL_SetAudioStreamOutputChannelMap" :bool
+(defwrap-fun "SDL_SetAudioStreamOutputChannelMap" :bool
+    (t t)
   (stream :pointer)
-  (chmapcount (:pointer :int))
-  (count :int))
+  (chmap (:pointer :int) :direction :input :bind-count count)
+  (count :int :bind-val chmap))
 
 (defexport-fun "SDL_PutAudioStreamData" :bool
   (stream :pointer)
@@ -172,37 +184,42 @@
 (defexport-fun "SDL_DestroyAudioStream" :void
   (stream :pointer))
 
-(defexport-fun "SDL_OpenAudioDeviceStream" :pointer
-  (did (audio-device-id))
-  (spec (:pointer (:struct audio-spec)))
+(defwrap-fun "SDL_OpenAudioDeviceStream" :pointer
+    (t t)
+  (did audio-device-id)
+  (spec (:pointer (:struct audio-spec)) :direction :input)
   (callback :pointer)
   (userdata :pointer))
 
 (defexport-fun "SDL_SetAudioPostmixCallback" :bool
-  (did (audio-device-id))
+  (did audio-device-id)
   (callback :pointer)
   (userdata :pointer))
 
-(defexport-fun ("SDL_LoadWAV_IO" load-wav-io) :bool
+(defwrap-fun ("SDL_LoadWAV_IO" load-wav-io) :bool
+    (t t)
   (src :pointer)
   (close-io :bool)
-  (spec (:pointer (:struct audio-spec)))
-  (buf (:pointer (:pointer :uint8)))
-  (len (:pointer :uint32)))
+  (spec (:pointer (:struct audio-spec)) :direction :intput)
+  (buf (:pointer (:pointer :uint8)) :direction :intput :bind-count len)
+  (len (:pointer :uint32) :bind-val buf))
 
-(defexport-fun ("SDL_LoadWAV" load-wav) :bool
+(defwrap-fun ("SDL_LoadWAV" load-wav) :bool
+    (t t)
   (path :string)
-  (spec (:pointer (:struct audio-spec)))
-  (buf (:pointer (:pointer :uint8)))
-  (len (:pointer :uint32)))
+  (spec (:pointer (:struct audio-spec)) :direction :intput)
+  (buf (:pointer (:pointer :uint8)) :direction :intput :bind-count len)
+  (len (:pointer :uint32) :bind-val buf))
 
-(defexport-fun "SDL_MixAudio" :bool
-  (dst (:pointer :uint8))
-  (src (:pointer :uint8))
+(defwrap-fun "SDL_MixAudio" :bool
+    (t t)
+  (dst (:pointer :uint8) :direction :intput)
+  (src (:pointer :uint8) :direction :intput)
   (fmt audio-format)
   (len :uint32)
   (volume :float))
 
+;; todo
 (defexport-fun "SDL_ConvertAudioSamples" :bool
   (src-spec (:pointer (:struct audio-spec)))
   (src-data (:pointer :uint8))

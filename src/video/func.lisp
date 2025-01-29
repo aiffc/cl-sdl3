@@ -20,13 +20,15 @@
 (defexport-fun "SDL_GetDisplayName" :string
   (id display-id))
 
-(defexport-fun "SDL_GetDisplayBounds" :bool
+(defwrap-fun "SDL_GetDisplayBounds" :bool
+    (t t)
   (id display-id)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_GetDisplayUsableBounds" :bool
+(defwrap-fun "SDL_GetDisplayUsableBounds" :bool
+    (t t)
   (id display-id)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_GetNaturalDisplayOrientation" display-operation
   (id display-id))
@@ -37,29 +39,35 @@
 (defexport-fun "SDL_GetDisplayContentScale" :float
   (id display-id))
 
+;; todo
 (defexport-fun "SDL_GetFullscreenDisplayModes" (:pointer (:pointer (:struct display-mode)))
   (id display-id)
   (count (:pointer :int)))
 
-(defexport-fun "SDL_GetClosestFullscreenDisplayMode" :bool
+(defwrap-fun "SDL_GetClosestFullscreenDisplayMode" :bool
+    (t t)
   (id display-id)
   (w :int)
   (h :int)
   (refresh-rate :float)
   (include-high-density-modes :bool)
-  (closest (:pointer (:struct display-mode))))
+  (closest (:pointer (:struct display-mode)) :direction :output))
 
-(defexport-fun "SDL_GetDesktopDisplayMode" (:pointer (:struct display-mode))
+(defwrap-fun "SDL_GetDesktopDisplayMode" (:pointer (:struct display-mode))
+    (t t t)
   (id display-id))
 
-(defexport-fun "SDL_GetCurrentDisplayMode" (:pointer (:struct display-mode))
+(defwrap-fun "SDL_GetCurrentDisplayMode" (:pointer (:struct display-mode))
+    (t t t)
   (id display-id))
 
-(defexport-fun "SDL_GetDisplayForPoint" display-id
-  (point (:pointer (:struct point))))
+(defwrap-fun "SDL_GetDisplayForPoint" display-id
+    (t t)
+  (point (:pointer (:struct point)) :direction :output))
 
-(defexport-fun "SDL_GetDisplayForRect" display-id
-  (rect (:pointer (:struct rect))))
+(defwrap-fun "SDL_GetDisplayForRect" display-id
+    (t t)
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_GetDisplayForWindow" display-id
   (window :pointer))
@@ -81,8 +89,9 @@
 (defexport-fun "SDL_GetWindowPixelFormat" pixel-format
   (window :pointer))
 
-(defexport-fun "SDL_GetWindows" (:pointer :pointer)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetWindows" (:pointer :pointer)
+    (t t)
+  (count (:pointer :int) :ret-count :pointer))
 
 (defexport-fun "SDL_CreateWindow" :pointer
   (title :string)
@@ -132,24 +141,27 @@
   (x :int)
   (y :int))
 
-(defexport-fun "SDL_GetWindowPosition" :bool
+(defwrap-fun "SDL_GetWindowPosition" :bool
+    (t t)
   (window :pointer)
-  (x (:pointer :int))
-  (y (:pointer :int)))
+  (x (:pointer :int) :direction :output)
+  (y (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_SetWindowSize" :bool
   (window :pointer)
   (w :int)
   (h :int))
 
-(defexport-fun "SDL_GetWindowSize" :bool
+(defwrap-fun "SDL_GetWindowSize" :bool
+    (t t)
   (window :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
-(defexport-fun "SDL_GetWindowSafeArea" :bool
+(defwrap-fun "SDL_GetWindowSafeArea" :bool
+    (t t)
   (window :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :output))
 
 (defexport-fun "SDL_SetWindowAspectRatio" :bool
   (window :pointer)
@@ -161,37 +173,39 @@
   (min (:pointer :float))
   (max (:pointer :float)))
 
-(defexport-fun "SDL_GetWindowBordersSize" :bool
+(defwrap-fun "SDL_GetWindowBordersSize" :bool
   (window :pointer)
-  (top (:pointer :int))
-  (left (:pointer :int))
-  (bottom (:pointer :int))
-  (right (:pointer :int)))
+  (top (:pointer :int) :direction :output)
+  (left (:pointer :int) :direction :output)
+  (bottom (:pointer :int) :direction :output)
+  (right (:pointer :int) :direction :output))
 
-(defexport-fun "SDL_GetWindowSizeInPixels" :bool
+(defwrap-fun "SDL_GetWindowSizeInPixels" :bool
   (window :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_SetWindowMinimumSize" :bool
   (window :pointer)
   (w :int)
   (h :int))
 
-(defexport-fun "SDL_GetWindowMinimumSize" :bool
+(defwrap-fun "SDL_GetWindowMinimumSize" :bool
+    (t t)
   (window :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_SetWindowMaximumSize" :bool
   (window :pointer)
   (w :int)
   (h :int))
 
-(defexport-fun "SDL_GetWindowMaximumSize" :bool
+(defwrap-fun "SDL_GetWindowMaximumSize" :bool
+    (t t)
   (window :pointer)
-  (w (:pointer :int))
-  (h (:pointer :int)))
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_SetWindowBordered" :bool
   (window :pointer)
@@ -240,17 +254,19 @@
   (window :pointer)
   (vsync :int))
 
-(defexport-fun "SDL_GetWindowSurfaceVSync" :bool
+(defwrap-fun "SDL_GetWindowSurfaceVSync" :bool
+    (t t)
   (window :pointer)
-  (vsync (:pointer :int)))
+  (vsync (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_UpdateWindowSurface" :bool
   (window :pointer))
 
-(defexport-fun "SDL_UpdateWindowSurfaceRects" :bool
+(defwrap-fun "SDL_UpdateWindowSurfaceRects" :bool
+    (t t)
   (window :pointer)
-  (rect (:pointer (:struct rect)))
-  (numrects :int))
+  (rect (:pointer (:struct rect)) :direction :input :bind-count numrects)
+  (numrects :int :bind-val rect))
 
 (defexport-fun "SDL_DestroyWindowSurface" :bool
   (window :pointer))
@@ -271,11 +287,13 @@
 
 (defexport-fun "SDL_GetGrabbedWindow" :pointer)
 
-(defexport-fun "SDL_SetWindowMouseRect" :bool
+(defwrap-fun "SDL_SetWindowMouseRect" :bool
+    (t t)
   (window :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_GetWindowMouseRect" (:pointer (:struct rect))
+(defwrap-fun "SDL_GetWindowMouseRect" (:pointer (:struct rect))
+    (t t t)
   (window :pointer))
 
 (defexport-fun "SDL_SetWindowOpacity" :bool
@@ -344,9 +362,10 @@
   (attr glattr)
   (value :int))
 
-(defexport-fun ("SDL_GL_GetAttribute" gl-get-attribute) :bool
+(defwrap-fun ("SDL_GL_GetAttribute" gl-get-attribute) :bool
+    (t t)
   (attr glattr)
-  (value (:pointer :int)))
+  (value (:pointer :int) :direction :output))
 
 (defexport-fun ("SDL_GL_CreateContext" gl-create-context) :pointer
   (window :pointer))
@@ -375,8 +394,9 @@
 (defexport-fun ("SDL_GL_SetSwapInterval" gl-set-interval) :bool
   (interval :int))
 
-(defexport-fun ("SDL_GL_GetSwapInterval" gl-get-swap-interval) :bool
-  (interval (:pointer :int)))
+(defwrap-fun ("SDL_GL_GetSwapInterval" gl-get-swap-interval) :bool
+    (t t)
+  (interval (:pointer :int) :direction :output))
 
 (defexport-fun ("SDL_GL_SwapWindow" gl-swap-window) :bool
   (window :pointer))

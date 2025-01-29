@@ -1,10 +1,10 @@
 (in-package :sdl3)
 
-(defexport-fun ("SDL_AsyncIOFromFile" async-io-from-file) :pointer
+(defexport-fun "SDL_AsyncIOFromFile" :pointer
   (file :string)
   (mode :string))
 
-(defexport-fun ("SDL_GetAsyncIOSize" get-async-io-size) :int64
+(defexport-fun "SDL_GetAsyncIOSize" :int64
   (asyncio :pointer))
 
 (defexport-fun ("SDL_ReadAsyncIO" read-async-io) :bool
@@ -29,21 +29,23 @@
   (queue :pointer)
   (userdata :pointer))
 
-(defexport-fun ("SDL_CreateAsyncIOQueue" create-async-io-queue) :pointer)
+(defexport-fun "SDL_CreateAsyncIOQueue" :pointer)
 
-(defexport-fun ("SDL_DestroyAsyncIOQueue" destroy-async-io-queue) :void
+(defexport-fun "SDL_DestroyAsyncIOQueue" :void
   (queue :pointer))
 
-(defexport-fun ("SDL_GetAsyncIOResult" get-async-io-result) :bool
+(defwrap-fun "SDL_GetAsyncIOResult"  :bool
+    (t t)
   (queue :pointer)
-  (outcome (:pointer (:struct async-io-outcome))))
+  (outcome (:pointer (:struct async-io-outcome)) :direction :output))
 
-(defexport-fun ("SDL_WaitAsyncIOResult" wait-async-io-result) :bool
+(defwrap-fun "SDL_WaitAsyncIOResult"  :bool
+    (t t)
   (queue :pointer)
-  (outcome (:pointer (:struct async-io-outcome)))
+  (outcome (:pointer (:struct async-io-outcome)) :direction :output)
   (timeout :int32))
 
-(defexport-fun ("SDL_SignalAsyncIOQueue" signal-async-io-queue) :void
+(defexport-fun "SDL_SignalAsyncIOQueue" :void
   (queue :pointer))
 
 (defexport-fun "SDL_LoadFileAsync" :bool
