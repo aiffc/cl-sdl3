@@ -37,6 +37,10 @@ TO TEST
   (sdl3.render.test::do-rectangles-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/06-textures/
   (sdl3.render.test::do-texture-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/07-streaming-textures/
+  (sdl3.render.test::do-stream-texture-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/08-rotating-textures/
+  (sdl3.render.test::do-rotating-texture-demo)
 #+END_SRC
 
 ** TODO

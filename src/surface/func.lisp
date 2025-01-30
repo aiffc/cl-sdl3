@@ -42,10 +42,10 @@
 (defexport-fun "SDL_SurfaceHasAlternateImages" :bool
   (surface (:pointer (:struct surface))))
 
-(defwrap-fun "SDL_GetSurfaceImages" (:pointer (:struct surface))
+(defwrap-fun "SDL_GetSurfaceImages" (:pointer (:pointer (:struct surface)))
     (t t)
   (surface (:pointer (:struct surface)))
-  (count (:pointer :int) :ret-count '(:struct surface)))
+  (count (:pointer :int) :ret-count '(:pointer (:struct surface))))
 
 (defexport-fun "SDL_RemoveSurfaceAlternateImages" :void
   (surface (:pointer (:struct surface))))
@@ -136,20 +136,20 @@
   (surface (:pointer (:struct surface)))
   (flip flip-mode))
 
-(defexport-fun "SDL_DuplicateSurface" :pointer
+(defexport-fun "SDL_DuplicateSurface" (:pointer (:struct surface))
   (surface (:pointer (:struct surface))))
 
-(defexport-fun "SDL_ScaleSurface" :pointer
+(defexport-fun "SDL_ScaleSurface" (:pointer (:struct surface))
   (surface (:pointer (:struct surface)))
   (width :int)
   (height :int)
   (mode scale-mode))
 
-(defexport-fun "SDL_ConvertSurface" :pointer
+(defexport-fun "SDL_ConvertSurface" (:pointer (:struct surface))
   (surface (:pointer (:struct surface)))
   (fmt pixel-format))
 
-(defexport-fun "SDL_ConvertSurfaceAndColorspace" :pointer
+(defexport-fun "SDL_ConvertSurfaceAndColorspace" (:pointer (:struct surface))
   (surface (:pointer (:struct surface)))
   (fmt pixel-format)
   (palette (:pointer (:struct palette)))

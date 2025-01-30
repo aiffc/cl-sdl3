@@ -80,10 +80,13 @@
   :continue)
 
 (sdl3:def-app-quit 06-quit (result)
-  (declare (ignore result)))
+  (declare (ignore result))
+  (sdl3:destroy-texture *texture-handler*))
 
 (defun do-texture-demo ()
   (setf *window-handle* nil
 	*renderer-handler* nil
-	*texture-handler* nil)
+	*texture-handler* nil
+	*texture-width* 0
+	*texture-height* 0)
   (sdl3:enter-app-main-callbacks '06-init '06-iterate '06-event '06-quit))

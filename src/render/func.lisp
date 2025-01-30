@@ -166,7 +166,7 @@
     (t t)
   (texture (:pointer (:struct texture)))
   (rect (:pointer (:struct rect)) :direction :input)
-  (psurface (:pointer (:pointer (:struct surface))) :direction :input))
+  (psurface (:pointer (:pointer (:struct surface))) :direction :output))
 
 (defexport-fun "SDL_UnlockTexture" :void
   (texture (:pointer (:struct texture))))
@@ -234,7 +234,7 @@
   (rect (:pointer (:struct rect))))
 
 (defwrap-fun "SDL_GetRenderClipRect" :bool
-  (t t)
+    (t t)
   (renderer :pointer)
   (rect (:pointer (:struct rect)) :direction :output))
 
@@ -372,7 +372,7 @@
   (scale :double)
   (dst (:pointer (:struct frect)) :direction :input))
 (defwrap-fun "SDL_RenderTexture9Grid" :bool
-  (renderer :pointer)
+    (renderer :pointer)
   (texture (:pointer (:struct texture)))
   (left-widht :float)
   (right-widht :float)
@@ -437,7 +437,7 @@
   (vsync :int))
 (defwrap-fun "SDL_GetRenderVSync" :bool
     (t t)
-    (renderer :pointer)
+  (renderer :pointer)
   (vsync (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_RenderDebugText" :bool

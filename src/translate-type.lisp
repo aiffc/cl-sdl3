@@ -1,9 +1,26 @@
 (in-package :sdl3)
 
+(defun type-is-struct-p (lst)
+  (and (listp (second lst))
+       (eql (first (second lst)) :struct)))
 
-(defun gen-map (lst1 lst2)
+(defun get-struct-slots (args)
+  (remove nil (mapcar (lambda (arg)
+			(when (type-is-struct-p arg)
+			  (list (first arg)      ;; name
+				(second arg))))  ;; type
+		      args)))
+
+(defun gen-map (lst1 lst2 ptrlst ctype)
   (mapcar (lambda (a b)
-	    (list 'setf a b))
+	    (let ((sptrp (find a ptrlst :key 'first)))
+	      (if sptrp
+		  `(setf (cffi:mem-ref (cffi:foreign-slot-pointer ptr
+								  '(:struct ,ctype)
+								  ',a)
+				       ',(second sptrp))
+			 ,b)
+		  `(setf ,a ,b))))
 	  lst1 lst2))
 
 (defun gen-key-map (lst1 lst2)
@@ -13,11 +30,16 @@
 		 lst1
 		 lst2)))
 
-(defun generate-translate-to-foreign (ctype c-type cslots lslots)
-  (let ((setfmt (gen-map cslots lslots)))
+(defun generate-translate-to-foreign (ctype c-type cslots lslots ptrlst)
+  (let* ((setfmt (gen-map cslots lslots ptrlst ctype))
+	 (ptrslots (mapcar 'first ptrlst))
+	 (new-cslots (set-difference cslots ptrslots)))
     `(defmethod cffi:translate-into-foreign-memory (value (type ,c-type) ptr)
-       (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
-	     (with-slots ,lslots value
+       ,(if new-cslots
+	    `(cffi:with-foreign-slots (,new-cslots ptr (:struct ,ctype))
+	       (with-slots ,lslots value
+		 ,@setfmt))
+	    `(with-slots ,lslots value
 	       ,@setfmt)))))
 
 (defun generate-translate-from-foreign (ctype c-type cslots lslots)
@@ -26,18 +48,18 @@
        (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
 	 (make-instance ',ctype ,@keymap)))))
 
-(defun generate-expand-to-foreign (ctype c-type cslots lslots)
-  (let ((setfmt (gen-map cslots lslots)))
-    `(defmethod cffi:expand-into-foreign-memory (value (type ,c-type) ptr)
-       (quote (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
-		(with-slots ,lslots value
-		  ,@setfmt))))))
+;; (defun generate-expand-to-foreign (ctype c-type cslots lslots)
+;;   (let ((setfmt (gen-map cslots lslots)))
+;;     `(defmethod cffi:expand-into-foreign-memory (value (type ,c-type) ptr)
+;;        (quote (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
+;; 		(with-slots ,lslots value
+;; 		  ,@setfmt))))))
 
-(defun generate-expand-from-foreign (ctype c-type cslots lslots)
-  (let ((keymap (gen-key-map lslots cslots)))
-    `(defmethod cffi:expand-from-foreign (ptr (type ,c-type))
-       `(cffi:with-foreign-slots (cslots  ,ptr (:struct ctype))
-	  (make-instance ',,ctype ,,@keymap)))))
+;; (defun generate-expand-from-foreign (ctype c-type cslots lslots)
+;;   (let ((keymap (gen-key-map lslots cslots)))
+;;     `(defmethod cffi:expand-from-foreign (ptr (type ,c-type))
+;;        `(cffi:with-foreign-slots (cslots  ,ptr (:struct ctype))
+;; 	  (make-instance ',,ctype ,,@keymap)))))
 
 
 (defmacro deflsp-type (name &body body)
@@ -46,11 +68,12 @@
 			     "all class function add %"
 			     (create-symbol '% s))
 			   cslots))
-	 (translate-type (create-symbol 'c- name)))
+	 (translate-type (create-symbol 'c- name))
+	 (ptrslots (get-struct-slots body)))
     `(eval-when (:compile-toplevel :load-toplevel :execute)
        (defclass-std:defclass/std ,name () (,lsp-funs))
        (cffi:defcstruct (,name :class ,translate-type) ,@body)
-       ,(generate-translate-to-foreign name translate-type cslots lsp-funs)
+       ,(generate-translate-to-foreign name translate-type cslots lsp-funs ptrslots)
        ,(generate-translate-from-foreign name translate-type cslots lsp-funs)
        ;; todo expand
        ;; ,(generate-expand-to-foreign name translate-type cslots lsp-funs)

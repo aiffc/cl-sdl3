@@ -33,9 +33,10 @@
 (defexport-fun "SDL_DestroyPalette" :void
   (palette (:pointer (:struct palette))))
 
-(defexport-fun ("SDL_MapRGB" map-rgb) :uint32
+(defwrap-fun ("SDL_MapRGB" map-rgb) :uint32
+    (t t)
   (fmt (:pointer (:struct pixel-format-detail)))
-  (palette (:pointer (:struct palette)))
+  (palette (:pointer (:struct palette)) :direction :input)
   (r :uint8)
   (g :uint8)
   (b :uint8))

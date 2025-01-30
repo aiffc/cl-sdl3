@@ -46,20 +46,23 @@
 		   lsp-name))))
 
 (defun parse-ctype (tp)
-  "parse pointer"
+  "parse pointer type"
   (cond ((equal tp '(:pointer :pointer)) `(quote ,tp))
 	((and (listp (second tp))
+	      (eql (first (second tp)) :pointer))
+	 `(quote ,tp))
+	((and (listp (second tp))
 	      (or (eql (first (second tp)) :struct)
-		  (eql (first (second tp)) :union)
-		  (eql (first (second tp)) :pointer)))
+		  (eql (first (second tp)) :union)))
 	 `(quote ,(second tp)))
 	((keywordp (second tp)) (second tp))
 	(t  `(quote ,(second tp)))))
 
 (defun get-input-map (lst)
-  "function use to get input arguments in lst"
+  "function use to get input arguments in lst
+get args list like (foo :int :direction :input)"
   (remove 'nil 
-	  (mapcar #'(lambda (arg)
+	  (mapcar (lambda (arg)
 		      (if (eql (getf arg :direction) :input)
 			  (remove 'nil
 				  (list (create-symbol '% (first arg)) 
@@ -68,41 +71,53 @@
 			  nil))
 		  lst)))
 (defun get-output-map (lst)
-  "function use to get input arguments in lst"
+  "function use to get input arguments in lst
+get args list like (foo :int :direction :output)"
   (remove 'nil 
-	  (mapcar #'(lambda (arg)
+	  (mapcar (lambda (arg)
 		      (if (eql (getf arg :direction) :output)
 			  (list (first arg) (parse-ctype (second arg)))
 			  nil))
 		  lst)))
 (defun get-export-fun-args (args ptr-args)
-  "remove all ptr-args from args"
+  "function use to generate wrap function's arguments list"
   (if (null ptr-args)
       args
       (reverse (set-difference args ptr-args))))
 
 (defun translate-output-map (lst)
-  (mapcar #'(lambda (val
+  "function use to translate output values from c function to lisp"
+  (mapcar (lambda (val
 		     &aux (tp (second val)))
 	      `(cffi:mem-ref ,(first val)
-			     ,(if (equal tp ''(:pointer :pointer)) 
-				  :pointer
-				  tp)))
+			     ,(cond ((equal tp ''(:pointer :pointer))
+				     :pointer)
+				    ((and (listp tp)
+					  (listp (second tp))
+					  (listp (second 
+						  (second tp)))
+					  (eql (first (second 
+						       (second tp)))
+					       :pointer))
+				     `(quote ,(second 
+					       (second tp))))
+				    (t tp))))
 	  lst))
 
 (defun get-input-args (lst)
   "function use to get input arguments in lst"
   (remove 'nil 
-	  (mapcar #'(lambda (arg)
+	  (mapcar (lambda (arg)
 		      (if (eql (getf arg :direction) :input)
 			  (first arg)
 			  nil))
 		  lst)))
 
 (defun generate-setf (input-map input-args)
+  "function use to auto generate set format from c to lisp"
   (when (/= (length input-map) (length  input-args))
     (error "input map and input args are not equal"))
-  (mapcar #'(lambda (im ia
+  (mapcar (lambda (im ia
 		     &aux (tp (cadadr im)))
 	      `(setf (cffi:mem-ref ,(first im) 
 				   ,(cond ((equal '(:pointer :pointer) tp) :pointer)
@@ -113,9 +128,10 @@
 	  input-args))
 
 (defun generate-multi-setf (input-map input-args)
+  "function use to auto generate set format from c to lisp with list"
   (when (/= (length input-map) (length  input-args))
     (error "input map and input args are not equal"))
-  (mapcar #'(lambda (im ia
+  (mapcar (lambda (im ia
 		     &aux (tp (second im)))
 	      (if (= (length im) 3) ;; if count is 3 it has count
 		  `(dotimes (i ,(first (last im)))
@@ -139,8 +155,9 @@
 	  input-args))
 
 (defun get-bind-let (args)
+  "get the argument from wraped function whitch should be list"
   (remove 'nil 
-	  (mapcar #'(lambda (arg &aux 
+	  (mapcar (lambda (arg &aux 
 				   (bind-v (getf arg :bind-val)))
 		      (when bind-v
 			`(,(first arg) (length ,bind-v))))
@@ -152,21 +169,22 @@
 		     return-ret
 		     ret
 		     translate-return)
-  (let* ((execute-fun-args (mapcar #'(lambda (arg)
-				       (if (eql (getf arg :direction) :input)
-					   (if (getf arg :bind-count)
-					       (first arg)
-					       `(if(null ,(first arg))
-						   (cffi:null-pointer)
-						   ,(create-symbol '% (first arg))))
-					   (first arg)))
+  "auto generate lisp function"
+  (let* ((execute-fun-args (mapcar (lambda (arg)
+				     (if (eql (getf arg :direction) :input)
+					 (if (getf arg :bind-count)
+					     (create-symbol '% (first arg))
+					     `(if (null ,(first arg))
+						  (cffi:null-pointer)
+						  ,(create-symbol '% (first arg))))
+					 (first arg)))
 				   args))
 	 (bind-let (get-bind-let args) )
 	 (input-map (get-input-map args))
 	 (input-args (get-input-args args))
 	 (output-map (get-output-map args))
 	 (output-ptrs (mapcar 'first output-map))
-	 (ret-lst (find-if #'(lambda (arg)
+	 (ret-lst (find-if (lambda (arg)
 			       (find :ret-count arg))
 			   args))
 	 (ret-count-val (first ret-lst))
@@ -177,7 +195,7 @@
 			      (list `(,ret-count-val :int))))) ;; usually count use int
 	 (export-fun-args (get-export-fun-args
 			   (remove 'nil
-				   (mapcar #'(lambda (arg)
+				   (mapcar (lambda (arg)
 					       (when (not (or (getf arg :bind-val)
 							      (getf arg :ret-count)))
 						 (first arg)))
@@ -203,7 +221,7 @@
 
 (defun gen-cffi-struct-body (body)
   "remove some custom args"
-  (mapcar #'(lambda (bd)
+  (mapcar (lambda (bd)
 	      (list (first bd) (second bd)))
 	  body))
 

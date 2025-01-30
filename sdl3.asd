@@ -34,13 +34,8 @@
 		 (:module "rect"
 		  :components
 		  ((:file "type")
-		   (:file "func")
-		   (:file "wrap")))
-		 (:module "keyboard"
-		  :components
-		  ((:file "type")
 		   (:file "func")))
-		 (:module "mouse"
+		 (:module "keyboard"
 		  :components
 		  ((:file "type")
 		   (:file "func")))
@@ -127,6 +122,10 @@
 		  :components
 		  ((:file "type")
 		   (:file "func")))
+		 (:module "mouse"
+		  :components
+		  ((:file "type")
+		   (:file "func")))
 		 (:module "camera"
 		  :components
 		  ((:file "type")
@@ -184,8 +183,7 @@
 		 (:module "render"
 		  :components
 		  ((:file "type")
-		   (:file "func")
-		   (:file "wrap")))
+		   (:file "func")))
 		 (:module "events"
 		  :components
 		  ((:file "type")
@@ -215,5 +213,7 @@
 		   (:file "03lines")
 		   (:file "04points")
 		   (:file "05rectangles")
-		   (:file "06texture"))))))
+		   (:file "06texture")
+		   (:file "07stream-texture")
+		   (:file "08rotating-textures"))))))
   :description "test function here")
