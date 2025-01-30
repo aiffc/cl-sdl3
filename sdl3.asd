@@ -213,5 +213,7 @@
 		   (:file "01clear")
 		   (:file "02primitives")
 		   (:file "03lines")
-		   (:file "04points"))))))
+		   (:file "04points")
+		   (:file "05rectangles")
+		   (:file "06texture"))))))
   :description "test function here")

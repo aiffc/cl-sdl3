@@ -33,6 +33,10 @@ TO TEST
   (sdl3.render.test::do-lines-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/04-points/
   (sdl3.render.test::do-points-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/05-rectangles/
+  (sdl3.render.test::do-rectangles-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/06-textures/
+  (sdl3.render.test::do-texture-demo)
 #+END_SRC
 
 ** TODO

@@ -77,7 +77,7 @@
 ;; SDL_PIXELFORMAT_XBGR32
 
 (deflsp-type pixel-format-detail
-  (fmt pixel-format)
+  (format pixel-format)
   (bits-per-pixel :uint8)
   (bytes-per-pixel :uint8)
   (padding :uint8 :count 2)

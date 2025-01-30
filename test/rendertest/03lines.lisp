@@ -1,8 +1,5 @@
 (in-package :sdl3.render.test)
 
-(defparameter *window-handle* nil)
-(defparameter *renderer-handler* nil)
-
 (sdl3:def-app-init 03-init (argc argv)
   (declare (ignore argc argv))
   (sdl3:set-app-metadata "Example Renderer Lines" "1.0" "Example Renderer Lines")
@@ -10,7 +7,7 @@
     (format t "~a~%" (sdl3:get-error))
     (return-from 03-init :failure))
   (multiple-value-bind (rst window renderer)
-      (sdl3:create-window-and-renderer "examples/renderer/clear" 640 480 :resizable)
+      (sdl3:create-window-and-renderer "examples/renderer/clear" +window-width+ +window-height+ :resizable)
     (if (not rst)
 	(progn 
 	  (format t "~a~%" (sdl3:get-error))

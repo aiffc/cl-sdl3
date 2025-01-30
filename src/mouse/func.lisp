@@ -50,7 +50,7 @@
   (y :int))
 
 (defexport-fun "SDL_CreateColorCursor" :pointer
-  (surface :pointer)
+  (surface (:pointer (:struct surface)))
   (x :int)
   (y :int))
 

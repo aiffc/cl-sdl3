@@ -132,9 +132,10 @@
 (defexport-fun "SDL_GetWindowTitle" :string
   (window :pointer))
 
-(defexport-fun "SDL_SetWindowIcon" :bool
+(defwrap-fun "SDL_SetWindowIcon" :bool
+    (t t)
   (window :pointer)
-  (icon :pointer))
+  (icon (:pointer (:struct surface)) :direction :input))
 
 (defexport-fun "SDL_SetWindowPosition" :bool
   (window :pointer)
@@ -247,7 +248,8 @@
 (defexport-fun "SDL_WindowHasSurface" :bool
   (window :pointer))
 
-(defexport-fun "SDL_GetWindowSurface" :pointer
+(defwrap-fun "SDL_GetWindowSurface" (:pointer (:struct surface))
+    (t t t)
   (window :pointer))
 
 (defexport-fun "SDL_SetWindowSurfaceVSync" :bool
@@ -325,9 +327,10 @@
   (callback :pointer)
   (data :pointer))
 
-(defexport-fun "SDL_SetWindowShape" :bool
+(defwrap-fun "SDL_SetWindowShape" :bool
+    (t t)
   (window :pointer)
-  (shape :pointer))
+  (shape (:pointer (:struct surface)) :direction :input))
 
 (defexport-fun "SDL_FlashWindow" :bool
   (window :pointer)

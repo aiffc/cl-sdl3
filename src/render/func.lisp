@@ -22,7 +22,7 @@
   (id properties-id))
 
 (defexport-fun "SDL_CreateSoftwareRenderer" :pointer
-  (surface :pointer))
+  (surface (:pointer (:struct surface))))
 
 (defexport-fun "SDL_GetRenderer" :pointer
   (window :pointer))
@@ -56,7 +56,7 @@
 
 (defexport-fun "SDL_CreateTextureFromSurface" (:pointer (:struct texture))
   (render :pointer)
-  (surface :pointer))
+  (surface (:pointer (:struct surface))))
 
 (defexport-fun "SDL_CreateTextureWithProperties" (:pointer (:struct texture))
   (render :pointer)
@@ -166,7 +166,7 @@
     (t t)
   (texture (:pointer (:struct texture)))
   (rect (:pointer (:struct rect)) :direction :input)
-  (psurface (:pointer :pointer) :direction :input))
+  (psurface (:pointer (:pointer (:struct surface))) :direction :input))
 
 (defexport-fun "SDL_UnlockTexture" :void
   (texture (:pointer (:struct texture))))
@@ -404,9 +404,10 @@
   (num-indices :int)
   (size-indices :int))
 
-(defexport-fun "SDL_RenderReadPixels" :pointer
+(defwrap-fun "SDL_RenderReadPixels" (:pointer (:struct surface))
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :input))
 
 (defexport-fun "SDL_RenderPresent" :bool
   (renderer :pointer))

@@ -1,7 +1,5 @@
 (in-package :sdl3.render.test)
 
-(defparameter *window-handle* nil)
-(defparameter *renderer-handler* nil)
 (defparameter *02pointes* (make-array 500
 				    :initial-contents
 				    (loop :repeat 500
@@ -18,7 +16,7 @@
     (return-from 02-init :failure))
   
   (multiple-value-bind (rst window renderer)
-      (sdl3:create-window-and-renderer "com.example.renderer-clear" 640 480 :resizable)
+      (sdl3:create-window-and-renderer "com.example.renderer-clear" +window-width+ +window-height+ :resizable)
     (if (not rst)
 	(progn 
 	  (format t "~a~%" (sdl3:get-error))

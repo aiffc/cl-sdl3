@@ -17,8 +17,8 @@
   (let ((setfmt (gen-map cslots lslots)))
     `(defmethod cffi:translate-into-foreign-memory (value (type ,c-type) ptr)
        (cffi:with-foreign-slots (,cslots ptr (:struct ,ctype))
-	 (with-slots ,lslots value
-	   ,@setfmt)))))
+	     (with-slots ,lslots value
+	       ,@setfmt)))))
 
 (defun generate-translate-from-foreign (ctype c-type cslots lslots)
   (let ((keymap (gen-key-map lslots cslots)))

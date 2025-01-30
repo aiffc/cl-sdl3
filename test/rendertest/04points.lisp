@@ -1,11 +1,7 @@
 (in-package :sdl3.render.test)
 
-(defparameter *window-handle* nil)
-(defparameter *renderer-handler* nil)
 (defparameter *last-time* 0)
 
-(defconstant +window-width+ 640)
-(defconstant +window-height+ 480)
 (defconstant +num-points+ 500)
 (defconstant +min-pixels-per-second+ 30)
 (defconstant +max-pixels-per-second+ 60)
