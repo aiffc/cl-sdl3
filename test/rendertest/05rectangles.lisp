@@ -1,5 +1,5 @@
 (in-package :sdl3.render.test)
-`
+
 (sdl3:def-app-init 05-init (argc argv)
   (declare (ignore argc argv))
   (sdl3:set-app-metadata "Example Renderer Rectangles" "1.0" "com.example.renderer-rectangles")
