@@ -222,5 +222,9 @@
 		   (:file "14viewport")
 		   (:file "15cliprect")
 		   (:file "17read-pixel")
-		   (:file "18debug-text"))))))
+		   (:file "18debug-text")))
+		 (:module "event"
+		  :components
+		  ((:file "package")
+		   (:file "keyboard"))))))
   :description "test function here")

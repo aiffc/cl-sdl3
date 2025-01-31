@@ -48,14 +48,13 @@ appstate an optional pointer, provided by the app in SDL_AppInit.
      ,@body))
 (export 'def-app-iterate)
 
-(defmacro def-app-event (name (event-type) &body body)
+(defmacro def-app-event (name (event-type pevent) &body body)
   "ret[app-result]
 app-state -> an optional pointer, provided by the app in SDL_AppInit.
 event -> the new event for the app to examine.
 event-type -> sdl event
 "
-  (let ((pevent (gensym))
-	(event-type-val (gensym)))
+  (let ((event-type-val (gensym)))
     `(cffi:defcallback ,name app-result ((appstate :pointer) (,pevent (:pointer (:union event))))
        (declare (ignore appstate))
        (cffi:with-foreign-slots (((,event-type-val type))

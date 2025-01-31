@@ -71,7 +71,7 @@
   
   :continue)
 
-(sdl3:def-app-event 06-event (event-type)
+(sdl3:def-app-event 06-event (event-type pevent)
   (when (eql event-type :quit)
     (return-from 06-event :success))
   :continue)

@@ -533,6 +533,7 @@
   (drop (:struct drop-event))
   (clipboard (:struct clipboard-event))
   (padding :uint8 :count 128))
+(export 'event)
 
 (cffi:defcenum event-action 
   :addevent

@@ -56,7 +56,7 @@
     (sdl3:render-present *renderer-handler*))
   :continue)
 
-(sdl3:def-app-event 08-event (event-type)
+(sdl3:def-app-event 08-event (event-type pevent)
   (when (eql event-type :quit)
     (return-from 08-event :success))
   :continue)

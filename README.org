@@ -25,6 +25,7 @@ TO TEST
 *** runtest
 #+BEGIN_SRC lisp
   (ql:quickload :sdl3/tests)
+  ;; do render test
   ;; demo from https://examples.libsdl.org/SDL3/renderer/01-clear/
   (sdl3.render.test::do-clear-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/02-primitives/
@@ -55,6 +56,8 @@ TO TEST
   (sdl3.render.test::do-read-pixel-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/18-debug-text/
   (sdl3.render.test::do-debug-text-demo)
+  ;; do event test
+  (sdl3.event.test::do-keyboard-demo)
 #+END_SRC
 
 ** TODO
