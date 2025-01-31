@@ -1,8 +1,6 @@
 (in-package :sdl3.render.test)
 
 (defconstant +texture-size+ 150)
-(defparameter *texture-width* 0)
-(defparameter *texture-height* 0)
 
 (sdl3:def-app-init 07-init (argc argv)
   (declare (ignore argc argv))
@@ -73,7 +71,5 @@
   (sdl3:destroy-texture *texture-handler*))
 
 (defun do-stream-texture-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil
-	*texture-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '07-init '07-iterate '07-event '07-quit))

@@ -1,7 +1,5 @@
 (in-package :sdl3.render.test)
 
-(defparameter *last-time* 0)
-
 (defconstant +num-points+ 500)
 (defconstant +min-pixels-per-second+ 30)
 (defconstant +max-pixels-per-second+ 60)
@@ -86,6 +84,5 @@
   (declare (ignore result)))
 
 (defun do-points-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '04-init '04-iterate '04-event '04-quit))

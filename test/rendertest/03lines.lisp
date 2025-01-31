@@ -82,6 +82,5 @@
   (declare (ignore result)))
 
 (defun do-lines-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '03-init '03-iterate '03-event '03-quit))

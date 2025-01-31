@@ -62,6 +62,5 @@
   (declare (ignore result)))
 
 (defun do-primitives-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '02-init '02-iterate '02-event '02-quit))

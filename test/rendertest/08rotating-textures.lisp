@@ -1,8 +1,4 @@
-
 (in-package :sdl3.render.test)
-
-(defparameter *texture-width* 0)
-(defparameter *texture-height* 0)
 
 (sdl3:def-app-init 08-init (argc argv)
   (declare (ignore argc argv))
@@ -70,11 +66,7 @@
   (sdl3:destroy-texture *texture-handler*))
 
 (defun do-rotating-texture-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil
-	*texture-handler* nil
-	*texture-width* 0
-	*texture-height* 0)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '08-init '08-iterate '08-event '08-quit))
 
 

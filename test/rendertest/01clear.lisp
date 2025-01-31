@@ -39,6 +39,5 @@
   (declare (ignore result)))
 
 (defun do-clear-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '01-init '01-iterate '01-event '01-quit))

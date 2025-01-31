@@ -41,6 +41,20 @@ TO TEST
   (sdl3.render.test::do-stream-texture-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/08-rotating-textures/
   (sdl3.render.test::do-rotating-texture-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/09-scaling-textures/
+  (sdl3.render.test::do-scaling-texture-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/10-geometry/
+  (sdl3.render.test::do-geometry-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/11-color-mods/
+  (sdl3.render.test::do-color-mode-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/14-viewport/
+  (sdl3.render.test::do-viewport-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/15-cliprect/
+  (sdl3.render.test::do-cliprect-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/17-read-pixels/
+  (sdl3.render.test::do-read-pixel-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/renderer/18-debug-text/
+  (sdl3.render.test::do-debug-text-demo)
 #+END_SRC
 
 ** TODO

@@ -1,6 +1,5 @@
 (in-package :sdl3.render.test)
-
-
+`
 (sdl3:def-app-init 05-init (argc argv)
   (declare (ignore argc argv))
   (sdl3:set-app-metadata "Example Renderer Rectangles" "1.0" "com.example.renderer-rectangles")
@@ -73,6 +72,5 @@
   (declare (ignore result)))
 
 (defun do-rectangles-demo ()
-  (setf *window-handle* nil
-	*renderer-handler* nil)
+  (renderer-init)
   (sdl3:enter-app-main-callbacks '05-init '05-iterate '05-event '05-quit))

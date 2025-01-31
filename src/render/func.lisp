@@ -149,7 +149,7 @@
 (defwrap-fun "SDL_UpdateNVTexture" :bool
     (t t)
   (texture (:pointer (:struct texture)))
-  (rect (:pointer (:struct rect)))
+  (rect (:pointer (:struct rect)) :direction :input)
   (yplane (:pointer :uint8) :direction :input :bind-count ypitch)
   (ypitch :int :bind-val yplane)
   (uvplane (:pointer :uint8) :direction :input :bind-count uvpitch)
@@ -212,9 +212,10 @@
   (window-x (:pointer :float) :direction :output)
   (window-y (:pointer :float) :direction :output))
 
-(defexport-fun "SDL_SetRenderViewport" :bool
+(defwrap-fun "SDL_SetRenderViewport" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :input))
 
 (defwrap-fun "SDL_GetRenderViewport" :bool
     (t t)
@@ -229,9 +230,10 @@
   (renderer :pointer)
   (rect (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_SetRenderClipRect" :bool
+(defwrap-fun "SDL_SetRenderClipRect" :bool
+    (t t)
   (renderer :pointer)
-  (rect (:pointer (:struct rect))))
+  (rect (:pointer (:struct rect)) :direction :input))
 
 (defwrap-fun "SDL_GetRenderClipRect" :bool
     (t t)
