@@ -58,7 +58,15 @@ TO TEST
   (sdl3.render.test::do-debug-text-demo)
   ;; do event test
   (sdl3.event.test::do-keyboard-demo)
-#+END_SRC
+  (sdl3.event.test::do-mouse-demo)
+  ;; do audio demo
+  ;; demo from https://examples.libsdl.org/SDL3/audio/01-simple-playback/
+  (sdl3.demo.audio::do-simple-playback-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/audio/02-simple-playback-callback/
+  (sdl3.demo.audio::do-simple-playback-callback-demo)
+  ;; demo from https://examples.libsdl.org/SDL3/audio/03-load-wav/
+  (sdl3.demo.audio::do-load-wav-demo)
+  #+END_SRC
 
 ** TODO
 add more test and demo

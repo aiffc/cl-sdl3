@@ -1,0 +1,56 @@
+(in-package :sdl3.demo.audio)
+
+(defparameter *window-handle* nil)
+(defparameter *renderer-handler* nil)
+(defparameter *audio-stream* nil)
+(defparameter *current-sine-stream* 0)
+(defparameter *wav-data* (cffi:null-pointer))
+(defparameter *wav-data-len* 0)
+
+(sdl3:def-app-init load-wav-init (argc argv)
+  (declare (ignore argc argv))
+  (sdl3:set-app-metadata "Example Audio Load Wave" "1.0" "com.example.audio-load-wav")
+  (when (not (sdl3:init '(:video :audio)))
+    (format t "~a~%" (sdl3:get-error))
+    (return-from load-wav-init :failure))
+  (multiple-value-bind (rst window renderer)
+      (sdl3:create-window-and-renderer "examples/audio/load-wav" 900 900 :resizable)
+    (if (not rst)
+	(progn 
+	  (format t "~a~%" (sdl3:get-error))
+	  (return-from load-wav-init :failure))
+	(setf *window-handle* window
+	      *renderer-handler* renderer)))
+  (multiple-value-bind (rst spec buf len)
+      (sdl3:load-wav (%u:load-texture "sample.wav"))
+    (when (not rst)
+      (format t "~a~%" (sdl3:get-error))
+      (return-from load-wav-init :failure))
+    (setf *audio-stream* (sdl3:open-audio-device-stream spec)
+	  *wav-data* buf
+	  *wav-data-len* len)
+    (when (cffi:null-pointer-p *audio-stream*)
+      (format t "~a~%" (sdl3:get-error))
+      (return-from load-wav-init :failure))
+    (sdl3:resume-audio-stream-device *audio-stream*))
+  :continue)
+
+(sdl3:def-app-iterate load-wav-iterate ()
+  (when (< (sdl3:get-audio-stream-available *audio-stream*) *wav-data-len*)
+    (sdl3:put-audio-stream-data *audio-stream* *wav-data* *wav-data-len*))
+  (sdl3:set-render-draw-color *renderer-handler* 100 100 100 255)
+  (sdl3:render-clear *renderer-handler*)
+  (sdl3:render-present *renderer-handler*)
+  :continue)
+
+(sdl3:def-app-event load-wav-event (event-type pevent)
+  (when (eql event-type :quit)
+    (return-from load-wav-event :success))
+  :continue)
+
+(sdl3:def-app-quit load-wav-quit (result)
+  (declare (ignore result)))
+
+(defun do-load-wav-demo ()
+  (sdl3:enter-app-main-callbacks 'load-wav-init 'load-wav-iterate 'load-wav-event 'load-wav-quit))
+

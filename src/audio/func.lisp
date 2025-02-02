@@ -185,7 +185,7 @@
   (stream :pointer))
 
 (defwrap-fun "SDL_OpenAudioDeviceStream" :pointer
-    (t t)
+    ()
   (did audio-device-id)
   (spec (:pointer (:struct audio-spec)) :direction :input)
   (callback :pointer)
@@ -200,16 +200,16 @@
     (t t)
   (src :pointer)
   (close-io :bool)
-  (spec (:pointer (:struct audio-spec)) :direction :intput)
-  (buf (:pointer (:pointer :uint8)) :direction :intput :bind-count len)
-  (len (:pointer :uint32) :bind-val buf))
+  (spec (:pointer (:struct audio-spec)) :direction :output)
+  (buf (:pointer (:pointer :uint8)) :direction :output)
+  (len (:pointer :uint32) :direction :output))
 
 (defwrap-fun ("SDL_LoadWAV" load-wav) :bool
     (t t)
   (path :string)
-  (spec (:pointer (:struct audio-spec)) :direction :intput)
-  (buf (:pointer (:pointer :uint8)) :direction :intput :bind-count len)
-  (len (:pointer :uint32) :bind-val buf))
+  (spec (:pointer (:struct audio-spec)) :direction :output)
+  (buf (:pointer (:pointer :uint8)) :direction :output)
+  (len (:pointer :uint32) :direction :output))
 
 (defwrap-fun "SDL_MixAudio" :bool
     (t t)

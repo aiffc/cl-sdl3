@@ -70,7 +70,8 @@
 		 (:module "audio"
 		  :components
 		  ((:file "type")
-		   (:file "func")))
+		   (:file "func")
+		   (:file "wrap")))
 		 (:module "time"
 		  :components
 		  ((:file "type")
@@ -226,5 +227,12 @@
 		 (:module "event"
 		  :components
 		  ((:file "package")
-		   (:file "keyboard"))))))
+		   (:file "keyboard")
+		   (:file "mouse")))
+		 (:module "audio"
+		  :components
+		  ((:file "package")
+		   (:file "01simple-playback")
+		   (:file "02simple-playback-callback")
+		   (:file "03load-wav"))))))
   :description "test function here")
