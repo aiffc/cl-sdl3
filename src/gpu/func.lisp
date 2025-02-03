@@ -29,33 +29,40 @@
 (defexport-fun "SDL_GetGPUShaderFormats" gpu-shader-format
   (device :pointer))
 
-(defexport-fun "SDL_CreateGPUComputePipeline" :pointer
+(defwrap-fun "SDL_CreateGPUComputePipeline" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-compute-pipeline-create-info))))
+  (createinfo (:pointer (:struct gpu-compute-pipeline-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUGraphicsPipeline" :pointer
+(defwrap-fun "SDL_CreateGPUGraphicsPipeline" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-graphics-pipeline-create-info))))
+  (createinfo (:pointer (:struct gpu-graphics-pipeline-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUSampler" :pointer
+(defwrap-fun "SDL_CreateGPUSampler" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-sampler-create-info))))
+  (createinfo (:pointer (:struct gpu-sampler-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUShader" :pointer
+(defwrap-fun "SDL_CreateGPUShader" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-shader-create-info))))
+  (createinfo (:pointer (:struct gpu-shader-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUTexture" :pointer
+(defwrap-fun "SDL_CreateGPUTexture" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-texture-create-info))))
+  (createinfo (:pointer (:struct gpu-texture-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUBuffer" :pointer
+(defwrap-fun "SDL_CreateGPUBuffer" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-buffer-create-info))))
+  (createinfo (:pointer (:struct gpu-buffer-create-info)) :direction :input))
 
-(defexport-fun "SDL_CreateGPUTransferBuffer" :pointer
+(defwrap-fun "SDL_CreateGPUTransferBuffer" :pointer
+    (t t)
   (device :pointer)
-  (createinfo (:pointer (:struct gpu-transfer-buffer-create-info))))
+  (createinfo (:pointer (:struct gpu-transfer-buffer-create-info)) :direction :input))
 
 (defexport-fun "SDL_SetGPUBufferName" :void
   (device :pointer)
@@ -127,23 +134,26 @@
   (data :pointer)
   (length :uint32))
 
-(defexport-fun "SDL_BeginGPURenderPass" :pointer
+(defwrap-fun "SDL_BeginGPURenderPass" :pointer
+    (t t)
   (command-buffer :pointer)
-  (color-target-infos (:pointer (:struct gpu-color-tage-info)))
-  (num-color-targets :uint32)
-  (depth-stencil-target-info (:pointer gpu-depth-stencil-target-info)))
+  (color-target-infos (:pointer (:struct gpu-color-tage-info)) :direction :input :bind-count num-color-targets)
+  (num-color-targets :uint32 :bind-val color-target-infos)
+  (depth-stencil-target-info (:pointer (:struct gpu-depth-stencil-target-info)) :direction :input))
 
 (defexport-fun "SDL_BindGPUGraphicsPipeline" :void
   (render-pass :pointer)
   (graphics-pipeline :pointer))
 
-(defexport-fun "SDL_SetGPUViewport" :void
+(defwrap-fun "SDL_SetGPUViewport" :void
+    (t t)
   (render-pass :pointer)
-  (viewport (:pointer (:struct gpu-viewport))))
+  (viewport (:pointer (:struct gpu-viewport)) :direction :input))
 
-(defexport-fun "SDL_SetGPUScissor" :void
+(defwrap-fun "SDL_SetGPUScissor" :void
+    (t t)
   (render-pass :pointer)
-  (scissor (:pointer (:struct rect))))
+  (scissor (:pointer (:struct rect)) :direction :input))
 
 (defexport-fun "SDL_SetGPUBlendConstants" :void
   (render-pass :pointer)
@@ -153,22 +163,25 @@
   (render-pass :pointer)
   (reference :uint8))
 
-(defexport-fun "SDL_BindGPUVertexBuffers" :void
+(defwrap-fun "SDL_BindGPUVertexBuffers" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (bindings (:pointer (:struct gpu-buffer-binding)))
-  (num-bindings :uint32))
+  (bindings (:pointer (:struct gpu-buffer-binding)) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val bindings))
 
-(defexport-fun "SDL_BindGPUIndexBuffer" :void
+(defwrap-fun "SDL_BindGPUIndexBuffer" :void
+    (t t)
   (render-pass :pointer)
-  (binding (:pointer (:struct gpu-buffer-binding)))
-  (index-element-size gpu-index-element-size))
+  (binding (:pointer (:struct gpu-buffer-binding)) :direction :input :bind-count index-element-size)
+  (index-element-size gpu-index-element-size :bind-val binding))
 
-(defexport-fun "SDL_BindGPUVertexSamplers" :void
+(defwrap-fun "SDL_BindGPUVertexSamplers" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)))
-  (num-bindings :uint32))
+  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val texture-sampler-bindings))
 
 (defexport-fun "SDL_BindGPUVertexStorageTextures" :void
   (render-pass :pointer)
@@ -176,29 +189,33 @@
   (storage-textures (:pointer :pointer))
   (num-bindings :uint32))
 
-(defexport-fun "SDL_BindGPUVertexStorageBuffers" :void
+(defwrap-fun "SDL_BindGPUVertexStorageBuffers" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (storage-buffers (:pointer :pointer))
-  (num-bindings :uint32))
+  (storage-buffers (:pointer :pointer) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val storage-buffers))
 
-(defexport-fun "SDL_BindGPUFragmentSamplers" :void
+(defwrap-fun "SDL_BindGPUFragmentSamplers" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)))
-  (num-bindings :uint32))
+  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val texture-sampler-bindings))
 
-(defexport-fun "SDL_BindGPUFragmentStorageTextures" :void
+(defwrap-fun "SDL_BindGPUFragmentStorageTextures" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (storage-textures (:pointer :pointer))
-  (num-bindings :uint32))
+  (storage-textures (:pointer :pointer) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val storage-textures))
 
-(defexport-fun "SDL_BindGPUFragmentStorageBuffers" :void
+(defwrap-fun "SDL_BindGPUFragmentStorageBuffers" :void
+    (t t)
   (render-pass :pointer)
   (first-slot :uint32)
-  (storage-buffers (:pointer :pointer))
-  (num-bindings :uint32))
+  (storage-buffers (:pointer :pointer) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val storage-buffers))
 
 (defexport-fun "SDL_DrawGPUIndexedPrimitives" :void
   (render-pass :pointer)
@@ -230,35 +247,41 @@
 (defexport-fun "SDL_EndGPURenderPass" :void
   (render-pass :pointer))
 
-(defexport-fun "SDL_BeginGPUComputePass" :pointer
+(defwrap-fun "SDL_BeginGPUComputePass" :pointer
+    (t t)
   (command-buffer :pointer)
   (storage-texture-bindings
-   (:pointer (:struct gpu-storage-texture-read-write-binding)))
-  (num-storage-texture-bindings :uint32)
-  (storage-buffer-bindings (:pointer (:struct gpu-storage-buffer-read-write-binding)))
-  (num-storage-buffer-bindings :uint32))
+   (:pointer (:struct gpu-storage-texture-read-write-binding))
+   :direction :input :bind-count num-storage-texture-bindings)
+  (num-storage-texture-bindings :uint32 :bind-val storage-texture-bindings)
+  (storage-buffer-bindings (:pointer (:struct gpu-storage-buffer-read-write-binding))
+			   :direction :input :bind-count num-storage-buffer-bindings)
+  (num-storage-buffer-bindings :uint32 :bind-val storage-buffer-bindings))
 
 (defexport-fun "sdl_bindgpucomputepipeline" :void
   (compute-pass :pointer)
   (compute-pipeline :pointer))
 
-(defexport-fun "SDL_BindGPUComputeSamplers" :void
+(defwrap-fun "SDL_BindGPUComputeSamplers" :void
+    (t t)
   (compute-pass :pointer)
   (first-slot :uint32)
-  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)))
-  (num-bindings :uint32))
+  (texture-sampler-bindings (:pointer (:struct gpu-texture-sampler-binding)) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val texture-sampler-bindings))
 
-(defexport-fun "SDL_BindGPUComputeStorageTextures" :void
+(defwrap-fun "SDL_BindGPUComputeStorageTextures" :void
+    (t t)
   (compute-pass :pointer)
   (first-slot :uint32)
-  (storage-textures (:pointer :pointer))
-  (num-bindings :uint32))
+  (storage-textures (:pointer :pointer) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val storage-textures))
 
-(defexport-fun "SDL_BindGPUComputeStorageBuffers" :void
+(defwrap-fun "SDL_BindGPUComputeStorageBuffers" :void
+    (t t)
   (compute-pass :pointer)
   (first-slot :uint32)
-  (storage-buffers (:pointer :pointer))
-  (num-bindings :uint32))
+  (storage-buffers (:pointer :pointer) :direction :input :bind-count num-bindings)
+  (num-bindings :uint32 :bind-val storage-buffers))
 
 (defexport-fun "SDL_DispatchGPUCompute" :void
   (compute-pass :pointer)
@@ -286,43 +309,49 @@
 (defexport-fun "SDL_BeginGPUCopyPass" :pointer
   (command-buffer :pointer))
 
-(defexport-fun "SDL_UploadToGPUTexture" :void
+(defwrap-fun "SDL_UploadToGPUTexture" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-texture-transfer-info)))
-  (destination (:pointer (:struct gpu-texture-region)))
+  (source (:pointer (:struct gpu-texture-transfer-info)) :direction :input)
+  (destination (:pointer (:struct gpu-texture-region)) :direction :input)
   (cycle :bool))
 
-(defexport-fun "SDL_UploadToGPUBuffer" :void
+(defwrap-fun "SDL_UploadToGPUBuffer" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-transfer-buffer-location)))
-  (destination (:pointer (:struct gpu-buffer-region)))
+  (source (:pointer (:struct gpu-transfer-buffer-location)) :direction :input)
+  (destination (:pointer (:struct gpu-buffer-region)) :direction :input)
   (cycle :bool))
 
-(defexport-fun "SDL_CopyGPUTextureToTexture" :void
+(defwrap-fun "SDL_CopyGPUTextureToTexture" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-texture-location)))
-  (destination (:pointer (:struct gpu-texture-location)))
+  (source (:pointer (:struct gpu-texture-location)) :direction :input)
+  (destination (:pointer (:struct gpu-texture-location)) :direction :input)
   (w :uint32)
   (h :uint32)
   (d :uint32)
   (cycle :bool))
 
-(defexport-fun "SDL_CopyGPUBufferToBuffer" :void
+(defwrap-fun "SDL_CopyGPUBufferToBuffer" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-buffer-location)))
-  (destination (:pointer (:struct gpu-buffer-location)))
+  (source (:pointer (:struct gpu-buffer-location)) :direction :input)
+  (destination (:pointer (:struct gpu-buffer-location)) :direction :input)
   (size :uint32)
   (cycle :bool))
 
-(defexport-fun "SDL_DownloadFromGPUTexture" :void
+(defwrap-fun "SDL_DownloadFromGPUTexture" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-texture-region)))
-  (destination (:pointer (:struct gpu-texture-transfer-info))))
+  (source (:pointer (:struct gpu-texture-region)) :direction :input)
+  (destination (:pointer (:struct gpu-texture-transfer-info)) :direction :input))
 
-(defexport-fun "SDL_DownloadFromGPUBuffer" :void
+(defwrap-fun "SDL_DownloadFromGPUBuffer" :void
+    (t t)
   (copy-pass :pointer)
-  (source (:pointer (:struct gpu-buffer-region)))
-  (destination (:pointer (:struct gpu-transfer-buffer-location))))
+  (source (:pointer (:struct gpu-buffer-region)) :direction :input)
+  (destination (:pointer (:struct gpu-transfer-buffer-location)) :direction :input))
 
 (defexport-fun "SDL_EndGPUCopyPass" :void
   (copy-pass :pointer))
@@ -331,9 +360,10 @@
   (command-buffer :pointer)
   (texture :pointer))
 
-(defexport-fun "SDL_BlitGPUTexture" :void
+(defwrap-fun "SDL_BlitGPUTexture" :void
+    (t t)
   (command-buffer :pointer)
-  (info (:pointer (:struct gpu-blit-info))))
+  (info (:pointer (:struct gpu-blit-info)) :direction :input))
 
 (defexport-fun "SDL_WindowSupportsGPUSwapchainComposition" :bool
   (device :pointer)
@@ -367,23 +397,25 @@
   (device :pointer)
   (window :pointer))
 
-(defexport-fun "SDL_AcquireGPUSwapchainTexture" :bool
+(defwrap-fun "SDL_AcquireGPUSwapchainTexture" :bool
+    (t t)
   (command-buffer :pointer)
   (window :pointer)
-  (swapchain-texture (:pointer :pointer))
-  (swapchain-texture-width (:pointer :uint32))
-  (swapchain-texture-height (:pointer :uint32)))
+  (swapchain-texture (:pointer :pointer) :direction :output)
+  (swapchain-texture-width (:pointer :uint32) :direction :output)
+  (swapchain-texture-height (:pointer :uint32) :direction :output))
 
 (defexport-fun "SDL_WaitForGPUSwapchain" :bool
   (device :pointer)
   (window :pointer))
 
-(defexport-fun "SDL_WaitAndAcquireGPUSwapchainTexture" :bool
+(defwrap-fun "SDL_WaitAndAcquireGPUSwapchainTexture" :bool
+    (t t)
   (command-buffer :pointer)
   (window :pointer)
-  (swapchain-texture (:pointer :pointer))
-  (swapchain-texture-width (:pointer :uint32))
-  (swapchain-texture-height (:pointer :uint32)))
+  (swapchain-texture (:pointer :pointer) :direction :output)
+  (swapchain-texture-width (:pointer :uint32) :direction :output)
+  (swapchain-texture-height (:pointer :uint32) :direction :output))
 
 (defexport-fun "SDL_SubmitGPUCommandBuffer" :bool
   (command-buffer :pointer))
@@ -397,11 +429,12 @@
 (defexport-fun "SDL_WaitForGPUIdle" :bool
   (device :pointer))
 
-(defexport-fun "SDL_WaitForGPUFences" :bool
+(defwrap-fun "SDL_WaitForGPUFences" :bool
+    (t t)
   (device :pointer)
   (wait-all :bool)
-  (fences (:pointer :pointer))
-  (num-fences :uint32))
+  (fences (:pointer :pointer) :direction :input :bind-count num-fences)
+  (num-fences :uint32 :bind-val fences))
 
 (defexport-fun "SDL_QueryGPUFence" :bool
   (device :pointer)
