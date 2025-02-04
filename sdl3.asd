@@ -194,7 +194,21 @@
 		  ((:file "type")
 		   (:file "func")
 		   (:file "wrap")))
-		 (:module "stdinc"))))
+		 ;; (:module "stdinc")
+		 (:module "extr"
+		  :components
+		  ((:module "sdl-image"
+		    :components
+			    ((:file "package")
+			     (:file "lib")
+			     (:file "type")
+			     (:file "func")))
+		   (:module "sdl-ttf"
+		    :components
+			    ((:file "package")
+			     (:file "lib")
+			     (:file "type")
+			     (:file "func"))))))))
   :description "common lisp bind sdl3 use cffi")
 
 
