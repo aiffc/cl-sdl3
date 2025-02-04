@@ -194,7 +194,7 @@
 		  ((:file "type")
 		   (:file "func")
 		   (:file "wrap")))
-		 ;; (:module "stdinc")
+		 ;;(:module "stdinc")
 		 (:module "extr"
 		  :components
 		  ((:module "sdl-image"

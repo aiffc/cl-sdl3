@@ -3,9 +3,8 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (declaim (inline system-relative-namestring))
   (defun system-relative-namestring (system name)
-    (namestring (asdf:system-relative-pathname system name)))
-  
-  )
+    (namestring (asdf:system-relative-pathname system name))))
+
 (cffi:define-foreign-library libsdl3
   (:darwin (:or (:framework "SDL3") (:default "libSDL3")))
   (:unix (:or "libSDL3.so" "libSDL3.so.0" "libSDL3.so.0.1.11"))
