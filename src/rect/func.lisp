@@ -1,86 +1,104 @@
 (in-package :sdl3)
 
-(defexport-fun ("SDL_RectToFRect" rect-to-frect) :void
-  (rect (:pointer (:struct rect)))
-  (frect (:pointer (:struct frect))))
+(defwrap-fun ("SDL_RectToFRect" rect-to-frect) :void
+    (t t)
+  (rect (:pointer (:struct rect)) :direction :input)
+  (frect (:pointer (:struct frect)) :direction :output))
 
-(defexport-fun "SDL_PointInRect" :bool
-  (point (:pointer (:struct point)))
-  (rect (:pointer (:struct rect))))
+(defwrap-fun "SDL_PointInRect" :bool
+    (t t)
+  (point (:pointer (:struct point)) :direction :input)
+  (rect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_RectEmpty" :bool
-  (rect (:pointer (:struct rect))))
+(defwrap-fun "SDL_RectEmpty" :bool
+    (t t)
+  (rect (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_RectsEqual" :bool
-  (a (:pointer (:struct rect)))
-  (b (:pointer (:struct rect))))
+(defwrap-fun "SDL_RectsEqual" :bool
+    (t t)
+  (a (:pointer (:struct rect)) :direction :input)
+  (b (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_HasRectIntersection" :bool
-  (a (:pointer (:struct rect)))
-  (b (:pointer (:struct rect))))
+(defwrap-fun "SDL_HasRectIntersection" :bool
+    (t t)
+  (a (:pointer (:struct rect)) :direction :input)
+  (b (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun "SDL_GetRectIntersection" :bool
-  (a (:pointer (:struct rect)))
-  (b (:pointer (:struct rect)))
-  (ret (:pointer (:struct rect))))
+(defwrap-fun "SDL_GetRectIntersection" :bool
+    (t t)
+  (a (:pointer (:struct rect)) :direction :input)
+  (b (:pointer (:struct rect)) :direction :input)
+  (ret (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_GetRectUnion" :bool
-  (a (:pointer (:struct rect)))
-  (b (:pointer (:struct rect)))
-  (ret (:pointer (:struct rect))))
+(defwrap-fun "SDL_GetRectUnion" :bool
+    (t t)
+  (a (:pointer (:struct rect)) :direction :input)
+  (b (:pointer (:struct rect)) :direction :input)
+  (ret (:pointer (:struct rect))  :direction :output))
 
-(defexport-fun "SDL_GetRectEnclosingPoints" :bool
-  (point (:pointer (:struct point)))
-  (count :int)
-  (clip (:pointer (:struct rect)))
-  (ret (:pointer (:struct rect))))
+(defwrap-fun "SDL_GetRectEnclosingPoints" :bool
+    (t t)
+  (point (:pointer (:struct point)) :direction :input :bind-count count)
+  (count :int :bind-val point)
+  (clip (:pointer (:struct rect)) :direction :input)
+  (ret (:pointer (:struct rect)) :direction :output))
 
-(defexport-fun "SDL_GetRectAndLineIntersection" :bool
-  (rect (:pointer (:struct rect)))
-  (x1 (:pointer :int))
-  (y1 (:pointer :int))
-  (x2 (:pointer :int))
-  (y2 (:pointer :int)))
+(defwrap-fun "SDL_GetRectAndLineIntersection" :bool
+    (t t)
+  (rect (:pointer (:struct rect)) :direction :input)
+  (x1 (:pointer :int) :direction :output)
+  (y1 (:pointer :int) :direction :output)
+  (x2 (:pointer :int) :direction :output)
+  (y2 (:pointer :int) :direction :output))
 
-(defexport-fun "SDL_PointInRectFloat" :bool
-  (point (:pointer (:struct fpoint)))
-  (rect (:pointer (:struct frect))))
+(defwrap-fun "SDL_PointInRectFloat" :bool
+    (t t)
+  (point (:pointer (:struct fpoint)) :direction :input)
+  (rect (:pointer (:struct frect)) :direction :input))
 
-(defexport-fun "SDL_RectEmptyFloat" :bool
-  (rect (:pointer (:struct frect))))
+(defwrap-fun "SDL_RectEmptyFloat" :bool
+    (t t)
+  (rect (:pointer (:struct frect)) :direction :output))
 
-(defexport-fun "SDL_RectsEqualEpsilon" :bool
-  (a (:pointer (:struct frect)))
-  (b (:pointer (:struct frect)))
+(defwrap-fun "SDL_RectsEqualEpsilon" :bool
+    (t t)
+  (a (:pointer (:struct frect)) :direction :input)
+  (b (:pointer (:struct frect)) :direction :input)
   (epsilon :float))
 
-(defexport-fun "SDL_RectsEqualFloat" :bool
-  (a (:pointer (:struct frect)))
-  (b (:pointer (:struct frect))))
+(defwrap-fun "SDL_RectsEqualFloat" :bool
+    (t t)
+  (a (:pointer (:struct frect)) :direction :input)
+  (b (:pointer (:struct frect)) :direction :input))
 
-(defexport-fun "SDL_HasRectIntersectionFloat" :bool
-  (a (:pointer (:struct frect)))
-  (b (:pointer (:struct frect))))
+(defwrap-fun "SDL_HasRectIntersectionFloat" :bool
+    (t t)
+  (a (:pointer (:struct frect)) :direction :input)
+  (b (:pointer (:struct frect)) :direction :input))
 
-(defexport-fun "SDL_GetRectIntersectionFloat" :bool
-  (a (:pointer (:struct frect)))
-  (b (:pointer (:struct frect)))
-  (ret (:pointer (:struct frect))))
+(defwrap-fun "SDL_GetRectIntersectionFloat" :bool
+    (t t)
+  (a (:pointer (:struct frect)) :direction :input)
+  (b (:pointer (:struct frect)) :direction :input)
+  (ret (:pointer (:struct frect)) :direction :output))
 
-(defexport-fun "SDL_GetRectUnionFloat" :bool
-  (a (:pointer (:struct frect)))
-  (b (:pointer (:struct frect)))
-  (ret (:pointer (:struct frect))))
+(defwrap-fun "SDL_GetRectUnionFloat" :bool
+    (t t)
+  (a (:pointer (:struct frect)) :direction :input)
+  (b (:pointer (:struct frect)) :direction :input)
+  (ret (:pointer (:struct frect)) :direction :output))
 
-(defexport-fun "SDL_GetRectEnclosingPointsFloat" :bool
-  (point (:pointer (:struct fpoint)))
-  (count :int)
-  (clip (:pointer (:struct frect)))
-  (ret (:pointer (:struct frect))))
+(defwrap-fun "SDL_GetRectEnclosingPointsFloat" :bool
+    (t t)
+  (point (:pointer (:struct fpoint)) :direction :input :bind-count count)
+  (count :int :bind-val point)
+  (clip (:pointer (:struct frect)) :direction :input)
+  (ret (:pointer (:struct frect)) :direction :output))
 
-(defexport-fun "SDL_GetRectAndLineIntersectionFloat" :bool
-  (rect (:pointer (:struct frect)))
-  (x1 (:pointer :float))
-  (y1 (:pointer :float))
-  (x2 (:pointer :float))
-  (y2 (:pointer :float)))
+(defwrap-fun "SDL_GetRectAndLineIntersectionFloat" :bool
+    (t t)
+  (rect (:pointer (:struct frect)) :direction :input)
+  (x1 (:pointer :float) :direction :output)
+  (y1 (:pointer :float) :direction :output)
+  (x2 (:pointer :float) :direction :output)
+  (y2 (:pointer :float) :direction :output))
