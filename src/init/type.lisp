@@ -10,13 +10,13 @@
   (:sensor     #x00008000)
   (:camera     #x00010000))
 
-(defconstant +app-name-string+         "SDL.app.metadata.name")
-(defconstant +app-version-string+      "SDL.app.metadata.version")
-(defconstant +app-identifier-string+   "SDL.app.metadata.identifier")
-(defconstant +app-creator-string+      "SDL.app.metadata.creator")
-(defconstant +app-copyright-string+    "SDL.app.metadata.copyright")
-(defconstant +app-url-string+          "SDL.app.metadata.url")
-(defconstant +app-type-string+         "SDL.app.metadata.type")    
+(alexandria:define-constant +app-name-string+         "SDL.app.metadata.name" :test #'string=)
+(alexandria:define-constant +app-version-string+      "SDL.app.metadata.version" :test #'string=)
+(alexandria:define-constant +app-identifier-string+   "SDL.app.metadata.identifier" :test #'string=)
+(alexandria:define-constant +app-creator-string+      "SDL.app.metadata.creator" :test #'string=)
+(alexandria:define-constant +app-copyright-string+    "SDL.app.metadata.copyright" :test #'string=)
+(alexandria:define-constant +app-url-string+          "SDL.app.metadata.url" :test #'string=)
+(alexandria:define-constant +app-type-string+         "SDL.app.metadata.type" :test #'string=)    
 
 
 (export '+app-name-string+)
