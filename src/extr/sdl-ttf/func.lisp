@@ -3,16 +3,17 @@
 (cffi:defcfun ("TTF_Version" version) :int)
 (export 'version)
 
-(cffi:defcfun ("TTF_GetFreeTypeVersion" get-free-type-version) :void
-  (major (:pointer :int))
-  (minor (:pointer :int))
-  (patch (:pointer :int)))
-(export 'get-free-type-version)
+(sdl3::defwrap-fun ("TTF_GetFreeTypeVersion" get-free-type-version) :void
+    (t t)
+  (major (:pointer :int) :direction :output)
+  (minor (:pointer :int) :direction :output)
+  (patch (:pointer :int) :direction :output))
 
-(cffi:defcfun ("TTF_GetHarfBuzzVersion" get-harf-buzz-version) :void
-  (major (:pointer :int))
-  (minor (:pointer :int))
-  (patch (:pointer :int)))
+(sdl3::defwrap-fun ("TTF_GetHarfBuzzVersion" get-harf-buzz-version) :void
+    (t t)
+  (major (:pointer :int) :direction :output)
+  (minor (:pointer :int) :direction :output)
+  (patch (:pointer :int) :direction :output))
 (export 'get-harf-buzz-version)
 
 (cffi:defcfun ("TTF_Init" init) :bool)
@@ -75,11 +76,11 @@
   (font :pointer))
 (export 'get-font-size)
 
-(cffi:defcfun ("TTF_GetFontDPI" get-font-dpi) :bool
+(sdl3::defwrap-fun ("TTF_GetFontDPI" get-font-dpi) :bool
+    (t t)
   (font :pointer)
-  (hdpi (:pointer :int))
-  (vdpi (:pointer :int)))
-(export 'get-font-dpi)
+  (hdpi (:pointer :int) :direction :output)
+  (vdpi (:pointer :int) :direction :output))
 
 (cffi:defcfun ("TTF_SetFontStyle" set-font-style) :void
   (font :pointer)
@@ -196,137 +197,139 @@
   (image_type (:pointer image-type)))
 (export 'get-glyph-image)
 
-(cffi:defcfun ("TTF_GetGlyphImageForIndex" get-glyph-image-for-index) (:pointer (:struct sdl3:surface))
+(sdl3::defwrap-fun ("TTF_GetGlyphImageForIndex" get-glyph-image-for-index) (:pointer (:struct sdl3:surface))
+    (t t)
   (font :pointer)
   (glyph_index :uint32)
-  (image_type (:pointer image-type)))
+  (image_type (:pointer image-type) :direction :output))
 (export 'get-glyph-image-for-index)
 
-(cffi:defcfun ("TTF_GetGlyphMetrics" get-glyph-metrics) :bool
+(sdl3::defwrap-fun ("TTF_GetGlyphMetrics" get-glyph-metrics) :bool
+    (t t)
   (font :pointer)
   (ch :uint32)
-  (minx (:pointer :int))
-  (maxx (:pointer :int))
-  (miny (:pointer :int))
-  (maxy (:pointer :int))
-  (advance (:pointer :int)))
-(export 'get-glyph-metrics)
+  (minx (:pointer :int) :direction :output)
+  (maxx (:pointer :int) :direction :output)
+  (miny (:pointer :int) :direction :output)
+  (maxy (:pointer :int) :direction :output)
+  (advance (:pointer :int) :direction :output))
 
-(cffi:defcfun ("TTF_GetStringSize" get-string-size) :bool
+(sdl3::defwrap-fun ("TTF_GetStringSize" get-string-size) :bool
+    (t t)
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
-  (w (:pointer :int))
-  (h (:pointer :int)))
-(export 'get-string-size)
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
-(cffi:defcfun ("TTF_GetStringSizeWrapped" get-string-size-wrapped) :bool
+(sdl3::defwrap-fun ("TTF_GetStringSizeWrapped" get-string-size-wrapped) :bool
+    (t t)
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (wrap_width :int)
-  (w (:pointer :int))
-  (h (:pointer :int)))
-(export 'get-string-size-wrapped)
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
-(cffi:defcfun ("TTF_MeasureString" measure-string) :bool
+(sdl3::defwrap-fun ("TTF_MeasureString" measure-string) :bool
+    (t t)
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (max_width :int)
-  (measured_width (:pointer :int))
-  (measured_length (:pointer sdl3::size-t)))
+  (measured_width (:pointer :int) :direction :input)
+  (measured_length (:pointer sdl3::size-t) :direction :input))
 (export 'measure-string)
 
-(cffi:defcfun ("TTF_RenderText_Solid" render-text_-solid) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Solid" render-text-solid) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color)))
-(export 'render-text_-solid)
+(export 'render-text-solid)
 
-(cffi:defcfun ("TTF_RenderText_Solid_Wrapped" render-text_-solid_-wrapped) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Solid_Wrapped" render-text-solid-wrapped) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (wrapLength :int))
-(export 'render-text_-solid_-wrapped)
+(export 'render-text-solid-wrapped)
 
-(cffi:defcfun ("TTF_RenderGlyph_Solid" render-glyph_-solid) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderGlyph_Solid" render-glyph-solid) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (ch :uint32)
   (fg (:struct sdl3:color)))
-(export 'render-glyph_-solid)
+(export 'render-glyph-solid)
 
-(cffi:defcfun ("TTF_RenderText_Shaded" render-text_-shaded) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Shaded" render-text-shaded) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color)))
-(export 'render-text_-shaded)
+(export 'render-text_shaded)
 
-(cffi:defcfun ("TTF_RenderText_Shaded_Wrapped" render-text_-shaded_-wrapped) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Shaded_Wrapped" render-text-shaded-wrapped) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color))
   (wrap_width :int))
-(export 'render-text_-shaded_-wrapped)
+(export 'render-text-shaded-wrapped)
 
-(cffi:defcfun ("TTF_RenderGlyph_Shaded" render-glyph_-shaded) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderGlyph_Shaded" render-glyph-shaded) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (ch :uint32)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color)))
-(export 'render-glyph_-shaded)
+(export 'render-glyph-shaded)
 
-(cffi:defcfun ("TTF_RenderText_Blended" render-text_-blended) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Blended" render-text-blended) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color)))
-(export 'render-text_-blended)
+(export 'render-text-blended)
 
-(cffi:defcfun ("TTF_RenderText_Blended_Wrapped" render-text_-blended_-wrapped) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_Blended_Wrapped" render-text-blended-wrapped) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (wrap_width :int))
-(export 'render-text_-blended_-wrapped)
+(export 'render-text-blended-wrapped)
 
-(cffi:defcfun ("TTF_RenderGlyph_Blended" render-glyph_-blended) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderGlyph_Blended" render-glyph-blended) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (ch :uint32)
   (fg (:struct sdl3:color)))
-(export 'render-glyph_-blended)
+(export 'render-glyph-blended)
 
-(cffi:defcfun ("TTF_RenderText_LCD" render-text_-l-c-d) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_LCD" render-text-lcd) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color)))
-(export 'render-text_-l-c-d)
+(export 'render-text-lcd)
 
-(cffi:defcfun ("TTF_RenderText_LCD_Wrapped" render-text_-l-c-d_-wrapped) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderText_LCD_Wrapped" render-text-lcd-wrapped) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (text :string)
   (length sdl3::size-t)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color))
   (wrap_width :int))
-(export 'render-text_-l-c-d_-wrapped)
+(export 'render-text-lcd-wrapped)
 
-(cffi:defcfun ("TTF_RenderGlyph_LCD" render-glyph_-l-c-d) (:pointer (:struct sdl3:surface))
+(cffi:defcfun ("TTF_RenderGlyph_LCD" render-glyph-lcd) (:pointer (:struct sdl3:surface))
   (font :pointer)
   (ch :uint32)
   (fg (:struct sdl3:color))
   (bg (:struct sdl3:color)))
-(export 'render-glyph_-l-c-d)
+(export 'render-glyph-lcd)
 
 (cffi:defcfun ("TTF_CreateSurfaceTextEngine" create-surface-text-engine) :pointer)
 (export 'create-surface-text-engine)
@@ -470,20 +473,21 @@
   (y :int))
 (export 'set-text-position)
 
-(cffi:defcfun ("TTF_GetTextPosition" get-text-position) :bool
+(sdl3::defwrap-fun ("TTF_GetTextPosition" get-text-position) :bool
+    (t t)
   (text (:pointer (:struct text)))
-  (x (:pointer :int))
-  (y (:pointer :int)))
-(export 'get-text-position)
+  (x (:pointer :int) :direction :output)
+  (y (:pointer :int) :direction :output))
 
 (cffi:defcfun ("TTF_SetTextWrapWidth" set-text-wrap-width) :bool
   (text (:pointer (:struct text)))
   (wrap_width :int))
 (export 'set-text-wrap-width)
 
-(cffi:defcfun ("TTF_GetTextWrapWidth" get-text-wrap-width) :bool
+(sdl3::defwrap-fun ("TTF_GetTextWrapWidth" get-text-wrap-width) :bool
+    (t t)
   (text (:pointer (:struct text)))
-  (wrap_width (:pointer :int)))
+  (wrap_width (:pointer :int) :direction :output))
 (export 'get-text-wrap-width)
 
 (cffi:defcfun ("TTF_SetTextWrapWhitespaceVisible" set-text-wrap-whitespace-visible) :bool
@@ -520,11 +524,11 @@
   (length :int))
 (export 'delete-text-string)
 
-(cffi:defcfun ("TTF_GetTextSize" get-text-size) :bool
+(sdl3::defwrap-fun ("TTF_GetTextSize" get-text-size) :bool
+    (t t)
   (text (:pointer (:struct text)))
-  (w (:pointer :int))
-  (h (:pointer :int)))
-(export 'get-text-size)
+  (w (:pointer :int) :direction :output)
+  (h (:pointer :int) :direction :output))
 
 (cffi:defcfun ("TTF_GetTextSubString" get-text-sub-string) :bool
   (text (:pointer (:struct text)))
@@ -543,7 +547,6 @@
   (offset :int)
   (length :int)
   (count (:pointer :int)))
-(export 'get-text-sub-strings-for-range)
 
 (cffi:defcfun ("TTF_GetTextSubStringForPoint" get-text-sub-string-for-point) :bool
   (text (:pointer (:struct text)))
