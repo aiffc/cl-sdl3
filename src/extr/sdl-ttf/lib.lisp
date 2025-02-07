@@ -6,7 +6,7 @@
     (namestring (asdf:system-relative-pathname system name))))
 
 (cffi:define-foreign-library libsdl3-ttf
-  (:darwin (:or (:framework "SDL3_ttf") (:default "libSDL3-ttf")))
+  (:darwin (:or (:framework "SDL3_ttf") (:default "libSDL3_ttf")))
   (:unix (:or "libSDL3_ttf.so" "libSDL3_ttf.so.0" "libSDL3_ttf.so.0.1.1"))
   #+(or x86 x86-64)
   (:windows #.(system-relative-namestring
