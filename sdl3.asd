@@ -38,7 +38,8 @@
 		 (:module "rect"
 		  :components
 		  ((:file "type")
-		   (:file "func")))
+		   (:file "func")
+		   (:file "wrap")))
 		 (:module "keyboard"
 		  :components
 		  ((:file "type")

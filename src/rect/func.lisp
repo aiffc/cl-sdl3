@@ -1,24 +1,5 @@
 (in-package :sdl3)
 
-(defwrap-fun ("SDL_RectToFRect" rect-to-frect) :void
-    (t t)
-  (rect (:pointer (:struct rect)) :direction :input)
-  (frect (:pointer (:struct frect)) :direction :output))
-
-(defwrap-fun "SDL_PointInRect" :bool
-    (t t)
-  (point (:pointer (:struct point)) :direction :input)
-  (rect (:pointer (:struct rect)) :direction :input))
-
-(defwrap-fun "SDL_RectEmpty" :bool
-    (t t)
-  (rect (:pointer (:struct rect)) :direction :output))
-
-(defwrap-fun "SDL_RectsEqual" :bool
-    (t t)
-  (a (:pointer (:struct rect)) :direction :input)
-  (b (:pointer (:struct rect)) :direction :input))
-
 (defwrap-fun "SDL_HasRectIntersection" :bool
     (t t)
   (a (:pointer (:struct rect)) :direction :input)
@@ -50,26 +31,6 @@
   (y1 (:pointer :int) :direction :output)
   (x2 (:pointer :int) :direction :output)
   (y2 (:pointer :int) :direction :output))
-
-(defwrap-fun "SDL_PointInRectFloat" :bool
-    (t t)
-  (point (:pointer (:struct fpoint)) :direction :input)
-  (rect (:pointer (:struct frect)) :direction :input))
-
-(defwrap-fun "SDL_RectEmptyFloat" :bool
-    (t t)
-  (rect (:pointer (:struct frect)) :direction :output))
-
-(defwrap-fun "SDL_RectsEqualEpsilon" :bool
-    (t t)
-  (a (:pointer (:struct frect)) :direction :input)
-  (b (:pointer (:struct frect)) :direction :input)
-  (epsilon :float))
-
-(defwrap-fun "SDL_RectsEqualFloat" :bool
-    (t t)
-  (a (:pointer (:struct frect)) :direction :input)
-  (b (:pointer (:struct frect)) :direction :input))
 
 (defwrap-fun "SDL_HasRectIntersectionFloat" :bool
     (t t)
