@@ -254,5 +254,9 @@
 		  ((:file "package")
 		   (:file "01simple-playback")
 		   (:file "02simple-playback-callback")
-		   (:file "03load-wav"))))))
+		   (:file "03load-wav")))
+                 (:module "demo"
+		  :components
+		  ((:file "package")
+		   (:file "snake"))))))
   :description "test function here")
