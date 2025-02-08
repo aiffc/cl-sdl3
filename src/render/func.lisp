@@ -337,7 +337,7 @@
 (defwrap-fun "SDL_RenderFillRect" :bool
     (t t)
   (renderer :pointer)
-  (rects (:pointer (:struct frect)) :direction :input))
+  (rect (:pointer (:struct frect)) :direction :input))
 (defwrap-fun "SDL_RenderFillRects" :bool
     (t t)
   (renderer :pointer)
