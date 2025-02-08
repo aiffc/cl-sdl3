@@ -3,8 +3,12 @@
   :author "YJC"
   :license ""
   :depends-on (:alexandria
-	       :defclass-std
-	       :cffi-libffi)
+               :defclass-std
+               :cffi-libffi
+               #+darwin
+               :trivial-main-thread
+               #+darwin
+               :float-features)
   :components ((:module "src"
 		:components
 		((:file "package")
