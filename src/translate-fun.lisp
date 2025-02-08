@@ -1,35 +1,38 @@
 (in-package :sdl3)
 
-
-(defparameter *key-world* '("GL" "EGL"))
-
-(defun get-word-until-lower-case (str
-				  &aux (rst ""))
-  (dotimes (i (length str))
-    (cond ((lower-case-p (char str (1+ i)))
-	   (return-from get-word-until-lower-case (values rst (- i 1))))
-	  (t (setf rst (string+ rst (char str i))))))
-  (values rst (length str)))
+(defun any-prefix-p (string prefixes)
+  "Does string have any of the prefix?
+If so, return that prefix"
+  (some (lambda (prefix)
+          (and (uiop:string-prefix-p prefix string) prefix))
+        prefixes))
 
 (defun sdl->lsp (str)
-  "please optimize it"
   (let ((name (subseq str 4 (length str)))
-	(lsp-name ""))
-    (do ((i 0 (1+ i)))
-	((>= i (length name)) lsp-name)
-      (setf lsp-name
-	    (string+ lsp-name 
-		     (cond ((= i 0) (char-downcase (char name i)))
-			   ((and (upper-case-p (char name i))
-				 (upper-case-p (char name (+ i 1))))
-			    ;; just use in gpu file fix it
-			    (multiple-value-bind (rst next-i)
-				(get-word-until-lower-case (subseq name i))
-			      (setf i (+ i next-i))
-			      (string+ #\- (string-downcase rst))))
-			   ((upper-case-p (char name i))
-			    (string+ #\- (char-downcase (char name i))))
-			   (t (char name i))))))))
+        (special-substrings (list "GPU" "YUV" "NV" "IO" "RW" "GUID" "SF"
+                                  "AVIF" "ICO" "CUR" "BMP" "GIF" "JPG" "JXL" "LBM" "PCX" "PNG" "PNM" "SVG" "QOI" "TGA" "TIF" "XCF" "XPM" "XV" "WEBP"))
+        char
+        prefix-match)
+    (with-output-to-string (str)
+      (do ((i 0 (1+ i)))
+          ((>= i (length name)))
+        (setf char (char name i))
+        (cond ((or (lower-case-p char)
+                   (digit-char-p char)
+                   (char= #\- char))
+               (write-char char str))
+              ((and (upper-case-p char)
+                    (setf prefix-match (any-prefix-p (subseq name i)
+                                                     special-substrings)))
+               (unless (eql i 0)
+                 (write-char #\- str))
+               (write-string (string-downcase prefix-match) str)
+               (incf i (1- (length prefix-match))))
+              ((upper-case-p char)
+               (unless (eql i 0)
+                 (write-char #\- str))
+               (write-char (char-downcase char) str))
+              (t (error "Unable to handle at char: ~a" char)))))))
 
 (defmacro defexport-fun (name ret &body body
 			 &aux (lsp-name (when (atom name)

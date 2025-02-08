@@ -213,7 +213,8 @@
 			    ((:file "package")
 			     (:file "lib")
 			     (:file "type")
-			     (:file "func"))))))))
+			     (:file "func")))))
+		 (:file "load-docstring"))))
   :description "common lisp bind sdl3 use cffi")
 
 
