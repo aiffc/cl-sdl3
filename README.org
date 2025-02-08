@@ -1,5 +1,5 @@
-* Sdl3 
-CFFI bind sdl3
+* SDL3
+CFFI bindings for SDL3
 
 ** Usage
 *** for windows
@@ -67,6 +67,16 @@ TO TEST
   ;; demo from https://examples.libsdl.org/SDL3/audio/03-load-wav/
   (sdl3.demo.audio::do-load-wav-demo)
   #+END_SRC
+
+** Documentation
+
+Documentation from the original SDL3 header files is available with respective function and symbols. Slime/SLY show the documentation during completion automatically. Otherwise you can also get the documentation by using =describe= function.
+
+If you want to build without documentation (probably to decrease image size during deployment) push :sdl3-nodoc to =*features*= before loading =sdl3=. You may need to clear the old complied bytecode files (e.g. *.fasl at ~/.cache/common-lisp/ in case of SBCL).
+
+#+begin_src lisp
+(push :sdl3-nodoc *features*)
+#+end_src
 
 ** TODO
 add more test and demo
