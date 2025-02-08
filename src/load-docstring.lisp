@@ -1,13 +1,12 @@
 (in-package #:sdl3)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defun load-docstrings (docfile
-                      &aux (sdl3-package (find-package :sdl3)))
+  (defun load-docstrings (docfile package)
     (let ((docstrings (uiop:read-file-forms docfile)))
       (loop for (type identifier docstring) in docstrings
             for symbol-name = (ignore-errors (string-upcase (sdl3::sdl->lsp identifier)))
             for symbol = (and symbol-name
-                              (find-symbol symbol-name sdl3-package))
+                              (find-symbol symbol-name package))
             do
                (cond ((null symbol))
                      ((eql type :function)
@@ -25,4 +24,11 @@
 
 #-sdl3-nodoc
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (load-docstrings (asdf:system-relative-pathname :sdl3 "doc/docstrings.lisp")))
+  (load-docstrings (asdf:system-relative-pathname :sdl3 "doc/docstrings.lisp")
+                   (find-package :sdl3))
+
+  (load-docstrings (asdf:system-relative-pathname :sdl3 "doc/image_docstrings.lisp")
+                   (find-package :sdl3-image))
+
+  (load-docstrings (asdf:system-relative-pathname :sdl3 "doc/ttf_docstrings.lisp")
+                   (find-package :sdl3-ttf)))

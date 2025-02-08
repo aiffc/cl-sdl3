@@ -9,7 +9,8 @@ If so, return that prefix"
 
 (defun sdl->lsp (str)
   (let ((name (subseq str 4 (length str)))
-        (special-substrings (list "GPU" "YUV" "NV" "IO" "RW" "GUID" "SF"))
+        (special-substrings (list "GPU" "YUV" "NV" "IO" "RW" "GUID" "SF"
+                                  "AVIF" "ICO" "CUR" "BMP" "GIF" "JPG" "JXL" "LBM" "PCX" "PNG" "PNM" "SVG" "QOI" "TGA" "TIF" "XCF" "XPM" "XV" "WEBP"))
         char
         prefix-match)
     (with-output-to-string (str)
