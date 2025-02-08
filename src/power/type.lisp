@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum power-state
+(defcenum power-state
   (:powerstate-error  -1)
   :powerstate-unknown
   :powerstate-on-battery

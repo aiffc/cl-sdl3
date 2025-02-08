@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum blend-factor
+(defcenum blend-factor
   (:blendfactor-zero                #x1)
   (:blendfactor-one                 #x2)
   (:blendfactor-src-color           #x3)
@@ -12,14 +12,14 @@
   (:blendfactor-dst-alpha           #x9)
   (:blendfactor-one-minus-dst-alpha #xa))
 
-(cffi:defcenum blend-operation
+(defcenum blend-operation
   (:blendoperation-add              #x1)
   (:blendoperation-subtract         #x2)
   (:blendoperation-rev-subtract     #x3)
   (:blendoperation-minimum          #x4)
   (:blendoperation-maximum          #x5))
 
-(cffi:defbitfield blend-mode 
+(defbitfield blend-mode 
   (:sdl-blendmode-none                  #x00000000)
   (:sdl-blendmode-blend                 #x00000001)
   (:sdl-blendmode-blend-premultiplied   #x00000010)

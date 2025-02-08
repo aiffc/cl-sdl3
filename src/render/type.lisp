@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum texture-access
+(defcenum texture-access
   :static
   :streaming
   :target)
@@ -11,7 +11,7 @@
   (h :int)
   (refcount :int))
 
-(cffi:defcenum renderer-logical-presentation
+(defcenum renderer-logical-presentation
   :disabled
   :stretch
   :letterbox

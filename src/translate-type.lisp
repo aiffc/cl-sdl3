@@ -81,3 +81,25 @@
        (export ',name)
        (export ',lsp-funs))))
 
+(defun first-or-identity (thing)
+  (if (listp thing)
+      (first thing)
+      thing))
+
+(defmacro defcenum (name-and-options &body enum-list)
+  (let ((name (first-or-identity name-and-options))
+        (keywords (mapcar #'first-or-identity enum-list)))
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
+       (defcenum ,name-and-options
+         ,@enum-list)
+       (deftype ,name ()
+         `(member ,,@keywords)))))
+
+(defmacro defbitfield (name-and-options &body bitfield-list)
+  (let ((name (first-or-identity name-and-options))
+        (keywords (mapcar #'first-or-identity bitfield-list)))
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
+       (cffi:defbitfield ,name-and-options
+         ,@bitfield-list)
+       (deftype ,name ()
+         `(member ,,@keywords)))))

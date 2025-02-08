@@ -4,7 +4,7 @@
   (name :string)
   (pattern :string))
 
-(cffi:defcenum file-dialog-type
+(defcenum file-dialog-type
   :openfile
   :savefile
   :openfolder)

@@ -9,7 +9,7 @@
   (flush :pointer)
   (close :pointer))
 
-(cffi:defcenum io-status
+(defcenum io-status
   :ready
   :error
   :eof
@@ -17,7 +17,7 @@
   :readonly
   :writeonly)
 
-(cffi:defcenum io-whence
+(defcenum io-whence
   :set
   :cur
   :end)

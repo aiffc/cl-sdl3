@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum pixel-format
+(defcenum pixel-format
   (:unknown 0)
   (:index1lsb #x11100100)
   (:index1msb #x11200100)
@@ -112,7 +112,7 @@
   (version :uint32)
   (refcount :int))
 
-(cffi:defcenum colorspace
+(defcenum colorspace
   (:unknown 0)
   (:srgb #x120005a0)
   (:srgb-linear #x12000500)

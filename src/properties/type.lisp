@@ -2,7 +2,7 @@
 
 (cffi:defctype properties-id :uint32)
 
-(cffi:defcenum property-type
+(defcenum property-type
   :invalid
   :pointer
   :string

@@ -2,7 +2,7 @@
 
 (cffi:defctype keyboard-id :uint32)
 
-(cffi:defcenum scancode
+(defcenum scancode
   (:unknown 0)
   (:a 4)
   (:b 5)
@@ -253,7 +253,7 @@
   (:count 512))
 
 
-(cffi:defbitfield keycode
+(defbitfield keycode
   (:extended-mask #x20000000)
   (:scancode-mask #x40000000)
   (:unknown #x00000000)
@@ -514,7 +514,7 @@
   (:rhyper #x20000007)
   )
 
-(cffi:defbitfield (keymod :uint16)
+(defbitfield (keymod :uint16)
   (:none #x0000)
   (:lshift #x0001)
   (:rshift #x0002)

@@ -2,7 +2,7 @@
 
 (cffi:defctype sensor-id :uint32)
 
-(cffi:defcenum sensor-type 
+(defcenum sensor-type 
   (:invalid -1)
   :unknown
   :accel

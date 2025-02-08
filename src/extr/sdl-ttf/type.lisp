@@ -1,33 +1,33 @@
 (in-package :sdl3-ttf)
 
-(cffi:defbitfield font-style-flags 
+(defbitfield font-style-flags 
   (:normal        #x00)
   (:bold          #x01)
   (:italic        #x02)
   (:underline     #x04)
   (:strikethrough #x08))
 
-(cffi:defcenum hinting-flags
+(defcenum hinting-flags
   (:normal 0)
   :light
   :mono
   :none
   :light-subpixel)
 
-(cffi:defcenum horizontal-alignment
+(defcenum horizontal-alignment
   (:invalid -1)
   (:left)
   (:center)
   (:right))
 
-(cffi:defcenum direction
+(defcenum direction
  (:INVALID 0)
  (:LTR 4)
  :RTL
  :TTB
  :BTT)
 
-(cffi:defcenum image-type
+(defcenum image-type
   (:INVALID)
   (:ALPHA)
   (:COLOR)
@@ -116,12 +116,12 @@
 
 (export '(gpu-atlas-draw-sequence %atlas-texture %xy %uv %num-vertices %indices %image-type %next))
 
-(cffi:defcenum gpu-text-engine-winding
+(defcenum gpu-text-engine-winding
   (:invalid -1)
   :clockwise
   :counter-clockwise)
 
-(cffi:defbitfield sub-string-flags
+(defbitfield sub-string-flags
   (:direction-mask    #x000000ff)
   (:text-start        #x00000100)
   (:line-start        #x00000200)

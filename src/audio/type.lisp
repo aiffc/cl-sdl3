@@ -2,7 +2,7 @@
 
 (cffi:defctype audio-device-id :uint32)
 
-(cffi:defcenum audio-format
+(defcenum audio-format
   (:unknown  #x0000)
   (:u8       #x0008)
   (:s8       #x8008) 

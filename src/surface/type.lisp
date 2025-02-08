@@ -1,15 +1,15 @@
 (in-package :sdl3)
 
-(cffi:defcenum flip-mode
+(defcenum flip-mode
   :none
   :horizontal
   :vertical)
 
-(cffi:defcenum scale-mode
+(defcenum scale-mode
   :nearest
   :linear)
 
-(cffi:defbitfield surface-flags 
+(defbitfield surface-flags 
   (:preallocated #x1)
   (:lock-needed  #x2)
   (:locked       #x3)
