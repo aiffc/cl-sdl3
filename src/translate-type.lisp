@@ -90,7 +90,7 @@
   (let ((name (first-or-identity name-and-options))
         (keywords (mapcar #'first-or-identity enum-list)))
     `(eval-when (:compile-toplevel :load-toplevel :execute)
-       (defcenum ,name-and-options
+       (cffi:defcenum ,name-and-options
          ,@enum-list)
        (deftype ,name ()
          `(member ,,@keywords)))))
