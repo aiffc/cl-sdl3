@@ -1,5 +1,9 @@
 (in-package :sdl3)
 
+
+;; Provides better debugging experince
+#+darwin(setf trivial-main-thread:*on-error* #'invoke-debugger)
+
 (defmacro defmain-fun (name (argc argv) &body body)
   "ret[integer]
 name -> callback name
