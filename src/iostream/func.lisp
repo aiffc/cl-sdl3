@@ -1,73 +1,73 @@
 (in-package :sdl3)
 
-(defexport-fun ("SDL_IOFromFile" io-from-file) :pointer
+(defexport-fun "SDL_IOFromFile" :pointer
   (file :string)
   (mode :string))
 
-(defexport-fun ("SDL_IOFromMem" io-from-mem) :pointer
+(defexport-fun "SDL_IOFromMem" :pointer
   (mem :pointer)
   (size size-t))
 
-(defexport-fun ("SDL_IOFromConstMem" io-from-const-men) :pointer
+(defexport-fun "SDL_IOFromConstMem" :pointer
   (mem :pointer)
   (size size-t))
-(defexport-fun ("SDL_IOFromDynamicMem" io-from-dynamic-mem) :pointer)
+(defexport-fun "SDL_IOFromDynamicMem" :pointer)
 
-(defexport-fun ("SDL_OpenIO" open-io) :pointer
+(defexport-fun "SDL_OpenIO" :pointer
   (iface (:pointer (:struct io-stream-interface)))
   (userdata :pointer))
 
-(defexport-fun ("SDL_CloseIO" close-io) :bool
+(defexport-fun "SDL_CloseIO" :bool
   (context :pointer))
 
-(defexport-fun ("SDL_GetIOProperties" get-io-properties) properties-id
+(defexport-fun "SDL_GetIOProperties" properties-id
   (context :pointer))
 
-(defexport-fun ("SDL_GetIOStatus" get-io-status) io-status
+(defexport-fun "SDL_GetIOStatus" io-status
   (context :pointer))
 
-(defexport-fun ("SDL_GetIOSize" get-io-size) :int64
+(defexport-fun "SDL_GetIOSize" :int64
   (context :pointer))
 
-(defexport-fun ("SDL_SeekIO" seek-io) :int64
+(defexport-fun "SDL_SeekIO" :int64
   (context :pointer)
   (offset :int64)
   (whence io-whence))
 
-(defexport-fun ("SDL_TellIO" tell-io) :int64
+(defexport-fun "SDL_TellIO" :int64
   (context :pointer))
 
-(defexport-fun ("SDL_ReadIO" read-io) size-t
+(defexport-fun "SDL_ReadIO" size-t
   (context :pointer)
   (ptr :pointer)
   (size size-t))
 
-(defexport-fun ("SDL_WriteIO" write-io) size-t
+(defexport-fun "SDL_WriteIO" size-t
   (context :pointer)
   (ptr :pointer)
   (size size-t))
 
 ;; todo (defexport-fun ("SDL_IOprintf") size-t)
 
-(defexport-fun ("SDL_FlushIO" flush-io) :bool
+(defexport-fun "SDL_FlushIO" :bool
   (context :pointer))
 
-(defexport-fun ("SDL_LoadFile_IO" load-file-io) :pointer
+(defexport-fun "SDL_LoadFile_IO" :pointer
   (src :pointer)
   (data-size (:pointer size-t))
   (closeio :bool))
 
-(defexport-fun ("SDL_LoadFile" load-file) :pointer
+(defexport-fun "SDL_LoadFile" :pointer
   (src :pointer)
   (data-size (:pointer size-t)))
 
-(defexport-fun ("SDL_SaveFile_IO" save-file-io) :bool
+(defexport-fun "SDL_SaveFile_IO" :bool
   (src :pointer)
   (data :pointer)
   (data-size size-t)
   (closeio :bool))
 
-(defexport-fun ("SDL_SaveFile") :bool
+(defexport-fun "SDL_SaveFile" :bool
   (file :string)
   (data :pointer)
   (data-size size-t))
@@ -79,42 +79,42 @@
   (io :pointer)
   (value :int8))
 
-(defexport-fun ("SDL_ReadU16LE" read-u16le) :bool
+(defexport-fun "SDL_ReadU16LE" :bool
   (io :pointer)
   (value :uint16))
-(defexport-fun ("SDL_ReadS16LE" read-s16le) :bool
+(defexport-fun "SDL_ReadS16LE" :bool
   (io :pointer)
   (value :int16))
-(defexport-fun ("SDL_ReadU16BE" read-u16be) :bool
+(defexport-fun "SDL_ReadU16BE" :bool
   (io :pointer)
   (value :uint16))
-(defexport-fun ("SDL_ReadS16BE" read-s16be) :bool
+(defexport-fun "SDL_ReadS16BE" :bool
   (io :pointer)
   (value :int16))
 
-(defexport-fun ("SDL_ReadU32LE" read-u32le) :bool
+(defexport-fun "SDL_ReadU32LE" :bool
   (io :pointer)
   (value :uint32))
-(defexport-fun ("SDL_ReadS32LE" read-s32le) :bool
+(defexport-fun "SDL_ReadS32LE" :bool
   (io :pointer)
   (value :int32))
-(defexport-fun ("SDL_ReadU32BE" read-u32be) :bool
+(defexport-fun "SDL_ReadU32BE" :bool
   (io :pointer)
   (value :uint32))
-(defexport-fun ("SDL_ReadS32BE" read-s32be) :bool
+(defexport-fun "SDL_ReadS32BE" :bool
   (io :pointer)
   (value :int32))
 
-(defexport-fun ("SDL_ReadU64LE" read-u64le) :bool
+(defexport-fun "SDL_ReadU64LE" :bool
   (io :pointer)
   (value :uint64))
-(defexport-fun ("SDL_ReadS64LE" read-s64le) :bool
+(defexport-fun "SDL_ReadS64LE" :bool
   (io :pointer)
   (value :int64))
-(defexport-fun ("SDL_ReadU64BE" read-u64be) :bool
+(defexport-fun "SDL_ReadU64BE" :bool
   (io :pointer)
   (value :uint64))
-(defexport-fun ("SDL_ReadS64BE" read-s64be) :bool
+(defexport-fun "SDL_ReadS64BE" :bool
   (io :pointer)
   (value :int64))
 
@@ -125,41 +125,41 @@
   (io :pointer)
   (value :int8))
 
-(defexport-fun ("SDL_WriteU16LE" write-u16le) :bool
+(defexport-fun "SDL_WriteU16LE" :bool
   (io :pointer)
   (value :uint16))
-(defexport-fun ("SDL_WriteS16LE" write-s16le) :bool
+(defexport-fun "SDL_WriteS16LE" :bool
   (io :pointer)
   (value :int16))
-(defexport-fun ("SDL_WriteU16BE" write-u16be) :bool
+(defexport-fun "SDL_WriteU16BE" :bool
   (io :pointer)
   (value :uint16))
-(defexport-fun ("SDL_WriteS16BE" write-s16be) :bool
+(defexport-fun "SDL_WriteS16BE" :bool
   (io :pointer)
   (value :int16))
 
-(defexport-fun ("SDL_WriteU32LE" write-u32le) :bool
+(defexport-fun "SDL_WriteU32LE" :bool
   (io :pointer)
   (value :uint32))
-(defexport-fun ("SDL_WriteS32LE" write-s32le) :bool
+(defexport-fun "SDL_WriteS32LE" :bool
   (io :pointer)
   (value :int32))
-(defexport-fun ("SDL_WriteU32BE" write-u32be) :bool
+(defexport-fun "SDL_WriteU32BE" :bool
   (io :pointer)
   (value :uint32))
-(defexport-fun ("SDL_WriteS32BE" write-s32be) :bool
+(defexport-fun "SDL_WriteS32BE" :bool
   (io :pointer)
   (value :int32))
 
-(defexport-fun ("SDL_WriteU64LE" write-u64le) :bool
+(defexport-fun "SDL_WriteU64LE" :bool
   (io :pointer)
   (value :uint64))
-(defexport-fun ("SDL_WriteS64LE" write-s64le) :bool
+(defexport-fun "SDL_WriteS64LE" :bool
   (io :pointer)
   (value :int64))
-(defexport-fun ("SDL_WriteU64BE" write-u64be) :bool
+(defexport-fun "SDL_WriteU64BE" :bool
   (io :pointer)
   (value :uint64))
-(defexport-fun ("SDL_WriteS64BE" write-s64be) :bool
+(defexport-fun "SDL_WriteS64BE" :bool
   (io :pointer)
   (value :int64))

@@ -9,34 +9,34 @@
 (defexport-fun "SDL_GetJoysticks" (:pointer joystick-id)
   (count (:pointer :int)))
 
-(defexport-fun ("SDL_GetJoystickNameForID" get-joystick-name-for-id) :string
+(defexport-fun "SDL_GetJoystickNameForID" :string
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickPathForID" get-joystick-path-for-id) :string
+(defexport-fun "SDL_GetJoystickPathForID" :string
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickPlayerIndexForID" get-joystick-player-index-for-id) :int
+(defexport-fun "SDL_GetJoystickPlayerIndexForID" :int
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickGUIDForID" get-joystick-guid-for-id) (:struct guid)
+(defexport-fun "SDL_GetJoystickGUIDForID" (:struct guid)
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickVendorForID" get-joystick-vendor-for-id) :uint16
+(defexport-fun "SDL_GetJoystickVendorForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickProductForID" get-joystick-product-for-id) :uint16
+(defexport-fun "SDL_GetJoystickProductForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickProductVersionForID" get-joystick-product-version-for-id) :uint16
+(defexport-fun "SDL_GetJoystickProductVersionForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickTypeForID" get-joystick-type-for-id) joystick-type
+(defexport-fun "SDL_GetJoystickTypeForID" joystick-type
   (instance-id joystick-id))
 
 (defexport-fun "SDL_OpenJoystick" :pointer
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetJoystickFromID" get-joystick-from-id) :pointer
+(defexport-fun "SDL_GetJoystickFromID" :pointer
   (instance-id joystick-id))
 
 (defexport-fun "SDL_GetJoystickFromPlayerIndex" :pointer
@@ -104,7 +104,7 @@
   (joystick :pointer)
   (player-index :int))
 
-(defexport-fun ("SDL_GetJoystickGUID" get-joystick-guid) (:struct guid)
+(defexport-fun "SDL_GetJoystickGUID" (:struct guid)
   (joystick :pointer))
 
 (defexport-fun "SDL_GetJoystickVendor" :uint16
@@ -135,7 +135,7 @@
 (defexport-fun "SDL_JoystickConnected" :bool
   (joystick :pointer))
 
-(defexport-fun ("SDL_GetJoystickID" get-joystick-id) joystick-id
+(defexport-fun "SDL_GetJoystickID" joystick-id
   (joystick :pointer))
 
 (defexport-fun "SDL_GetNumJoystickAxes" :int
@@ -192,7 +192,7 @@
   (right-rumble :uint16)
   (duration-ms :uint32))
 
-(defexport-fun ("SDL_SetJoystickLED" get-joystick-led) :bool
+(defexport-fun "SDL_SetJoystickLED" :bool
   (joystick :pointer)
   (red :uint8)
   (green :uint8)

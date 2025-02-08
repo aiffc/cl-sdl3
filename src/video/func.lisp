@@ -82,7 +82,7 @@
   (window :pointer)
   (mode (:pointer (:struct display-mode))))
 
-(defexport-fun ("SDL_GetWindowICCProfile" get-window-icc-profile) :pointer
+(defexport-fun "SDL_GetWindowICCProfile" :pointer
   (window :pointer)
   (size (:pointer size-t)))
 
@@ -110,10 +110,10 @@
 (defexport-fun "SDL_CreateWindowWithProperties" :pointer
   (props properties-id))
 
-(defexport-fun ("SDL_GetWindowID" get-window-id) window-id
+(defexport-fun "SDL_GetWindowID" window-id
   (window :pointer))
 
-(defexport-fun ("SDL_GetWindowFromID" get-window-from-id) :pointer
+(defexport-fun "SDL_GetWindowFromID" :pointer
   (id window-id))
 
 (defexport-fun "SDL_GetWindowParent" :pointer
@@ -345,64 +345,64 @@
 
 (defexport-fun "SDL_DisableScreenSaver" :bool)
 
-(defexport-fun ("SDL_GL_LoadLibrary" gl-load-library) :bool
+(defexport-fun "SDL_GL_LoadLibrary" :bool
   (path :string))
 
-(defexport-fun ("SDL_GL_GetProcAddress" gl-get-proce-address) :pointer
+(defexport-fun "SDL_GL_GetProcAddress" :pointer
   (proc :string))
 
-(defexport-fun ("SDL_EGL_GetProcAddress" egl-get-proce-address) :pointer
+(defexport-fun "SDL_EGL_GetProcAddress" :pointer
   (proc :string))
 
-(defexport-fun ("SDL_GL_UnloadLibrary" gl-unload-library) :void)
+(defexport-fun "SDL_GL_UnloadLibrary" :void)
 
-(defexport-fun ("SDL_GL_ExtensionSupported" gl-extensions-supported) :bool
+(defexport-fun "SDL_GL_ExtensionSupported" :bool
   (extension :string))
 
-(defexport-fun ("SDL_GL_ResetAttributes" gl-reset-attributes) :void)
+(defexport-fun "SDL_GL_ResetAttributes" :void)
 
-(defexport-fun ("SDL_GL_SetAttribute" gl-set-attribute) :bool
+(defexport-fun "SDL_GL_SetAttribute" :bool
   (attr glattr)
   (value :int))
 
-(defwrap-fun ("SDL_GL_GetAttribute" gl-get-attribute) :bool
+(defwrap-fun "SDL_GL_GetAttribute" :bool
     (t t)
   (attr glattr)
   (value (:pointer :int) :direction :output))
 
-(defexport-fun ("SDL_GL_CreateContext" gl-create-context) :pointer
+(defexport-fun "SDL_GL_CreateContext" :pointer
   (window :pointer))
 
-(defexport-fun ("SDL_GL_MakeCurrent" gl-make-current) :bool
+(defexport-fun "SDL_GL_MakeCurrent" :bool
   (window :pointer)
   (context :pointer))
 
-(defexport-fun ("SDL_GL_GetCurrentWindow" gl-get-current-window) :pointer)
+(defexport-fun "SDL_GL_GetCurrentWindow" :pointer)
 
-(defexport-fun ("SDL_GL_GetCurrentContext" gl-get-current-context) :pointer)
+(defexport-fun "SDL_GL_GetCurrentContext" :pointer)
 
-(defexport-fun ("SDL_EGL_GetCurrentDisplay" egl-get-current-display) :pointer)
+(defexport-fun "SDL_EGL_GetCurrentDisplay" :pointer)
 
-(defexport-fun ("SDL_EGL_GetCurrentConfig" egl_-get-current-config) :pointer)
+(defexport-fun "SDL_EGL_GetCurrentConfig" :pointer)
 
-(defexport-fun ("SDL_EGL_GetWindowSurface" egl-get-window-surface) :pointer
+(defexport-fun "SDL_EGL_GetWindowSurface" :pointer
   (window :pointer))
 
-(defexport-fun ("SDL_EGL_SetAttributeCallbacks" egl-set-attribute-callbacks) :void
+(defexport-fun "SDL_EGL_SetAttributeCallbacks" :void
   (platformAttribCallback :pointer)
   (surfaceAttribCallback :pointer)
   (contextAttribCallback :pointer)
   (data :pointer))
 
-(defexport-fun ("SDL_GL_SetSwapInterval" gl-set-interval) :bool
+(defexport-fun "SDL_GL_SetSwapInterval" :bool
   (interval :int))
 
-(defwrap-fun ("SDL_GL_GetSwapInterval" gl-get-swap-interval) :bool
+(defwrap-fun "SDL_GL_GetSwapInterval" :bool
     (t t)
   (interval (:pointer :int) :direction :output))
 
-(defexport-fun ("SDL_GL_SwapWindow" gl-swap-window) :bool
+(defexport-fun "SDL_GL_SwapWindow" :bool
   (window :pointer))
 
-(defexport-fun ("SDL_GL_DestroyContext" gl-destroy-context) :bool
+(defexport-fun "SDL_GL_DestroyContext" :bool
   (content :pointer))

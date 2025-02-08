@@ -7,7 +7,7 @@
 (defexport-fun "SDL_GetAsyncIOSize" :int64
   (asyncio :pointer))
 
-(defexport-fun ("SDL_ReadAsyncIO" read-async-io) :bool
+(defexport-fun "SDL_ReadAsyncIO" :bool
   (asyncio :pointer)
   (ptr :pointer)
   (offset :uint64)
@@ -15,7 +15,7 @@
   (queue :pointer)
   (userdata :pointer))
 
-(defexport-fun ("SDL_WriteAsyncIO" write-async-io) :bool
+(defexport-fun "SDL_WriteAsyncIO" :bool
   (asyncio :pointer)
   (ptr :pointer)
   (offset :uint64)
@@ -23,7 +23,7 @@
   (queue :pointer)
   (userdata :pointer))
 
-(defexport-fun ("SDL_CloseAsyncIO" close-async-io) :bool
+(defexport-fun "SDL_CloseAsyncIO" :bool
   (asyncio :pointer)
   (fluse :bool)
   (queue :pointer)

@@ -5,7 +5,7 @@
 (defexport-fun "SDL_GetMice" (:pointer mouse-id)
   (count (:pointer :int)))
 
-(defexport-fun ("SDL_GetMouseNameForID" get-mouse-name-for-id) :string
+(defexport-fun "SDL_GetMouseNameForID" :string
   (id mouse-id))
 
 (defexport-fun "SDL_GetMouseFocus" :pointer)

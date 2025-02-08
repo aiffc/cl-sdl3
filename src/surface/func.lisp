@@ -56,27 +56,27 @@
 (defexport-fun "SDL_UnlockSurface" :void
   (surface (:pointer (:struct surface))))
 
-(defexport-fun ("SDL_LoadBMP_IO" load-bmp-io) (:pointer (:struct surface))
+(defexport-fun "SDL_LoadBMP_IO" (:pointer (:struct surface))
   (src :pointer)
   (closeio :bool))
 
-(defexport-fun ("SDL_LoadBMP" load-bmp) (:pointer (:struct surface))
+(defexport-fun "SDL_LoadBMP" (:pointer (:struct surface))
   (file :string))
 
-(defexport-fun ("SDL_SaveBMP_IO" save-bmp-io) :bool
+(defexport-fun "SDL_SaveBMP_IO" :bool
   (surface (:pointer (:struct surface)))
   (dst :pointer)
   (closeio :bool))
 
-(defexport-fun ("SDL_SaveBMP" save-bmp) :bool
+(defexport-fun "SDL_SaveBMP" :bool
   (surface (:pointer (:struct surface)))
   (file :string))
 
-(defexport-fun ("SDL_SetSurfaceRLE" set-surface-rle) :bool
+(defexport-fun "SDL_SetSurfaceRLE" :bool
   (surface (:pointer (:struct surface)))
   (enabled :bool))
 
-(defexport-fun ("SDL_SurfaceHasRLE" surface-has-rle) :bool
+(defexport-fun "SDL_SurfaceHasRLE" :bool
   (surface (:pointer (:struct surface))))
 
 (defexport-fun "SDL_SetSurfaceColorKey" :bool
@@ -274,13 +274,13 @@
   (dsurface (:pointer (:struct surface)))
   (drect (:pointer (:struct rect)) :direction :input))
 
-(defexport-fun ("SDL_MapSurfaceRGB" map-surface-rgb) :uint32
+(defexport-fun "SDL_MapSurfaceRGB" :uint32
   (surface (:pointer (:struct surface)))
   (r :uint8)
   (g :uint8)
   (b :uint8))
 
-(defexport-fun ("SDL_MapSurfaceRGBA" map-surface-rgba) :uint32
+(defexport-fun "SDL_MapSurfaceRGBA" :uint32
   (surface (:pointer (:struct surface)))
   (r :uint8)
   (g :uint8)

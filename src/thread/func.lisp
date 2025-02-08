@@ -11,9 +11,9 @@
 (defexport-fun "SDL_GetThreadName" :string
   (thread :pointer))
 
-(defexport-fun ("SDL_GetCurrentThreadID" get-current-thread-id) thread-id)
+(defexport-fun "SDL_GetCurrentThreadID" thread-id)
 
-(defexport-fun ("SDL_GetThreadID" get-thread-id) thread-id
+(defexport-fun "SDL_GetThreadID" thread-id
   (thread :pointer))
 
 (defexport-fun "SDL_SetCurrentThreadPriority" :bool
@@ -29,13 +29,13 @@
 (defexport-fun "SDL_DetachThread" :void
   (thread :pointer))
 
-(defexport-fun ("SDL_GetTLS" get-tls) :pointer
+(defexport-fun "SDL_GetTLS" :pointer
   (id :pointer))
 
-(defexport-fun ("SDL_SetTLS" set-tls) :bool
+(defexport-fun "SDL_SetTLS" :bool
   (id :pointer)
   (value :pointer)
   (destructor :pointer))
 
 
-(defexport-fun ("SDL_CleanupTLS" cleanup-tls) :void)
+(defexport-fun "SDL_CleanupTLS" :void)

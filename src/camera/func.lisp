@@ -30,7 +30,7 @@
 (defexport-fun "SDL_GetCameraPermissionState" :int
   (camera :pointer))
 
-(defexport-fun ("SDL_GetCameraID" get-camera-id) camera-id
+(defexport-fun "SDL_GetCameraID" camera-id
   (camera :pointer))
 
 (defexport-fun "SDL_GetCameraProperties" properties-id

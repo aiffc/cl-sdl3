@@ -5,28 +5,28 @@
 	 :pointer
 	 :uint64))
 
-(defexport-fun ("SDL_Vulkan_LoadLibrary" vulkan-load-library) :bool
+(defexport-fun "SDL_Vulkan_LoadLibrary" :bool
   (path :string))
 
-(defexport-fun ("SDL_Vulkan_GetVkGetInstanceProcAddr" vulkan-get-vk-get-instance-proc-addr)  :pointer)
+(defexport-fun "SDL_Vulkan_GetVkGetInstanceProcAddr"  :pointer)
 
-(defexport-fun ("SDL_Vulkan_UnloadLibrary" vulkan-unload-library) :void)
+(defexport-fun "SDL_Vulkan_UnloadLibrary" :void)
 
-(defexport-fun ("SDL_Vulkan_GetInstanceExtensions" vulkan-get-instance-extensions) (:pointer :string)
+(defexport-fun "SDL_Vulkan_GetInstanceExtensions" (:pointer :string)
   (count :uint32))
 
-(defexport-fun ("SDL_Vulkan_CreateSurface" vulkan-create-surface) :bool
+(defexport-fun "SDL_Vulkan_CreateSurface" :bool
   (window :pointer)
   (instance :pointer)
   (allocator :pointer)
   (surface (:pointer vk-surface-khr)))
 
-(defexport-fun ("SDL_Vulkan_DestroySurface" vulkan-destroy-surface) :void
+(defexport-fun "SDL_Vulkan_DestroySurface" :void
   (instance :pointer)
   (surface vk-surface-khr)
   (allocator :pointer))
 
-(defexport-fun ("SDL_Vulkan_GetPresentationSupport" vulkan-get-presentation-support) :bool
+(defexport-fun "SDL_Vulkan_GetPresentationSupport" :bool
   (instance :pointer)
   (physical-device :pointer)
   (queue-family-index :uint32))

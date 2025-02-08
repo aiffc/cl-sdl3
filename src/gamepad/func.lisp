@@ -3,7 +3,7 @@
 (defexport-fun "SDL_AddGamepadMapping" :int
   (mapping :string))
 
-(defexport-fun ("SDL_AddGamepadMappingsFromIO" add-gamepad-mappings-from-io) :int
+(defexport-fun "SDL_AddGamepadMappingsFromIO" :int
   (src :pointer)
   (closeio :bool))
 
@@ -15,7 +15,7 @@
 (defexport-fun "SDL_GetGamepadMappings" (:pointer :string)
   (count (:pointer :int)))
 
-(defexport-fun ("SDL_GetGamepadMappingForGUID" get-gamepad-mapping-for-guid) :string
+(defexport-fun "SDL_GetGamepadMappingForGUID" :string
   (guid (:struct guid)))
 
 (defexport-fun "SDL_GetGamepadMapping" :string
@@ -33,40 +33,40 @@
 (defexport-fun "SDL_IsGamepad" :bool
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadNameForID" get-gamepad-name-for-id) :string
+(defexport-fun "SDL_GetGamepadNameForID" :string
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadPathForID" get-gamepad-path-for-id) :string
+(defexport-fun "SDL_GetGamepadPathForID" :string
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadPlayerIndexForID" get-gamepad-player-index-for-id) :int
+(defexport-fun "SDL_GetGamepadPlayerIndexForID" :int
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadGUIDForID" get-gamepad-guid-for-id) (:struct guid)
+(defexport-fun "SDL_GetGamepadGUIDForID" (:struct guid)
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadVendorForID" get-gamepad-vendor-for-id) :uint16
+(defexport-fun "SDL_GetGamepadVendorForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadProductForID" get-gamepad-product-for-id) :uint16
+(defexport-fun "SDL_GetGamepadProductForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadProductVersionForID" get-gamepad-product-version-for-id) :uint16
+(defexport-fun "SDL_GetGamepadProductVersionForID" :uint16
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadTypeForID" get-gamepad-type-for-id) gamepad-type
+(defexport-fun "SDL_GetGamepadTypeForID" gamepad-type
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetRealGamepadTypeForID" get-real-gamepad-type-for-id) gamepad-type
+(defexport-fun "SDL_GetRealGamepadTypeForID" gamepad-type
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadMappingForID" get-gamepad-mapping-for-id) :string
+(defexport-fun "SDL_GetGamepadMappingForID" :string
   (instance-id joystick-id))
 
 (defexport-fun "SDL_OpenGamepad" :pointer
   (instance-id joystick-id))
 
-(defexport-fun ("SDL_GetGamepadFromID" get-gamepad-from-id) :pointer
+(defexport-fun "SDL_GetGamepadFromID" :pointer
   (instance-id joystick-id))
 
 (defexport-fun "SDL_GetGamepadFromPlayerIndex" :pointer
@@ -75,7 +75,7 @@
 (defexport-fun "SDL_GetGamepadProperties" properties-id
   (gamepad :pointer))
 
-(defexport-fun ("SDL_GetGamepadID" get-gamepad-id) joystick-id
+(defexport-fun "SDL_GetGamepadID" joystick-id
   (gamepad :pointer))
 
 (defexport-fun "SDL_GetGamepadName" :string
@@ -131,8 +131,7 @@
 (defexport-fun "SDL_SetGamepadEventsEnabled" :void
   (enabled :bool))
 
-(defexport-fun "SDL_GamepadEventsEnabled" :bool
-  )
+(defexport-fun "SDL_GamepadEventsEnabled" :bool)
 
 (defexport-fun "SDL_GetGamepadBindings" (:pointer (:pointer (:struct gamepad-binding)))
   (gamepad :pointer)
@@ -234,7 +233,7 @@
   (right-rumble :uint16)
   (duration-ms :uint32))
 
-(defexport-fun ("SDL_SetGamepadLED" set-gamepad-led) :bool
+(defexport-fun "SDL_SetGamepadLED" :bool
   (gamepad :pointer)
   (red :uint8)
   (green :uint8)

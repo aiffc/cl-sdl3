@@ -3,16 +3,16 @@
 (defexport-fun "SDL_GetHaptics" (:pointer haptic-id)
   (count (:pointer :int)))
 
-(defexport-fun ("SDL_GetHapticNameForID" get-haptic-name-for-id) :string
+(defexport-fun "SDL_GetHapticNameForID" :string
   (instance-id haptic-id))
 
 (defexport-fun "SDL_OpenHaptic" :pointer
   (instance-id haptic-id))
 
-(defexport-fun ("SDL_GetHapticFromID" get-haptic-from-id) :pointer
+(defexport-fun "SDL_GetHapticFromID" :pointer
   (instance-id haptic-id))
 
-(defexport-fun ("SDL_GetHapticID" get-haptic-id) haptic-id
+(defexport-fun "SDL_GetHapticID" haptic-id
   (haptic :pointer))
 
 (defexport-fun "SDL_GetHapticName" :string

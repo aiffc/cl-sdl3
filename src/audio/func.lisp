@@ -196,7 +196,7 @@
   (callback :pointer)
   (userdata :pointer))
 
-(defwrap-fun ("SDL_LoadWAV_IO" load-wav-io) :bool
+(defwrap-fun "SDL_LoadWAV_IO" :bool
     (t t)
   (src :pointer)
   (close-io :bool)
@@ -204,7 +204,7 @@
   (buf (:pointer (:pointer :uint8)) :direction :output)
   (len (:pointer :uint32) :direction :output))
 
-(defwrap-fun ("SDL_LoadWAV" load-wav) :bool
+(defwrap-fun "SDL_LoadWAV" :bool
     (t t)
   (path :string)
   (spec (:pointer (:struct audio-spec)) :direction :output)

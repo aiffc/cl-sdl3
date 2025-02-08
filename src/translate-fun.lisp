@@ -9,15 +9,29 @@ If so, return that prefix"
 
 (defun sdl->lsp (str)
   (let ((name (subseq str 4 (length str)))
-        (special-substrings (list "GPU" "YUV" "NV" "IO" "RW" "GUID" "SF"
-                                  "AVIF" "ICO" "CUR" "BMP" "GIF" "JPG" "JXL" "LBM" "PCX" "PNG" "PNM" "SVG" "QOI" "TGA" "TIF" "XCF" "XPM" "XV" "WEBP"))
-        char
+        (special-substrings (list "GPU" "YUV" "NV" "IO" "RW" "GUID" "SF" 
+				  "CPU" "WAV" "ID" "GDK" "LED" "URL" 
+				  "RGBA" "RGB" "RLE" "TLS" "NS" "ICC" "GL"
+				  "EGL" "AVIF" "ICO" "CUR" "BMP" "GIF" "JPG"
+				  "JXL" "LBM" "PCX" "PNG" "PNM" "SVG" "QOI"
+				  "TGA" "TIF" "XCF" "XPM" "XV" "WEBP"
+				  "MMX" "SSE42" "SSE41" "SSE3" "SSE2" "SSE"
+				  "ARMSIMD" "AVX512F" "AVX2" "AVX"
+				  "NEON" "LSX" "LASX" "RAM" "SIMD"
+				  "U16LE" "U16BE" "S16LE" "S16BE" 
+				  "U32LE" "U32BE" "S32LE" "S32BE" 
+				  "U64LE" "U64BE" "S64LE" "S64BE"))
+        (pre-char-is-underline nil)
+	char
         prefix-match)
     (with-output-to-string (str)
       (do ((i 0 (1+ i)))
           ((>= i (length name)))
         (setf char (char name i))
-        (cond ((or (lower-case-p char)
+        (cond ((char= #\_ char)
+	       (write-char #\- str)
+	       (setf pre-char-is-underline t))
+	      ((or (lower-case-p char)
                    (digit-char-p char)
                    (char= #\- char))
                (write-char char str))
@@ -25,12 +39,16 @@ If so, return that prefix"
                     (setf prefix-match (any-prefix-p (subseq name i)
                                                      special-substrings)))
                (unless (eql i 0)
-                 (write-char #\- str))
+		 (if pre-char-is-underline
+		   (setf pre-char-is-underline nil)
+		   (write-char #\- str)))
                (write-string (string-downcase prefix-match) str)
                (incf i (1- (length prefix-match))))
               ((upper-case-p char)
-               (unless (eql i 0)
-                 (write-char #\- str))
+               (unless (eql i 0) 
+		 (if pre-char-is-underline
+		     (setf pre-char-is-underline nil)
+		     (write-char #\- str)))
                (write-char (char-downcase char) str))
               (t (error "Unable to handle at char: ~a" char)))))))
 

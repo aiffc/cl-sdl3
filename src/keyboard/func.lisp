@@ -5,7 +5,7 @@
 (defexport-fun "SDL_GetKeyboards" keyboard-id
   (count (:pointer :int)))
 
-(defexport-fun ("SDL_GetKeyboardNameForID" get-keyboard-name-fro-id) :string
+(defexport-fun "SDL_GetKeyboardNameForID" :string
   (instance-id keyboard-id))
 
 (defexport-fun "SDL_GetKeyboardFocus" :pointer)

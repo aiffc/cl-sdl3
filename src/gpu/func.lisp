@@ -464,9 +464,9 @@
   (height :uint32)
   (depth-or-layer-count :uint32))
 
-(defexport-fun ("SDL_GDKSuspendGPU" gdk-suspend-gpu) :void
+(defexport-fun "SDL_GDKSuspendGPU" :void
   (device :pointer))
 
-(defexport-fun ("SDL_GDKResumeGPU" gdk-resump-gpu) :void
+(defexport-fun "SDL_GDKResumeGPU" :void
   (device :pointer))
 

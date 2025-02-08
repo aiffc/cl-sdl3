@@ -1,11 +1,11 @@
 (in-package :sdl3)
 
-(defexport-fun ("SDL_GUIDToString" guid-to-string) :void
+(defexport-fun "SDL_GUIDToString" :void
   (guid (:struct guid))
   (psz-guid :string)
   (cb-guid :int))
 
-(defexport-fun ("SDL_StringToGUID" string-to-guid) (:struct guid)
+(defexport-fun "SDL_StringToGUID" (:struct guid)
   (pch-guid :string))
 
 

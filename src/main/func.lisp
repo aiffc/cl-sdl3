@@ -23,4 +23,4 @@
 
 (defexport-fun "SDL_UnregisterApp" :void)
 
-(defexport-fun ("SDL_GDKSuspendComplete" gdk-suspend-complete) :void)
+(defexport-fun "SDL_GDKSuspendComplete" :void)
