@@ -15,7 +15,7 @@
                      ((or (eql type :enum)
                           (eql type :bitfield)
                           (eql type :typedef))
-                      (setf (get symbol :doc) docstring))
+                      (setf (documentation symbol 'type) docstring))
                      ((eql type :struct)
                       (setf (documentation symbol 'type) docstring))
                      (t

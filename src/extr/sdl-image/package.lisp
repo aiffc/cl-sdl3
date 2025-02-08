@@ -1,3 +1,3 @@
 (defpackage :sdl3-image
-  (:use #:cl))
-
+  (:use #:cl)
+  (:import-from :sdl3 :defcenum :defbitfield))
