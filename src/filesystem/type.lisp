@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum folder 
+(defcenum folder 
   :home         
   :desktop      
   :documents    
@@ -14,7 +14,7 @@
   :videos       
   :count)
 
-(cffi:defcenum path-type
+(defcenum path-type
   :none
   :file
   :directory
@@ -27,5 +27,5 @@
   (modify-time stime)
   (access-time stime))
 
-(cffi:defbitfield glob-flags
+(defbitfield glob-flags
   (:glob-caseinsensitive 1))

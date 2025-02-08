@@ -10,7 +10,7 @@
   (framerate-numerator :int)
   (framerate-denominator :int))
 
-(cffi:defcenum camera-position
+(defcenum camera-position
   :unknown
   :front-facing
   :back-facing)

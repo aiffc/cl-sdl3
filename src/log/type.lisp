@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum log-priority
+(defcenum log-priority
  :invalid
  :trace
  :verbose

@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defbitfield init-flags
+(defbitfield init-flags
   (:audio      #x00000010)
   (:video      #x00000020)
   (:joystick   #x00000200)

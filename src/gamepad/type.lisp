@@ -2,7 +2,7 @@
 
 (cffi:defctype joystick-id :uint32)
 
-(cffi:defcenum gamepad-type
+(defcenum gamepad-type
   (:unknown 0)
   :standard
   :xbox360
@@ -16,13 +16,13 @@
   :nintendo-switch-joycon-pair
   :count)
 
-(cffi:defcenum joystick-connection-state
+(defcenum joystick-connection-state
   (:invalid  -1)
   :unknown
   :wired
   :wireless)
 
-(cffi:defcenum gamepad-binding-type
+(defcenum gamepad-binding-type
   (:none 0)
   :button
   :axis
@@ -40,7 +40,7 @@
   (axis (:struct %gamepad-biding-input-axis))
   (hat (:struct %gamepad-biding-input-hat)))
 
-(cffi:defcenum gamepad-button
+(defcenum gamepad-button
   (:invalid -1)
   :south
   :east
@@ -69,7 +69,7 @@
   :misc5
   :misc6
   :count)
-(cffi:defcenum gamepad-axis
+(defcenum gamepad-axis
   (:invalid -1)
   :leftx
   :lefty
@@ -90,7 +90,7 @@
   (output-type gamepad-binding-type)
   (output (:union %gamepad-binding-output)))
 
-(cffi:defcenum gamepad-button-label
+(defcenum gamepad-button-label
   :unknown
   :a
   :b

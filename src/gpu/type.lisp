@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defbitfield gpu-shader-format
+(defbitfield gpu-shader-format
   (:invalid  #x0)
   (:private  #x1)
   (:spirv    #x2)
@@ -25,7 +25,7 @@
   (threadcount-z :uint32)
   (props properties-id))
 
-(cffi:defcenum gpu-vertex-input-rate
+(defcenum gpu-vertex-input-rate
   :vertex
   :instance)
 
@@ -35,7 +35,7 @@
   (input-rate gpu-vertex-input-rate)
   (instance-step-rate :uint32))
 
-(cffi:defcenum gpu-vertex-element-format
+(defcenum gpu-vertex-element-format
   :invalid
   :int
   :int2
@@ -80,23 +80,23 @@
   (vertex-attributes (:pointer (:struct gpu-vertex-attribute)))
   (num-vertex-attributes :uint32))
 
-(cffi:defcenum gpu-primitive-type
+(defcenum gpu-primitive-type
   :trianglelist
   :trianglestrip
   :linelist
   :linestrip
   :pointlist)
 
-(cffi:defcenum gpu-fill-mode
+(defcenum gpu-fill-mode
   :fill
   :line)
 
-(cffi:defcenum gpu-cull-mode
+(defcenum gpu-cull-mode
   :none
   :front
   :back)
 
-(cffi:defcenum gpu-front-face
+(defcenum gpu-front-face
   :counter-clockwise
   :clockwise)
 
@@ -112,7 +112,7 @@
   (padding1 :uint8)
   (padding2 :uint8))
 
-(cffi:defcenum gpu-sample-count
+(defcenum gpu-sample-count
   :1
   :2
   :4
@@ -126,7 +126,7 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcenum gpu-compare-op
+(defcenum gpu-compare-op
   :invalid
   :never
   :less
@@ -137,7 +137,7 @@
   :greater-or-equal
   :always)
 
-(cffi:defcenum gpu-stencil-op
+(defcenum gpu-stencil-op
   :invalid
   :keep
   :zero
@@ -167,7 +167,7 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcenum gpu-texture-format
+(defcenum gpu-texture-format
   :invalid
   :a8-unorm
   :r8-unorm
@@ -274,7 +274,7 @@
   :astc-12x10-float
   :astc-12x12-float)
 
-(cffi:defcenum gpu-blend-factor
+(defcenum gpu-blend-factor
   :invalid
   :zero
   :one
@@ -290,7 +290,7 @@
   :one-minus-constant-color
   :src-alpha-saturate)
 
-(cffi:defcenum gpu-blend-op
+(defcenum gpu-blend-op
  :invalid
  :add
  :subtract
@@ -298,7 +298,7 @@
  :min
  :max)
 
-(cffi:defbitfield color-component-flags
+(defbitfield color-component-flags
   (:r #x1)
   (:g #x2)
   (:b #x4)
@@ -341,15 +341,15 @@
   (target-info (:struct gpu-graphics-pipeline-target-info))
   (props properties-id))
 
-(cffi:defcenum gpu-filter
+(defcenum gpu-filter
   :nearest
   :linear)
 
-(cffi:defcenum gpu-sampler-mipmap-mode
+(defcenum gpu-sampler-mipmap-mode
   :nearest
   :linear)
 
-(cffi:defcenum gpu-sampler-address-mode
+(defcenum gpu-sampler-address-mode
   :repeat
   :mirrored-repeat
   :clamp-to-edge)
@@ -372,7 +372,7 @@
   (padding2 :uint8)
   (props properties-id))
 
-(cffi:defcenum gpu-shader-stage
+(defcenum gpu-shader-stage
   :vertex
   :fragment)
 
@@ -388,14 +388,14 @@
   (num-uniform-buffers :uint32)
   (props properties-id))
 
-(cffi:defcenum gpu-texture-type
+(defcenum gpu-texture-type
   :2d
   :2d-array
   :3d
   :cube
   :cube-array)
 
-(cffi:defbitfield gpu-texture-usage-flags
+(defbitfield gpu-texture-usage-flags
   (:sampler                                 #x1)
   (:color-target                            #x2)
   (:depth-stencil-target                    #x4)
@@ -415,7 +415,7 @@
   (sample-count gpu-sample-count)
   (props properties-id))
 
-(cffi:defbitfield gpu-buffer-usage-flags
+(defbitfield gpu-buffer-usage-flags
   (:vertex                      #x1)
   (:index                       #x2)
   (:indirect                    #x4)
@@ -428,7 +428,7 @@
   (size :uint32)
   (props properties-id))
 
-(cffi:defcenum gpu-transfer-buffer-usage
+(defcenum gpu-transfer-buffer-usage
   :upload
   :download)
 
@@ -437,12 +437,12 @@
   (size :uint32)
   (props properties-id))
 
-(cffi:defcenum gpu-load-op
+(defcenum gpu-load-op
   :load
   :clear
   :dont-care)
 
-(cffi:defcenum gpu-store-op
+(defcenum gpu-store-op
   :load
   :dont-care
   :reslove
@@ -487,7 +487,7 @@
   (buffer :pointer)
   (offset :uint32))
 
-(cffi:defcenum gpu-index-element-size
+(defcenum gpu-index-element-size
   :16bit
   :32bit)
 
@@ -570,13 +570,13 @@
   (padding2 :uint8)
   (padding3 :uint8))
 
-(cffi:defcenum gpu-swapchain-composition
+(defcenum gpu-swapchain-composition
   :sdr
   :sdr-linear
   :hdr-extended-linear
   :hdr10-st2084)
 
-(cffi:defcenum gpu-present-mode
+(defcenum gpu-present-mode
   :vsync
   :immediate
   :mailbox)

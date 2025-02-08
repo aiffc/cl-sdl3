@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum assert-state 
+(defcenum assert-state 
   :retry
   :break
   :abort

@@ -5,7 +5,7 @@
   (reserved :uint32)
   (timestamp :uint64))
 
-(cffi:defcenum event-type
+(defcenum event-type
   (:first 0)
   (:quit #x100)
   :terminating
@@ -220,7 +220,7 @@
   (x :float)
   (y :float))
 
-(cffi:defcenum mouse-wheel-direction
+(defcenum mouse-wheel-direction
   :normal
   :flipped)
 
@@ -404,7 +404,7 @@
   (window-id window-id)
   (which pen-id))
 
-(cffi:defbitfield pen-input-flags
+(defbitfield pen-input-flags
   (:down #x1)
   (:button-1 #x2)
   (:button-2 #x4)
@@ -447,7 +447,7 @@
   (button :uint8)
   (down :bool))
 
-(cffi:defcenum pen-axis
+(defcenum pen-axis
   :pressure
   :xtilt
   :ytilt
@@ -535,7 +535,7 @@
   (padding :uint8 :count 128))
 (export 'event)
 
-(cffi:defcenum event-action 
+(defcenum event-action 
   :addevent
   :peekevent
   :getevent)

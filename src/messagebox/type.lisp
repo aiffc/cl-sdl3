@@ -1,13 +1,13 @@
 (in-package :sdl3)
 
-(cffi:defbitfield message-box-flags 
+(defbitfield message-box-flags 
   (:messagebox-error                    #x00000010)
   (:messagebox-warning                  #x00000020)
   (:messagebox-information              #x00000040)
   (:messagebox-buttons-left-to-right    #x00000080)
   (:messagebox-buttons-right-to-left    #x00000100))
 
-(cffi:defbitfield message-box-button-flags
+(defbitfield message-box-button-flags
   (:messagebox-button-returnkey-default #x00000001)
   (:messagebox-button-escapekey-default #x00000002))
 
@@ -16,7 +16,7 @@
   (g :uint8)
   (b :uint8))
 
-(cffi:defcenum message-box-color-type 
+(defcenum message-box-color-type 
   :messagebox-color-background
   :messagebox-color-text
   :messagebox-color-button-border

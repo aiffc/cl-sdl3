@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defcenum joystick-type
+(defcenum joystick-type
   :unknown
   :gamepad
   :wheel
@@ -13,7 +13,7 @@
   :throttle
   :count)
 
-(cffi:defcenum joystick-connection-state
+(defcenum joystick-connection-state
   (:invalid -1)
   :unknown
   :wired

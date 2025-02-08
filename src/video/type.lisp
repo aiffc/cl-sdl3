@@ -2,14 +2,14 @@
 
 (cffi:defctype window-id :uint32)
 
-(cffi:defcenum system-theme
+(defcenum system-theme
   :unknown
   :light
   :dark)
 
 (cffi:defctype display-id :uint32)
 
-(cffi:defcenum display-operation
+(defcenum display-operation
   :unknown
   :landscape
   :landscape_flipped
@@ -27,7 +27,7 @@
   (refresh-rate-denominator :int)
   (internal :pointer))
 
-(cffi:defbitfield (window-flags :uint64)
+(defbitfield (window-flags :uint64)
   (:fullscreen           #x0000000000000001)    
   (:opengl               #x0000000000000002)    
   (:occluded             #x0000000000000004)    
@@ -54,12 +54,12 @@
   (:transparent          #x0000000040000000)    
   (:not-focusable        #x0000000080000000))
 
-(cffi:defcenum flash-operation
+(defcenum flash-operation
   :cancel
   :briefly
   :until-focused)
 
-(cffi:defcenum glattr
+(defcenum glattr
   :red-size
   :green-size                  
   :blue-size                   

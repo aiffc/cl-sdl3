@@ -1,12 +1,12 @@
 (in-package :sdl3)
 
-(cffi:defcenum async-io-task-type
+(defcenum async-io-task-type
   :read
   :write
   :close)
 
 
-(cffi:defcenum async-io-result
+(defcenum async-io-result
   :asyncio_complete
   :asyncio_failure
   :asyncio_canceled)

@@ -2,7 +2,7 @@
 
 (cffi:defctype mouse-id :uint32)
 
-(cffi:defbitfield mouse-button-flags
+(defbitfield mouse-button-flags
   (:button-left 1)
   (:button-middle 2)
   (:button-right 3)
@@ -14,7 +14,7 @@
   (:button-x1mask 8)
   (:button-x2mask 16))
 
-(cffi:defcenum system-cursor
+(defcenum system-cursor
   :default      
   :text         
   :wait         
