@@ -124,6 +124,7 @@
   (:user #x8000)
   (:last #xffff)
   (:enum-padding #x7fffffff))
+(export 'event-type)
 
 (deflsp-type display-event 
   (type event-type)
