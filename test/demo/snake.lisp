@@ -139,19 +139,18 @@
                                :last-step (sdl3:get-ticks))))
   :continue)
 
-(defun handle-event (type pevent)
-  (cond ((eql type :quit)
-         :success)
-        ((eql type :key-down)
-         (let* ((keyboard-event (cffi:mem-ref pevent '(:struct sdl3:keyboard-event)))
-                (key (slot-value keyboard-event 'sdl3:%key))
-                (scancode (slot-value keyboard-event 'sdl3:%scancode)))
-           (when (member key '(:up :down :left :right))
-             (setf (next-dir (state *app*)) key))
-           (if (eql key :q)
-               :success
-               :continue)))
-        (t :continue)))
+(defun handle-event (event)
+  (typecase event
+    (sdl3:quit-event :success)
+    (sdl3:keyboard-event
+     (let* ((key (slot-value event 'sdl3:%key))
+            (scancode (slot-value event 'sdl3:%scancode)))
+       (when (member key '(:up :down :left :right))
+         (setf (next-dir (state *app*)) key))
+       (if (eql key :q)
+           :success
+           :continue)))
+    (t :continue)))
 
 (defun iterate ()
   (let ((now (sdl3:get-ticks))
@@ -159,13 +158,18 @@
                              :%h (coerce *snake-block-size-in-pixels* 'float)
                              :%w (coerce *snake-block-size-in-pixels* 'float))))
     (with-slots (renderer last-step state) *app*
+      ;; Run physics updates
       (loop while (> (- now last-step)
                      *step-rate-in-ms*)
             do
                (incf last-step *step-rate-in-ms*)
                (game-step state))
+
+      ;; Sleep until UI update time
       (when (< (- now last-step) *step-rate-in-ms*)
         (sleep (/ (- now last-step) 1000 5)))
+
+      ;; Render game board
       (sdl3:set-render-draw-color renderer 0 0 0 255)
       (sdl3:render-clear renderer)
 
@@ -201,17 +205,15 @@
 (defun run-snake% ()
   (init)
   (unwind-protect
-       (cffi:with-foreign-object (pevent '(:union sdl3:event))
-         (loop named outer do
+       (loop named outer do
            (loop named event-loop
-                 while (sdl3:poll-event pevent)
+                 for event = (sdl3:poll-event*)
+                 while event
                  do
-                    (let* ((type (cffi:mem-ref pevent :uint32))
-                           (type-keyword (cffi:foreign-enum-keyword 'sdl3:event-type type))
-                           (next (handle-event type-keyword pevent)))
+                    (let* ((next (handle-event event)))
                       (unless (eql next :continue)
                         (return-from outer))))
-           (iterate)))
+           (iterate))
     (handle-quit)))
 
 (defun do-snake-demo ()
@@ -234,7 +236,8 @@
   (iterate))
 
 (sdl3:def-app-event demo-event (type event)
-  (handle-event type event))
+  (declare (ignorable type))
+  (handle-event (sdl3:event-unmarshal event)))
 
 (sdl3:def-app-quit demo-quit (result)
   (declare (ignore result))
@@ -243,4 +246,3 @@
 (defun do-snake-demo2 ()
   (sdl3:enter-app-main-callbacks 'demo-init 'demo-iterate 'demo-event 'demo-quit))
 (export 'do-snake-demo2)
-
