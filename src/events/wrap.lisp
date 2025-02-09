@@ -65,7 +65,7 @@
 
 (defun poll-event* ()
   "Polls for event returns either
-1. nil ;; if any error happens
+1. nil ;; if there are no events in the queue
 2. (value event-object event-type) ;; see union `event' and `event-type'
 
 See `pool-event' for more details."
