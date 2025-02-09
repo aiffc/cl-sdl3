@@ -17,13 +17,13 @@ CFFI bindings for SDL3
   cp -rf build/libSDL3.so* /usr/lib/x86_64-linux-gnu/
 
   git clone https://github.com/libsdl-org/SDL_ttf.git
-  cd SDL
+  cd SDL_ttf
   cmake -S . -B build
   make -C build && make -C build install
   cp -rf build/libSDL3_ttf.so* /usr/lib/x86_64-linux-gnu/
 
   git clone https://github.com/libsdl-org/SDL_image.git
-  cd SDL
+  cd SDL_image
   cmake -S . -B build
   make -C build && make -C build install
   cp -rf build/libSDL3_image.so.* /usr/lib/x86_64-linux-gnu/
@@ -69,9 +69,6 @@ TO TEST
   (sdl3.render.test::do-read-pixel-demo)
   ;; demo from https://examples.libsdl.org/SDL3/renderer/18-debug-text/
   (sdl3.render.test::do-debug-text-demo)
-  ;; do event test
-  (sdl3.event.test::do-keyboard-demo)
-  (sdl3.event.test::do-mouse-demo)
   ;; do audio demo
   ;; demo from https://examples.libsdl.org/SDL3/audio/01-simple-playback/
   (sdl3.demo.audio::do-simple-playback-demo)
@@ -79,6 +76,18 @@ TO TEST
   (sdl3.demo.audio::do-simple-playback-callback-demo)
   ;; demo from https://examples.libsdl.org/SDL3/audio/03-load-wav/
   (sdl3.demo.audio::do-load-wav-demo)
+  ;; do offical demo
+  ;; demo from https://examples.libsdl.org/SDL3/demo/01-snake/
+  (sdl3.demo:do-snake-demo)  ;; old style
+  (sdl3.demo:do-snake-demo2) ;; use callback
+  ;; do event test
+  (sdl3.event.test::do-keyboard-demo)
+  (sdl3.event.test::do-mouse-demo)
+  ;; do gpu demo use vulkan driver
+  ;; compile shader 
+  ;; glslc test/gpu/shaders/triangle/triangle.vert -o test/gpu/shaders/triangle/vert.spv
+  ;; glslc test/gpu/shaders/triangle/triangle.frag -o test/gpu/shaders/triangle/frag.spv
+  (sdl3.gpu::do-triangle-demo)
   #+END_SRC
 
 ** Documentation

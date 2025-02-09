@@ -258,5 +258,9 @@
                  (:module "demo"
 		  :components
 		  ((:file "package")
-		   (:file "snake"))))))
+		   (:file "snake")))
+		 (:module "gpu"
+		  :components
+		  ((:file "package")
+		   (:file "triangle"))))))
   :description "test function here")

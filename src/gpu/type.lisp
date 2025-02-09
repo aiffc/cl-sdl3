@@ -443,7 +443,7 @@
   :dont-care)
 
 (defcenum gpu-store-op
-  :load
+  :store
   :dont-care
   :reslove
   :reslove-and-store)

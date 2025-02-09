@@ -57,9 +57,10 @@
   (data-size (:pointer size-t))
   (closeio :bool))
 
-(defexport-fun "SDL_LoadFile" :pointer
-  (src :pointer)
-  (data-size (:pointer size-t)))
+(defwrap-fun "SDL_LoadFile" :pointer
+    (t t)
+  (file :string)
+  (data-size (:pointer size-t) :direction :output))
 
 (defexport-fun "SDL_SaveFile_IO" :bool
   (src :pointer)
