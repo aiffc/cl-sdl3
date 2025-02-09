@@ -1,132 +1,131 @@
 (in-package :sdl3)
 
-(deflsp-type common-event 
+(deflsp-type common-event
   (type :uint32)
   (reserved :uint32)
   (timestamp :uint64))
 
-(defcenum event-type
-  (:first 0)
-  (:quit #x100)
-  :terminating
-  :low-memory     
-  :will-enter-background
-  :did-enter-background
-  :will-enter-foreground 
-  :did-enter-foreground
-  :locale-changed
-  :system-theme-changed
-  (:display-orientation #x151)
-  :display-added 
-  :display-removed
-  :display-moved
-  :display-desktop-mode-changed
-  :display-current-mode-changed
-  :display-content-scale-changed
-  ;; :display-first :display-orientation
-  ;; :display-last :display-content-scale-changed
-  (:window-shown #x202)
-  :window-hidden
-  :window-exposed
-  :window-moved
-  :window-resized
-  :window-pixel-size-changed
-  :window-metal-view-resized
-  :window-minimized      
-  :window-maximized      
-  :window-restored       
-  :window-mouse-enter    
-  :window-mouse-leave    
-  :window-focus-gained   
-  :window-focus-lost     
-  :window-close-requested
-  :window-hit-test       
-  :window-iccprof-changed
-  :window-display-changed
-  :window-display-scale-changed
-  :window-safe-area-changed 
-  :window-occluded          
-  :window-enter-fullscreen  
-  :window-leave-fullscreen  
-  :window-destroyed         
-  :window-hdr-state-changed
-  ;; :window-first :window-shown
-  ;; :window-last :window-hdr-state-changed
-  (:key-down #x300) 
-  :key-up                  
-  :text-editing            
-  :text-input              
-  :keymap-changed          
-  :keyboard-added         
-  :keyboard-removed       
-  :text-editing-candidates
-  (:mouse-motion #x400)
-  :mouse-button-down      
-  :mouse-button-up        
-  :mouse-wheel            
-  :mouse-added            
-  :mouse-removed          
-  (:joystick-axis-motion #x600)
-  :joystick-ball-motion         
-  :joystick-hat-motion          
-  :joystick-button-down         
-  :joystick-button-up           
-  :joystick-added               
-  :joystick-removed             
-  :joystick-battery-updated     
-  :joystick-update-complete     
-  (:gamepad-axis-motion #x650) 
-  :gamepad-button-down          
-  :gamepad-button-up            
-  :gamepad-added                
-  :gamepad-removed              
-  :gamepad-remapped             
-  :gamepad-touchpad-down        
-  :gamepad-touchpad-motion      
-  :gamepad-touchpad-up          
-  :gamepad-sensor-update        
-  :gamepad-update-complete      
-  :gamepad-steam-handle-updated 
-  (:finger-down #x700)
-  :finger-up
-  :finger-motion
-  :finger-canceled
-  (:clipboard-update #x900) 
-  (:drop-file #x1000)
-  :drop-text                
-  :drop-begin               
-  :drop-complete            
-  :drop-position            
-  (:audio-device-added #x1100)
-  :audio-device-removed       
-  :audio-device-format-changed
-  (:sensor-update #x1200)
-  (:pen-proximity-in #x1300)
-  :pen-proximity-out         
-  :pen-down                  
-  :pen-up                    
-  :pen-button-down           
-  :pen-button-up             
-  :pen-motion                
-  :pen-axis                  
-  (:camera-device-added #x1400)
-  :camera-device-removed        
-  :camera-device-approved       
-  :camera-device-denied         
-  (:render-targets-reset #x2000)
-  :render-device-reset
-  :render-device-lost
-  (:private0 #x4000)
-  :private1
-  :private2
-  :private3
-  (:poll-sentinel #x7f00)
-  (:user #x8000)
-  (:last #xffff)
-  (:enum-padding #x7fffffff))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defcenum event-type
+    (:first 0)
+    (:quit #x100)
+    :terminating
+    :low-memory
+    :will-enter-background
+    :did-enter-background
+    :will-enter-foreground
+    :did-enter-foreground
+    :locale-changed
+    :system-theme-changed
+    (:display-orientation #x151)
+    :display-added
+    :display-removed
+    :display-moved
+    :display-desktop-mode-changed
+    :display-current-mode-changed
+    :display-content-scale-changed
+    (:window-shown #x202)
+    :window-hidden
+    :window-exposed
+    :window-moved
+    :window-resized
+    :window-pixel-size-changed
+    :window-metal-view-resized
+    :window-minimized
+    :window-maximized
+    :window-restored
+    :window-mouse-enter
+    :window-mouse-leave
+    :window-focus-gained
+    :window-focus-lost
+    :window-close-requested
+    :window-hit-test
+    :window-iccprof-changed
+    :window-display-changed
+    :window-display-scale-changed
+    :window-safe-area-changed
+    :window-occluded
+    :window-enter-fullscreen
+    :window-leave-fullscreen
+    :window-destroyed
+    :window-hdr-state-changed
+    ;; :window-first :window-shown
+    ;; :window-last :window-hdr-state-changed
+    (:key-down #x300)
+    :key-up
+    :text-editing
+    :text-input
+    :keymap-changed
+    :keyboard-added
+    :keyboard-removed
+    :text-editing-candidates
+    (:mouse-motion #x400)
+    :mouse-button-down
+    :mouse-button-up
+    :mouse-wheel
+    :mouse-added
+    :mouse-removed
+    (:joystick-axis-motion #x600)
+    :joystick-ball-motion
+    :joystick-hat-motion
+    :joystick-button-down
+    :joystick-button-up
+    :joystick-added
+    :joystick-removed
+    :joystick-battery-updated
+    :joystick-update-complete
+    (:gamepad-axis-motion #x650)
+    :gamepad-button-down
+    :gamepad-button-up
+    :gamepad-added
+    :gamepad-removed
+    :gamepad-remapped
+    :gamepad-touchpad-down
+    :gamepad-touchpad-motion
+    :gamepad-touchpad-up
+    :gamepad-sensor-update
+    :gamepad-update-complete
+    :gamepad-steam-handle-updated
+    (:finger-down #x700)
+    :finger-up
+    :finger-motion
+    :finger-canceled
+    (:clipboard-update #x900)
+    (:drop-file #x1000)
+    :drop-text
+    :drop-begin
+    :drop-complete
+    :drop-position
+    (:audio-device-added #x1100)
+    :audio-device-removed
+    :audio-device-format-changed
+    (:sensor-update #x1200)
+    (:pen-proximity-in #x1300)
+    :pen-proximity-out
+    :pen-down
+    :pen-up
+    :pen-button-down
+    :pen-button-up
+    :pen-motion
+    :pen-axis
+    (:camera-device-added #x1400)
+    :camera-device-removed
+    :camera-device-approved
+    :camera-device-denied
+    (:render-targets-reset #x2000)
+    :render-device-reset
+    :render-device-lost
+    (:private0 #x4000)
+    :private1
+    :private2
+    :private3
+    (:poll-sentinel #x7f00)
+    (:user #x8000)
+    (:last #xffff)
+    (:enum-padding #x7fffffff)))
 (export 'event-type)
 
-(deflsp-type display-event 
+(deflsp-type display-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -134,7 +133,7 @@
   (data-1 :int32)
   (data-2 :int32))
 
-(deflsp-type window-event 
+(deflsp-type window-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -142,13 +141,13 @@
   (data-1 :int32)
   (data-2 :int32))
 
-(deflsp-type keyboard-device-event 
+(deflsp-type keyboard-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which keyboard-id))
 
-(deflsp-type keyboard-event 
+(deflsp-type keyboard-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -208,7 +207,7 @@
   (xrel :float)
   (yrel :float))
 
-(deflsp-type mouse-button-event 
+(deflsp-type mouse-button-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -225,7 +224,7 @@
   :normal
   :flipped)
 
-(deflsp-type mouse-wheel-event 
+(deflsp-type mouse-wheel-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -238,13 +237,13 @@
   (mouse-y :float))
 
 (cffi:defctype joystick-id :uint32)
-(deflsp-type joy-device-event 
+(deflsp-type joy-device-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
   (which joystick-id))
 
-(deflsp-type joy-axis-event 
+(deflsp-type joy-axis-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -302,7 +301,7 @@
   (timestamp :uint64)
   (which joystick-id))
 
-(deflsp-type gamepad-axis-event 
+(deflsp-type gamepad-axis-event
   (type event-type)
   (reserved :uint32)
   (timestamp :uint64)
@@ -536,7 +535,7 @@
   (padding :uint8 :count 128))
 (export 'event)
 
-(defcenum event-action 
+(defcenum event-action
   :addevent
   :peekevent
   :getevent)
