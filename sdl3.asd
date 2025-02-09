@@ -193,7 +193,8 @@
 		 (:module "events"
 		  :components
 		  ((:file "type")
-		   (:file "func")))
+		   (:file "func")
+                   (:file "wrap")))
 		 (:module "main"
 		  :components
 		  ((:file "type")
