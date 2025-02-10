@@ -36,9 +36,11 @@
 					 :%num-uniform-buffers num-uniform-buffers
 					 :%props 0))
 	     (shader (sdl3:create-gpu-shader *gpu-device* shader-info)))
+	
 	(when (cffi:null-pointer-p shader)
 	  (error "Error: ~a~%" (sdl3:get-error)))
-	(cffi:foreign-free code)
+	;; windows dead here why?
+	#-win32 (cffi:foreign-free code)
 	shader))))
 
 (defun make-vertex-input-state ()

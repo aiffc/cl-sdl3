@@ -71,10 +71,11 @@
   
   :continue)
 
-(sdl3:def-app-event 06-event (event-type pevent)
-  (when (eql event-type :quit)
-    (return-from 06-event :success))
-  :continue)
+(sdl3:def-app-event 06-event (type event)
+  (declare (ignore type))
+  (typecase (sdl3:event-unmarshal event)
+    (sdl3:quit-event :success)
+    (t :continue)))
 
 (sdl3:def-app-quit 06-quit (result)
   (declare (ignore result))

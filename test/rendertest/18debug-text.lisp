@@ -42,10 +42,11 @@
     (sdl3:render-present *renderer-handler*))
   :continue)
 
-(sdl3:def-app-event 18-event (event-type pevent)
-  (when (eql event-type :quit)
-    (return-from 18-event :success))
-  :continue)
+(sdl3:def-app-event 18-event (type event)
+  (declare (ignore type))
+  (typecase (sdl3:event-unmarshal event)
+    (sdl3:quit-event :success)
+    (t :continue)))
 
 (sdl3:def-app-quit 18-quit (result)
   (declare (ignore result)))

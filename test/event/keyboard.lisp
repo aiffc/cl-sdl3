@@ -22,17 +22,16 @@
 (sdl3:def-app-iterate keyboard-iterate ()
   :continue)
 
-(sdl3:def-app-event keyboard-event (event-type pevent)
-  (cond ((eql event-type :quit) (return-from keyboard-event :success))
-	((eql event-type :key-down)
-	 (with-slots (sdl3:%key
-		      sdl3:%scancode
-		      sdl3:%mod)
-	     (cffi:mem-ref pevent '(:struct sdl3:keyboard-event))
-	   (format t "~a ~a ~a~%" sdl3:%key sdl3:%scancode sdl3:%mod)
-	   (when (or (eql sdl3:%scancode :q) (eql sdl3:%scancode :escape))
-	     (return-from keyboard-event :success)))))
-  :continue)
+(sdl3:def-app-event keyboard-event (type event)
+  (let ((event-unmarshal (sdl3:event-unmarshal event)))
+    (typecase event-unmarshal
+      (sdl3:quit-event :success)
+      (sdl3:keyboard-event
+       (let ((key (slot-value event-unmarshal 'sdl3:%key))
+	     (scancode (slot-value event-unmarshal 'sdl3:%scancode)))
+	 (format t "type ~a key ~a scancode ~a~%" type key scancode))
+       :continue)
+      (t :continue))))
 
 (sdl3:def-app-quit keyboard-quit (result)
   (declare (ignore result)))

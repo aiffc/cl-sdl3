@@ -16,6 +16,7 @@
   (let* ((vert (load-shader "triangle/vert.spv" :vertex))
 	 (frag (load-shader "triangle/frag.spv" :fragment))
 	 (make-info (make-graphics-pipeline-create-info vert frag)))
+    (format t "Success device driver is ~a~%" (sdl3:get-gpu-device-driver *gpu-device*))
     (setf *gpu-pipeline* (sdl3:create-gpu-graphics-pipeline *gpu-device* make-info))
     (when (cffi:null-pointer-p *gpu-pipeline*)
       (error "Error: ~a~%" (sdl3:get-error)))
@@ -25,9 +26,10 @@
     (sdl3:release-gpu-shader *gpu-device* frag))
   :continue)
 
-(defun triangle-event (event-type)
-  (cond ((eql event-type :quit) :success)
-	(t :continue)))
+(defun triangle-event (event)
+  (typecase (sdl3:event-unmarshal event)
+    (sdl3:quit-event :success)
+    (t :continue)))
 
 (defun triangle-iterate (&aux 
 			   (cmd (sdl3:acquire-gpu-command-buffer *gpu-device*))
@@ -84,8 +86,9 @@
 (sdl3:def-app-iterate triangle-iterate-callback ()
   (triangle-iterate))
 
-(sdl3:def-app-event triangle-event-callback (event-type pevent)
-  (triangle-event event-type))
+(sdl3:def-app-event triangle-event-callback (type pevent)
+  (declare (ignore type))
+  (triangle-event pevent))
 
 (sdl3:def-app-quit triangle-quit-callback (result)
   (declare (ignore result))

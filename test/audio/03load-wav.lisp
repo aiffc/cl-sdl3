@@ -43,10 +43,11 @@
   (sdl3:render-present *renderer-handler*)
   :continue)
 
-(sdl3:def-app-event load-wav-event (event-type pevent)
-  (when (eql event-type :quit)
-    (return-from load-wav-event :success))
-  :continue)
+(sdl3:def-app-event load-wav-event (type event)
+  (declare (ignore type))
+  (typecase (sdl3:event-unmarshal event)
+    (sdl3:quit-event :success)
+    (t :continue)))
 
 (sdl3:def-app-quit load-wav-quit (result)
   (declare (ignore result)))

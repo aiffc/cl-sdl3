@@ -25,46 +25,30 @@
   (sdl3:render-present *renderer-handler*)
   :continue)
 
-(sdl3:def-app-event mouse-event (event-type pevent)
-  (cond ((eql event-type :quit) (return-from mouse-event :success))
-	((eql event-type :mouse-button-down)
-	 (with-slots (sdl3:%button)
-	     (cffi:mem-ref pevent '(:struct sdl3:mouse-button-event))
-	   (format t "mouse ~a down~%" sdl3:%button)))
-	((eql event-type :mouse-button-up)
-	 (with-slots (sdl3:%button)
-	     (cffi:mem-ref pevent '(:struct sdl3:mouse-button-event))
-	   (format t "mouse ~a up~%" sdl3:%button)))
-	((eql event-type :mouse-motion)
-	 (with-slots (sdl3:%x
-		      sdl3:%y
-		      sdl3:%xrel
-		      sdl3:%yrel)
-	     (cffi:mem-ref pevent '(:struct sdl3:mouse-motion-event))
-	   (format t "~a ~a ~a ~a~%" sdl3:%x sdl3:%y sdl3:%xrel sdl3:%yrel)))
-	((eql event-type :mouse-wheel)
-	 (with-slots (sdl3:%direction
-		      sdl3:%x
-		      sdl3:%y
-		      sdl3:%mouse-x
-		      sdl3:%mouse-y)
-	     (cffi:mem-ref pevent '(:struct sdl3:mouse-wheel-event))
-	   (format t "~a ~a ~a ~a ~a~%" sdl3:%direction sdl3:%x sdl3:%y sdl3:%mouse-x sdl3:%mouse-y))
-	 (with-slots (sdl3:%x
-		      sdl3:%y
-		      sdl3:%xrel
-		      sdl3:%yrel)
-	     (cffi:mem-ref pevent '(:struct sdl3:mouse-motion-event))
-	   (format t "~a ~a ~a ~a~%" sdl3:%x sdl3:%y sdl3:%xrel sdl3:%yrel)))
-	((eql event-type :key-down)
-	 (with-slots (sdl3:%key
-		      sdl3:%scancode
-		      sdl3:%mod)
-	     (cffi:mem-ref pevent '(:struct sdl3:keyboard-event))
-	   (format t "~a down~%" sdl3:%scancode)
-	   (when (or (eql sdl3:%scancode :q) (eql sdl3:%scancode :escape))
-	     (return-from mouse-event :success)))))
-  :continue)
+(sdl3:def-app-event mouse-event (type event)
+  (let ((event-unmarshal (sdl3:event-unmarshal event)))
+    (typecase event-unmarshal
+      (sdl3:quit-event :success)
+      (sdl3:mouse-button-event 
+       (let ((button (slot-value event-unmarshal 'sdl3:%button)))
+	 (format t "type ~a button ~a~%" type button))
+       :continue)
+      (sdl3:mouse-motion-event
+       (let ((x (slot-value event-unmarshal 'sdl3:%x))
+	     (y (slot-value event-unmarshal 'sdl3:%y))
+	     (xrel (slot-value event-unmarshal 'sdl3:%xrel))
+	     (yrel (slot-value event-unmarshal 'sdl3:%yrel)))
+	 (format t "type ~a ~a y ~a xrel ~a yrel ~a~%" type x y xrel yrel))
+       :continue)
+      (sdl3:mouse-wheel-event 
+       (let ((x (slot-value event-unmarshal 'sdl3:%x))
+	     (y (slot-value event-unmarshal 'sdl3:%y))
+	     (mx (slot-value event-unmarshal 'sdl3:%mouse-x))
+	     (my (slot-value event-unmarshal 'sdl3:%mouse-y))
+	     (direction (slot-value event-unmarshal 'sdl3:%direction)))
+	 (format t "type ~a ~a y ~a xrel ~a yrel ~a direction ~a~%" type x y mx my direction))
+       :continue)
+      (t :continue))))
 
 (sdl3:def-app-quit mouse-quit (result)
   (declare (ignore result)))
