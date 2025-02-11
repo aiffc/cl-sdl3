@@ -88,3 +88,34 @@
          ,@bitfield-list)
        (deftype ,name ()
          `(member ,,@keywords)))))
+
+(defun convert-ctype-to-lisp (typespec)
+  "Convert CFFI type specifier to lisp one.
+This doesn't handle all cases but works fine for our use."
+  (cond ((keywordp typespec) ;; basic types
+         (ecase typespec
+           ((:int :int8 :int16 :int32 :int64) 'integer)
+           ((:uint :uint8 :uint16 :uint32 :uint64) 'unsigned-byte)))
+        ((eql (first typespec) :struct)
+         ;; Since all structs in this library are defined by deflsp-type
+         ;; struct have their corresponding lisp type with same name
+         (assert (find-class (second typespec)))
+         (second typespec))
+        (t (error "Can't convert ~a to lisp type" typespec))))
+
+(defmacro defcunion (name-and-options &body union-list)
+  (let ((name (first-or-identity name-and-options)))
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
+       (cffi:defcunion ,name-and-options
+         ,@union-list)
+       (deftype ,name ()
+         '(or ,@(remove-duplicates
+                 ;; skip the first field of the union
+                 ;; and convert all else to lisp type
+                 (loop for spec in (rest union-list)
+                       for array-size = (getf (nthcdr 2 spec) :count nil)
+                       for lisp-type = (convert-ctype-to-lisp (second spec))
+                       when (and lisp-type array-size)
+                         collect `(array ,lisp-type (,array-size))
+                       when (and lisp-type (not array-size))
+                         collect lisp-type)))))))
