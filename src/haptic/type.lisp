@@ -85,7 +85,7 @@
   (fade-length :int16)
   (fade-level :int16))
 
-(cffi:defcunion haptic-effect
+(defcunion haptic-effect
   (type :uint16)
   (constant (:struct haptic-constant))
   (periodic (:struct haptic-periodic))

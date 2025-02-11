@@ -35,7 +35,7 @@
 (deflsp-type %gamepad-biding-input-hat
   (hat :int)
   (hat-mask :int))
-(cffi:defcunion %gamepad-binding-input
+(defcunion %gamepad-binding-input
   (buttong :int)
   (axis (:struct %gamepad-biding-input-axis))
   (hat (:struct %gamepad-biding-input-hat)))
@@ -78,11 +78,13 @@
   :left-trigger
   :right-trigger
   :count)
-(cffi:defcunion %gamepad-binding-output
-  (buttong gamepad-button)
+(deflsp-type %gamepad-binding-output-axis
   (axis gamepad-axis)
   (axis-min :int)
   (axis-max :int))
+(defcunion %gamepad-binding-output
+  (buttong gamepad-button)
+  (axis (:struct %gamepad-binding-output-axis)))
 
 (deflsp-type gamepad-binding
   (input-type gamepad-binding-type)

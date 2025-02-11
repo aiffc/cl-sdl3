@@ -493,7 +493,7 @@
   (num-mime-types :int32)
   (mime-types (:pointer :string)))
 
-(cffi:defcunion event
+(defcunion event
   (type :uint32)
   (common (:struct common-event))
   (display (:struct display-event))
