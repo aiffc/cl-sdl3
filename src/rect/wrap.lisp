@@ -8,6 +8,7 @@
 		 :%y (%y rect)
 		 :%w (%w rect)
 		 :%h (%h rect)))
+(export 'rect-to-frecp)
 
 (defun point-in-rect (point rect)
   (let ((px (sdl3:%x point))
@@ -20,10 +21,12 @@
 	 (< px (+ rx rw))
 	 (>= py ry)
 	 (< py (+ ry rh)))))
+(export 'point-in-rect)
 
-(defun rect-empty (rect)
+(defun rect-empty-p (rect)
   (or (<= (%w rect) 0.0)
       (<= (%h rect) 0.0)))
+(export 'rect-empty-p)
 
 (defun rects-equal (rect1 rect2)
   (let ((r1x (%x rect1))
@@ -38,12 +41,15 @@
 	 (= r1y r2y)
 	 (= r1w r2w)
 	 (= r1h r2h))))
+(export 'rects-equal)
 
 (defun point-in-rect-float (point rect)
   (point-in-rect point rect))
+(export 'point-in-rect-float)
 
 (defun rect-empty-float (rect)
   (rect-empty rect))
+(export 'rect-empty-float)
 
 (defun rects-equal-epsilon (rect1 rect2 epsilon)
   (let ((r1x (%x rect1))
@@ -58,3 +64,4 @@
 	 (<= epsilon (abs (- r1y r2y)))
 	 (<= epsilon (abs (- r1w r2w)))
 	 (<= epsilon (abs (- r1h r2h))))))
+(export 'rects-equal-epsilon)

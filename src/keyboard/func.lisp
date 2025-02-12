@@ -2,16 +2,18 @@
 
 (defexport-fun "SDL_HasKeyboard" :bool)
 
-(defexport-fun "SDL_GetKeyboards" keyboard-id
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetKeyboards" (:pointer keyboard-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'keyboard-id))
 
 (defexport-fun "SDL_GetKeyboardNameForID" :string
   (instance-id keyboard-id))
 
 (defexport-fun "SDL_GetKeyboardFocus" :pointer)
 
-(defexport-fun "SDL_GetKeyboardState" (:pointer :bool)
-  (numkeys (:pointer :int)))
+(defwrap-fun "SDL_GetKeyboardState" (:pointer :bool)
+    (t t)
+  (numkeys (:pointer :int) :ret-count :bool))
 
 (defexport-fun "SDL_ResetKeyboard" :void)
 
@@ -25,9 +27,10 @@
   (modstate keymod)
   (key-event :bool))
 
-(defexport-fun "SDL_GetScancodeFromKey" scancode
+(defwrap-fun "SDL_GetScancodeFromKey" scancode
+    (t t)
   (key keycode)
-  (modstate (:pointer keymod)))
+  (modstate (:pointer keymod) :direction :output))
 
 (defexport-fun "SDL_SetScancodeName" :bool
   (scancode scancode)
@@ -61,15 +64,17 @@
 (defexport-fun "SDL_ClearComposition" :bool
   (window :pointer))
 
-(defexport-fun "SDL_SetTextInputArea" :bool
+(defwrap-fun "SDL_SetTextInputArea" :bool
+    (t t)
   (window :pointer)
-  (rect (:pointer (:struct rect)))
+  (rect (:pointer (:struct rect)) :direction :input)
   (cursor :int))
 
-(defexport-fun "SDL_GetTextInputArea" :bool
+(defwrap-fun "SDL_GetTextInputArea" :bool
+    (t t)
   (window :pointer)
-  (rect (:pointer (:struct rect)))
-  (cursor (:pointer :int)))
+  (rect (:pointer (:struct rect)) :direction :output)
+  (cursor (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_HasScreenKeyboardSupport" :bool)
 
