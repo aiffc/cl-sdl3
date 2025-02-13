@@ -1,7 +1,8 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_GetHaptics" (:pointer haptic-id)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetHaptics" (:pointer haptic-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'haptic-id))
 
 (defexport-fun "SDL_GetHapticNameForID" :string
   (instance-id haptic-id))
@@ -43,18 +44,21 @@
 (defexport-fun "SDL_GetNumHapticAxes" :int
   (haptic :pointer))
 
-(defexport-fun "SDL_HapticEffectSupported" :bool
+(defwrap-fun "SDL_HapticEffectSupported" :bool
+    (t t)
   (haptic :pointer)
-  (effect (:pointer (:union haptic-effect))))
+  (effect (:pointer (:union haptic-effect)) :direction :input))
 
-(defexport-fun "SDL_CreateHapticEffect" :int
+(defwrap-fun "SDL_CreateHapticEffect" :int
+    (t t)
   (haptic :pointer)
-  (effect (:pointer (:union haptic-effect))))
+  (effect (:pointer (:union haptic-effect)) :direction :input))
 
-(defexport-fun "SDL_UpdateHapticEffect" :bool
+(defwrap-fun "SDL_UpdateHapticEffect" :bool
+    (t t)
   (haptic :pointer)
   (effect :int)
-  (data (:pointer (:union haptic-effect))))
+  (data (:pointer (:union haptic-effect)) :direction :input))
 
 (defexport-fun "SDL_RunHapticEffect" :bool
   (haptic :pointer)

@@ -1,20 +1,22 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_ShowOpenFileDialog" :void
+(defwrap-fun "SDL_ShowOpenFileDialog" :void
+    (t t)
   (callback :pointer)
   (userdata :pointer)
   (window :pointer)
-  (filters (:pointer (:struct dialog-file-filter)))
-  (nfilters :int)
+  (filters (:pointer (:struct dialog-file-filter)) :direction :input :bind-count nfilters)
+  (nfilters :int :bind-val filters)
   (default-location :string)
   (allow-many :bool))
 
-(defexport-fun "SDL_ShowSaveFileDialog" :void
+(defwrap-fun "SDL_ShowSaveFileDialog" :void
+    (t t)
   (callback :pointer)
   (userdata :pointer)
   (window :pointer)
-  (filters (:pointer (:struct dialog-file-filter)))
-  (nfilters :int)
+  (filters (:pointer (:struct dialog-file-filter)) :direction :input :bind-count nfilters)
+  (nfilters :int :bind-val filters)
   (default-location :string))
 
 (defexport-fun "SDL_ShowOpenFolderDialog" :void

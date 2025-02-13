@@ -3,13 +3,14 @@
 (defexport-fun "SDL_GetPixelFormatName" :string
   (fmt pixel-format))
 
-(defexport-fun "SDL_GetMasksForPixelFormat" :bool
+(defwrap-fun "SDL_GetMasksForPixelFormat" :bool
+    (t t)
   (fmt pixel-format)
-  (bpp (:pointer :int))
-  (rmask (:pointer :uint32))
-  (gmask (:pointer :uint32))
-  (bmask (:pointer :uint32))
-  (amask (:pointer :uint32)))
+  (bpp (:pointer :int) :direction :output)
+  (rmask (:pointer :uint32) :direction :output)
+  (gmask (:pointer :uint32) :direction :output)
+  (bmask (:pointer :uint32) :direction :output)
+  (amask (:pointer :uint32) :direction :output))
 
 (defexport-fun "SDL_GetPixelFormatForMasks" pixel-format
   (bpp :int)
@@ -18,17 +19,19 @@
   (bmask :uint32)
   (amask :uint32))
 
-(defexport-fun "SDL_GetPixelFormatDetails" (:pointer (:struct pixel-format-detail))
+(defwrap-fun "SDL_GetPixelFormatDetails" (:pointer (:struct pixel-format-detail))
+    (t t)
   (fmt pixel-format))
 
 (defexport-fun "SDL_CreatePalette" (:pointer (:struct palette))
   (ncolors :int))
 
-(defexport-fun "SDL_SetPaletteColors" :bool
+(defwrap-fun "SDL_SetPaletteColors" :bool
+    (t t)
   (palette (:pointer (:struct palette)))
-  (colors (:pointer (:struct color)))
+  (colors (:pointer (:struct color)) :direction :input :bind-count ncolors)
   (firstcolor :int)
-  (ncolors :int))
+  (ncolors :int :bind-val colors))
 
 (defexport-fun "SDL_DestroyPalette" :void
   (palette (:pointer (:struct palette))))
@@ -41,25 +44,29 @@
   (g :uint8)
   (b :uint8))
 
-(defexport-fun "SDL_MapRGBA" :uint32
+(defwrap-fun "SDL_MapRGBA" :uint32
+    (t t)
   (fmt (:pointer (:struct pixel-format-detail)))
-  (palette (:pointer (:struct palette)))
+  (palette (:pointer (:struct palette)) :direction :input)
   (r :uint8)
   (g :uint8)
   (b :uint8)
   (a :uint8))
 
-(defexport-fun "SDL_GetRGB" :void
+(defwrap-fun "SDL_GetRGB" :void
+    (t)
+  (pixel :uint32)
   (fmt (:pointer (:struct pixel-format-detail)))
-  (palette (:pointer (:struct palette)))
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8)))
+  (palette (:pointer (:struct palette)) :direction :input)
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output))
 
-(defexport-fun "SDL_GetRGBA" :void
+(defwrap-fun "SDL_GetRGBA" :void
+    (t)
   (fmt (:pointer (:struct pixel-format-detail)))
-  (palette (:pointer (:struct palette)))
-  (r (:pointer :uint8))
-  (g (:pointer :uint8))
-  (b (:pointer :uint8))
-  (a (:pointer :uint8)))
+  (palette (:pointer (:struct palette)) :direction :output)
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output)
+  (a (:pointer :uint8) :direction :output))

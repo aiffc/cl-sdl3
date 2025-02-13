@@ -1,5 +1,6 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_GetPowerInfo" power-state
-  (seconds (:pointer :int))
-  (percent (:pointer :int)))
+(defwrap-fun "SDL_GetPowerInfo" power-state
+    (t t)
+  (seconds (:pointer :int) :direction :output)
+  (percent (:pointer :int) :direction :output))

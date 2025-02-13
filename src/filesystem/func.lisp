@@ -1,6 +1,5 @@
 (in-package :sdl3)
 
-
 (defexport-fun "SDL_GetBasePath" :string)
 
 (defexport-fun "SDL_GetPrefPath" :string
@@ -29,14 +28,16 @@
   (old :string)
   (new :string))
 
-(defexport-fun "SDL_GetPathInfo" :bool
+(defwrap-fun "SDL_GetPathInfo" :bool
+    (t t)
   (path :string)
-  (info (:pointer (:struct path-info))))
+  (info (:pointer (:struct path-info)) :direction :output))
 
-(defexport-fun "SDL_GlobDirectory" (:pointer :string)
+(defwrap-fun "SDL_GlobDirectory" (:pointer :string)
+  (t t)
   (path :string)
   (pattern :string)
   (flags glob-flags)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :string))
 
 (defexport-fun "SDL_GetCurrentDirectory" :string)

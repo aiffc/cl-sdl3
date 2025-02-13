@@ -1,7 +1,7 @@
 (in-package :sdl3)
 
 (defexport-fun "SDL_GetTouchDevices" (:pointer touch-id)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count 'touch-id))
 
 (defexport-fun "SDL_GetTouchDeviceName" :string
   (touch-id touch-id))
@@ -9,6 +9,7 @@
 (defexport-fun "SDL_GetTouchDeviceType" touch-device-type
   (touch-id touch-id))
 
+;; todo
 (defexport-fun "SDL_GetTouchFingers" (:pointer (:pointer (:struct finger)))
   (touch-id touch-id)
   (count :int))

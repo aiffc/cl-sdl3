@@ -1,7 +1,7 @@
 (in-package :sdl3)
 
 (defexport-fun "SDL_GetSensors" (:pointer sensor-id)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count 'sensor-id))
 
 (defexport-fun "SDL_GetSensorNameForID" :string
   (id sensor-id))
@@ -33,9 +33,10 @@
 (defexport-fun "SDL_GetSensorID" sensor-id
   (sensor :pointer))
 
-(defexport-fun "SDL_GetSensorData" :bool
+(defwrap-fun "SDL_GetSensorData" :bool
+    (t t)
   (sensor :pointer)
-  (data (:pointer :float))
+  (data (:pointer :float) :direction :output)
   (num-values :int))
 
 (defexport-fun "SDL_CloseSensor" :void

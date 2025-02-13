@@ -19,9 +19,10 @@
 (defexport-fun "SDL_SetCurrentThreadPriority" :bool
   (properties thread-properties))
 
-(defexport-fun "SDL_WaitThread" :void
+(defwrap-fun "SDL_WaitThread" :void
+    (t t)
   (thread :pointer)
-  (status (:pointer :int)))
+  (status (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_GetThreadState" thread-status
   (thread :pointer))

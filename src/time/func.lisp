@@ -1,25 +1,29 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_GetDateTimeLocalePreferences" :bool
-  (data-format (:pointer data-format))
-  (time-format (:pointer time-format)))
+(defwrap-fun "SDL_GetDateTimeLocalePreferences" :bool
+    (t t)
+  (data-format (:pointer data-format) :direction :output)
+  (time-format (:pointer time-format) :direction :output))
 
-(defexport-fun "SDL_GetCurrentTime" :bool
-  (ticks (:pointer stime)))
+(defwrap-fun "SDL_GetCurrentTime" :bool
+    (t t)
+  (ticks (:pointer stime) :direction :output))
 
-(defexport-fun "SDL_TimeToDateTime" :bool
+(defwrap-fun "SDL_TimeToDateTime" :bool
+    (t t)
   (ticks stime)
-  (dt (:pointer (:struct data-time)))
+  (dt (:pointer (:struct data-time)) :direction :output)
   (local-time :bool))
 
-(defexport-fun "SDL_DateTimeToTime" :bool
-  (dt (:pointer (:struct data-time)))
-  (ticks (:pointer stime)))
+(defwrap-fun "SDL_DateTimeToTime" :bool
+    (t t)
+  (dt (:pointer (:struct data-time)) :direction :input)
+  (ticks (:pointer stime) :direction :output))
 
-(defexport-fun "SDL_TimeToWindows" :void
+(defwrap-fun "SDL_TimeToWindows" :void
   (ticks stime)
-  (dw-low (:pointer :uint32))
-  (dw-hight (:pointer :uint32)))
+  (dw-low (:pointer :uint32) :direction :output)
+  (dw-hight (:pointer :uint32) :direction :output))
 
 (defexport-fun "SDL_TimeFromWindows" stime
   (dw-low :uint32)

@@ -11,10 +11,10 @@
     (t t)
   (count (:pointer :int) :ret-cout 'camera-id))
 
-;; todo 
-(defexport-fun "SDL_GetCameraSupportedFormats" (:pointer (:pointer (:struct camera-spec)))
+(defwrap-fun "SDL_GetCameraSupportedFormats" (:pointer (:pointer (:struct camera-spec)))
+    (t t)
   (devid camera-id)
-  (count :int :ret-cout))
+  (count :int :ret-cout '(:pointer (:struct camera-spec))))
 
 (defexport-fun "SDL_GetCameraName" :string
   (instance-id camera-id))

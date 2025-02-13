@@ -32,7 +32,8 @@
   (surface (:pointer (:struct surface)))
   (palette (:pointer (:struct palette))))
 
-(defexport-fun "SDL_GetSurfacePalette" (:pointer (:struct palette))
+(defwrap-fun "SDL_GetSurfacePalette" (:pointer (:struct palette))
+    (t t t)
   (surface (:pointer (:struct surface))))
 
 (defexport-fun "SDL_AddSurfaceAlternateImage" :bool

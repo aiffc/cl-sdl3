@@ -12,8 +12,9 @@
 
 (defexport-fun "SDL_ReloadGamepadMappings" :bool)
 
-(defexport-fun "SDL_GetGamepadMappings" (:pointer :string)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetGamepadMappings" (:pointer :string)
+    (t t)
+  (count (:pointer :int) :ret-count :string))
 
 (defexport-fun "SDL_GetGamepadMappingForGUID" :string
   (guid (:struct guid)))
@@ -27,8 +28,9 @@
 
 (defexport-fun "SDL_HasGamepad" :bool)
 
-(defexport-fun "SDL_GetGamepads" (:pointer joystick-id)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetGamepads" (:pointer joystick-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'joystick-id))
 
 (defexport-fun "SDL_IsGamepad" :bool
   (instance-id joystick-id))
@@ -118,9 +120,10 @@
 (defexport-fun "SDL_GetGamepadConnectionState" joystick-connection-state
   (gamepad :pointer))
 
-(defexport-fun "SDL_GetGamepadPowerInfo" power-state
+(defwrap-fun "SDL_GetGamepadPowerInfo" power-state
+    (t t)
   (gamepad :pointer)
-  (percent (:pointer  :int)))
+  (percent (:pointer  :int) :direction :input))
 
 (defexport-fun "SDL_GamepadConnected" :bool
   (gamepad :pointer))
@@ -133,9 +136,10 @@
 
 (defexport-fun "SDL_GamepadEventsEnabled" :bool)
 
-(defexport-fun "SDL_GetGamepadBindings" (:pointer (:pointer (:struct gamepad-binding)))
+(defwrap-fun "SDL_GetGamepadBindings" (:pointer (:pointer (:struct gamepad-binding)))
+    (t t)
   (gamepad :pointer)
-  (count (:pointer  :int)))
+  (count (:pointer  :int) :ret-count '(:pointer (:struct gamepad-binding))))
 
 (defexport-fun "SDL_UpdateGamepads" :void
   )
@@ -189,14 +193,15 @@
   (gamepad :pointer)
   (touchpad :int))
 
-(defexport-fun "SDL_GetGamepadTouchpadFinger" :bool
+(defwrap-fun "SDL_GetGamepadTouchpadFinger" :bool
+    (t t)
   (gamepad :pointer)
   (touchpad :int)
   (finger :int)
-  (down (:pointer  :bool))
-  (x (:pointer  :float))
-  (y (:pointer  :float))
-  (pressure (:pointer  :float)))
+  (down (:pointer :bool) :direction :output)
+  (x (:pointer :float) :direction :output)
+  (y (:pointer :float) :direction :output)
+  (pressure (:pointer :float) :direction :output))
 
 (defexport-fun "SDL_GamepadHasSensor" :bool
   (gamepad :pointer)
@@ -215,10 +220,11 @@
   (gamepad :pointer)
   (type sensor-type))
 
-(defexport-fun "SDL_GetGamepadSensorData" :bool
+(defwrap-fun "SDL_GetGamepadSensorData" :bool
+    (t t)
   (gamepad :pointer)
   (type sensor-type)
-  (data (:pointer  :float))
+  (data (:pointer  :float) :direction :output)
   (num-values :int))
 
 (defexport-fun "SDL_RumbleGamepad" :bool

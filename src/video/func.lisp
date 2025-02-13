@@ -9,8 +9,9 @@
 
 (defexport-fun "SDL_GetSystemTheme" system-theme)
 
-(defexport-fun "SDL_GetDisplays" (:pointer display-id)
-  (count (:pointer :int)))
+(defwrap-fun "SDL_GetDisplays" (:pointer display-id)
+    (t t)
+  (count (:pointer :int) :ret-count 'display-id))
 
 (defexport-fun "SDL_GetPrimaryDisplay" display-id)
 

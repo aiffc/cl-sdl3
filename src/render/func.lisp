@@ -36,12 +36,14 @@
 (defexport-fun "SDL_GetRendererProperties" properties-id
   (render :pointer))
 
-(defwrap-fun "SDL_GetRenderOutputSize" :bool (t t)
+(defwrap-fun "SDL_GetRenderOutputSize" :bool
+    (t t)
   (render :pointer)
   (w (:pointer :int) :direction :output)
   (h (:pointer :int) :direction :output))
 
-(defwrap-fun "SDL_GetCurrentRenderOutputSize" :bool (t t)
+(defwrap-fun "SDL_GetCurrentRenderOutputSize" :bool
+    (t t)
   (render :pointer)
   (w (:pointer :int) :direction :output)
   (h (:pointer :int) :direction :output))

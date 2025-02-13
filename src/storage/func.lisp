@@ -12,8 +12,9 @@
 (defexport-fun "SDL_OpenFileStorage" :pointer
   (path :string))
 
-(defexport-fun "SDL_OpenStorage" :pointer
-  (iface (:pointer (:struct storage-interface)))
+(defwrap-fun "SDL_OpenStorage" :pointer
+    (t t)
+  (iface (:pointer (:struct storage-interface)) :direction :input)
   (userdata :pointer))
 
 (defexport-fun "SDL_CloseStorage" :bool
@@ -22,10 +23,11 @@
 (defexport-fun "SDL_StorageReady" :bool
   (storage :pointer))
 
-(defexport-fun "SDL_GetStorageFileSize" :bool
+(defwrap-fun "SDL_GetStorageFileSize" :bool
+    (t t)
   (storage :pointer)
   (path :string)
-  (length (:pointer :uint64)))
+  (length (:pointer :uint64) :direction :output))
 
 (defexport-fun "SDL_ReadStorageFile" :bool
   (storage :pointer)
@@ -63,17 +65,19 @@
   (oldpath :string)
   (newpath :string))
 
-(defexport-fun "SDL_GetStoragePathInfo" :bool
+(defwrap-fun "SDL_GetStoragePathInfo" :bool
+    (t t)
   (storage :pointer)
   (path :string)
-  (info (:pointer (:struct path-info))))
+  (info (:pointer (:struct path-info)) :direction :output))
 
 (defexport-fun "SDL_GetStorageSpaceRemaining" :uint64
   (storage :pointer))
 
-(defexport-fun "SDL_GlobStorageDirectory" (:pointer :string)
+(defwrap-fun "SDL_GlobStorageDirectory" (:pointer :string)
+    (t t)
   (storage :pointer)
   (path :string)
   (pattern :string)
   (flags glob-flags)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count :string))

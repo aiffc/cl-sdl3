@@ -1,8 +1,8 @@
 (in-package :sdl3)
 
-;;todo
-(defexport-fun "SDL_CreateProcess" :pointer
-  (args (:pointer :string))
+(defwrap-fun "SDL_CreateProcess" :pointer
+    (t t)
+  (args (:pointer :string) :direction :input)
   (pipe-studio :bool))
 
 (defexport-fun "SDL_CreateProcessWithProperties" :pointer
@@ -11,10 +11,11 @@
 (defexport-fun "SDL_GetProcessProperties" properties-id
   (process :pointer))
 
-(defexport-fun "SDL_ReadProcess" :pointer
+(defwrap-fun "SDL_ReadProcess" :pointer
+    (t t)
   (process :pointer)
-  (datasize (:pointer size-t))
-  (exitcode (:pointer :int)))
+  (datasize (:pointer size-t) :direction :output)
+  (exitcode (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_GetProcessInput" :pointer
   (process :pointer))
@@ -26,10 +27,10 @@
   (process :pointer)
   (force :bool))
 
-(defexport-fun "SDL_WaitProcess" :bool
+(defwrap-fun "SDL_WaitProcess" :bool
   (process :pointer)
   (blck :bool)
-  (exitcode (:pointer :int)))
+  (exitcode (:pointer :int) :direction :input))
 
 (defexport-fun "SDL_DestroyProcess" :void
   (process :pointer))

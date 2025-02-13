@@ -13,8 +13,9 @@
   (size size-t))
 (defexport-fun "SDL_IOFromDynamicMem" :pointer)
 
-(defexport-fun "SDL_OpenIO" :pointer
-  (iface (:pointer (:struct io-stream-interface)))
+(defwrap-fun "SDL_OpenIO" :pointer
+    (t t)
+  (iface (:pointer (:struct io-stream-interface)) :direction :input)
   (userdata :pointer))
 
 (defexport-fun "SDL_CloseIO" :bool

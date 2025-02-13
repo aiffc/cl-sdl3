@@ -1,7 +1,8 @@
 (in-package :sdl3)
 
-(defexport-fun "SDL_ShowMessageBox" :bool
-  (data (:pointer (:struct message-box-data)))
+(defwrap-fun "SDL_ShowMessageBox" :bool
+    (t t)
+  (data (:pointer (:struct message-box-data)) :direction :input)
   (id (:pointer :int)))
 
 (defexport-fun "SDL_ShowSimpleMessageBox" :bool

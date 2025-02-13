@@ -7,7 +7,7 @@
 (defexport-fun "SDL_HasJoystick" :bool)
 
 (defexport-fun "SDL_GetJoysticks" (:pointer joystick-id)
-  (count (:pointer :int)))
+  (count (:pointer :int) :ret-count 'joystick-id))
 
 (defexport-fun "SDL_GetJoystickNameForID" :string
   (instance-id joystick-id))
@@ -42,8 +42,9 @@
 (defexport-fun "SDL_GetJoystickFromPlayerIndex" :pointer
   (player-index :int))
 
-(defexport-fun "SDL_AttachVirtualJoystick" joystick-id
-  (desc (:pointer (:struct virtual-joystick-desc))))
+(defwrap-fun "SDL_AttachVirtualJoystick" joystick-id
+    (t t)
+  (desc (:pointer (:struct virtual-joystick-desc)) :direction :input))
 
 (defexport-fun "SDL_DetachVirtualJoystick" :bool
   (instance-id joystick-id))
@@ -81,12 +82,13 @@
   (y :float)
   (pressure :float))
 
-(defexport-fun "SDL_SendJoystickVirtualSensorData" :bool
+(defwrap-fun "SDL_SendJoystickVirtualSensorData" :bool
+    (t t)
   (joystick :pointer)
   (type sensor-type)
   (sensor-timestamp :uint64)
-  (data (:pointer :float))
-  (num-values :int))
+  (data (:pointer :float) :direction :input :bind-count num-values)
+  (num-values :int :bind-val data))
 
 (defexport-fun "SDL_GetJoystickProperties" properties-id
   (joystick :pointer))
@@ -125,12 +127,13 @@
 (defexport-fun "SDL_GetJoystickType" joystick-type
   (joystick :pointer))
 
-(defexport-fun "SDL_GetJoystickGUIDInfo" :void
+(defwrap-fun "SDL_GetJoystickGUIDInfo" :void
+    (t)
   (guid (:struct guid))
-  (vendor (:pointer  :uint16))
-  (product (:pointer  :uint16))
-  (version (:pointer  :uint16))
-  (crc16 (:pointer  :uint16)))
+  (vendor (:pointer  :uint16) :direction :output)
+  (product (:pointer  :uint16) :direction :output)
+  (version (:pointer  :uint16) :direction :output)
+  (crc16 (:pointer  :uint16) :direction :output))
 
 (defexport-fun "SDL_JoystickConnected" :bool
   (joystick :pointer))
@@ -161,16 +164,18 @@
   (joystick :pointer)
   (axis :int))
 
-(defexport-fun "SDL_GetJoystickAxisInitialState" :bool
+(defwrap-fun "SDL_GetJoystickAxisInitialState" :bool
+    (t t)
   (joystick :pointer)
   (axis :int)
-  (state (:pointer  :int16)))
+  (state (:pointer :int16) :direction :output))
 
-(defexport-fun "SDL_GetJoystickBall" :bool
+(defwrap-fun "SDL_GetJoystickBall" :bool
+    (t t)
   (joystick :pointer)
   (ball :int)
-  (dx (:pointer  :int))
-  (dy (:pointer  :int)))
+  (dx (:pointer :int) :direction :output)
+  (dy (:pointer :int) :direction :output))
 
 (defexport-fun "SDL_GetJoystickHat" :uint8
   (joystick :pointer)
@@ -209,7 +214,8 @@
 (defexport-fun "SDL_GetJoystickConnectionState" joystick-connection-state
   (joystick :pointer))
 
-(defexport-fun "SDL_GetJoystickPowerInfo" power-state
+(defwrap-fun "SDL_GetJoystickPowerInfo" power-state
+    (t t)
   (joystick :pointer)
-  (percent (:pointer  :int)))
+  (percent (:pointer  :int) :direction :output))
 
