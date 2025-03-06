@@ -237,8 +237,8 @@
   (text :string)
   (length sdl3::size-t)
   (max_width :int)
-  (measured_width (:pointer :int) :direction :input)
-  (measured_length (:pointer sdl3::size-t) :direction :input))
+  (measured_width (:pointer :int) :direction :output)
+  (measured_length (:pointer sdl3::size-t) :direction :output))
 (export 'measure-string)
 
 (cffi:defcfun ("TTF_RenderText_Solid" render-text-solid) (:pointer (:struct sdl3:surface))

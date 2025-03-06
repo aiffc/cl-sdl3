@@ -3,7 +3,7 @@
 (defexport-fun "SDL_SetClipboardText" :bool
   (text :string))
 
-(defexport-fun "SDL_GetClipboardText" :char)
+(defexport-fun "SDL_GetClipboardText" :string)
 
 (defexport-fun "SDL_HasClipboardText" :bool)
 
