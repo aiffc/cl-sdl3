@@ -182,7 +182,7 @@
   (bottom (:pointer :int) :direction :output)
   (right (:pointer :int) :direction :output))
 
-(defwrap-fun "SDL_GetWindowSizeInPixels" :bool
+(defwrap-fun "SDL_GetWindowSizeInPixels" :bool (t t)
   (window :pointer)
   (w (:pointer :int) :direction :output)
   (h (:pointer :int) :direction :output))

@@ -16,7 +16,7 @@
        ((:display-orientation :display-added :display-removed :display-moved
          :display-desktop-mode-changed :display-current-mode-changed :display-content-scale-changed)
         display-event)
-       ((:window-shown :window-hidden :window-moved :window-resized
+       ((:window-shown :window-hidden :window-exposed :window-moved :window-resized
          :window-pixel-size-changed :window-metal-view-resized
          :window-minimized :window-maximized :window-restored
                        :window-mouse-enter :window-mouse-leave :window-focus-gained :window-focus-lost
