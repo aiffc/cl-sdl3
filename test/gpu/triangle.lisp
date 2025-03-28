@@ -51,7 +51,7 @@
       (format t "~a~%" (sdl3:get-error))
       (sdl3:submit-gpu-command-buffer cmd)
       (return-from triangle-iterate :failure))
-    (let* ((color-target-info (make-instance 'sdl3:gpu-color-tage-info 
+    (let* ((color-target-info (make-instance 'sdl3:gpu-color-target-info 
 					     :%texture texture
 					     :%mip-level 0
 					     :%layer-or-depth-plane 0
