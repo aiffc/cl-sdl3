@@ -448,7 +448,7 @@
   :reslove
   :reslove-and-store)
 
-(deflsp-type gpu-color-tage-info
+(deflsp-type gpu-color-target-info
   (texture :pointer)
   (mip-level :uint32)
   (layer-or-depth-plane :uint32)

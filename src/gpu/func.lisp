@@ -137,7 +137,7 @@
 (defwrap-fun "SDL_BeginGPURenderPass" :pointer
     (t t)
   (command-buffer :pointer)
-  (color-target-infos (:pointer (:struct gpu-color-tage-info)) :direction :input :bind-count num-color-targets)
+  (color-target-infos (:pointer (:struct gpu-color-target-info)) :direction :input :bind-count num-color-targets)
   (num-color-targets :uint32 :bind-val color-target-infos)
   (depth-stencil-target-info (:pointer (:struct gpu-depth-stencil-target-info)) :direction :input))
 
