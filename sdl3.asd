@@ -214,6 +214,12 @@
 			    ((:file "package")
 			     (:file "lib")
 			     (:file "type")
+			     (:file "func")))
+		   (:module "sdl-mixer"
+		    :components
+			    ((:file "package")
+			     (:file "lib")
+			     (:file "type")
 			     (:file "func")))))
 		 (:file "load-docstring"))))
   :description "common lisp bind sdl3 use cffi")

@@ -27,7 +27,13 @@ CFFI bindings for SDL3
   cmake -S . -B build
   make -C build && make -C build install
   cp -rf build/libSDL3_image.so.* /usr/lib/x86_64-linux-gnu/
-  
+
+  git clone https://github.com/libsdl-org/SDL_mixer.git
+  cd SDL_mixer
+  cmake -S . -B build
+  make -C build && make -C build install
+  cp -rf build/libSDL3_mixer.so.* /usr/lib/x86_64-linux-gnu/
+
   (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
   (ql:quickload :sdl3)
 #+END_SRC
