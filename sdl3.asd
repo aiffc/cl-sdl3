@@ -120,6 +120,9 @@
 		  :components
 		  ((:file "type")
 		   (:file "func")))
+		 (:module "platform"
+		  :components
+		  ((:file "func")))
 		 (:module "blendmode"
 		  :components
 		  ((:file "type")
