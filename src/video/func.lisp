@@ -136,7 +136,7 @@
 (defwrap-fun "SDL_SetWindowIcon" :bool
     (t t)
   (window :pointer)
-  (icon (:pointer (:struct surface)) :direction :input))
+  (icon (:pointer (:struct surface))))
 
 (defexport-fun "SDL_SetWindowPosition" :bool
   (window :pointer)
