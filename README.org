@@ -8,8 +8,9 @@ CFFI bindings for SDL3
   (ql:quickload :sdl3)
 #+END_SRC
 
-*** for linux
-#+BEGIN_SRC lisp
+*** for linux & darwin
+#+BEGIN_SRC shell
+  # no need to do cp under darwin
   git clone https://github.com/libsdl-org/SDL.git
   cd SDL
   cmake -S . -B build
@@ -34,12 +35,13 @@ CFFI bindings for SDL3
   make -C build && make -C build install
   cp -rf build/libSDL3_mixer.so.* /usr/lib/x86_64-linux-gnu/
 
+
+#+END_SRC
+on lisp
+#+BEGIN_SRC lisp
   (push #P"/path/to/cl-sdl3" asdf:*central-registry*)
   (ql:quickload :sdl3)
 #+END_SRC
-
-*** for darwin
-TO TEST
 
 *** runtest
 #+BEGIN_SRC lisp

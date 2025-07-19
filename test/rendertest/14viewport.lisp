@@ -80,7 +80,12 @@
 
 (sdl3:def-app-quit 14-quit (result)
   (declare (ignore result))
-  (sdl3:destroy-texture *texture-handler*))
+  (sdl3:destroy-texture *texture-handler*)
+  (sdl3:destroy-renderer *renderer-handler*)
+  (sdl3:destroy-window *window-handle*)
+  (sdl3:pump-events)
+  (sdl3:quit-sub-system :video)
+  (sdl3:quit))
 
 (defun do-viewport-demo ()
   (renderer-init)

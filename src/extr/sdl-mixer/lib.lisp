@@ -7,7 +7,7 @@
 
 ;; no offical release for sdl3 mixer, so windows and mac use the newest offical release
 (cffi:define-foreign-library libsdl3-mixer
-  (:darwin (:or (:framework "SDL2_mixer") (:default "libSDL2_mixer")))
+  (:darwin (:or (:framework "SDL3_mixer") (:default "libSDL3_mixer")))
   (:unix (:or "libSDL3_mixer.so" "libSDL3_mixer.so.0" "libSDL3_mixer.so.0.0.0"))
   #+(or x86 x86-64)
   (:windows #.(system-relative-namestring

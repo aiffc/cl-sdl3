@@ -51,7 +51,12 @@
       (t :continue))))
 
 (sdl3:def-app-quit mouse-quit (result)
-  (declare (ignore result)))
+  (declare (ignore result))
+  (sdl3:destroy-renderer *renderer-handler*)
+  (sdl3:destroy-window *window-handle*)
+  (sdl3:pump-events)
+  (sdl3:quit-sub-system :video)
+  (sdl3:quit))
 
 (defun do-mouse-demo ()
   (sdl3:enter-app-main-callbacks 'mouse-init 'mouse-iterate 'mouse-event 'mouse-quit))

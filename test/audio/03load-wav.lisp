@@ -50,7 +50,12 @@
     (t :continue)))
 
 (sdl3:def-app-quit load-wav-quit (result)
-  (declare (ignore result)))
+  (declare (ignore result))
+  (sdl3:destroy-renderer *renderer-handler*)
+  (sdl3:destroy-window *window-handle*)
+  (sdl3:pump-events)
+  (sdl3:quit-sub-system :video)
+  (sdl3:quit))
 
 (defun do-load-wav-demo ()
   (sdl3:enter-app-main-callbacks 'load-wav-init 'load-wav-iterate 'load-wav-event 'load-wav-quit))

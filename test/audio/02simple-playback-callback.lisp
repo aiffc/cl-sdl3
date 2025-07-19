@@ -70,7 +70,12 @@
     (t :continue)))
 
 (sdl3:def-app-quit simple-playback-callback-quit (result)
-  (declare (ignore result)))
+  (declare (ignore result))
+  (sdl3:destroy-renderer *renderer-handler*)
+  (sdl3:destroy-window *window-handle*)
+  (sdl3:pump-events)
+  (sdl3:quit-sub-system :video)
+  (sdl3:quit))
 
 (defun do-simple-playback-callback-demo ()
   (sdl3:enter-app-main-callbacks 'simple-playback-callback-init 'simple-playback-callback-iterate 'simple-playback-callback-event 'simple-playback-callback-quit))

@@ -92,7 +92,11 @@
 
 (sdl3:def-app-quit triangle-quit-callback (result)
   (declare (ignore result))
-  (triangle-quit))
+  (triangle-quit)
+  (sdl3:destroy-window *gpu-window*)
+  (sdl3:pump-events)
+  (sdl3:quit-sub-system :video)
+  (sdl3:quit))
 
 
 (defun do-triangle-demo ()
