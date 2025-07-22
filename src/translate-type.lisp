@@ -61,6 +61,16 @@
 ;;        `(cffi:with-foreign-slots (cslots  ,ptr (:struct ctype))
 ;; 	  (make-instance ',,ctype ,,@keymap)))))
 
+(defun generate-ptr-slot-funs (name cslots)
+  (loop :for slot :in cslots
+	:for fun-name := (create-symbol name '-ptr- slot)
+	:collect `(eval-when (:load-toplevel :compile-toplevel :execute)
+		    (defun ,fun-name (ptr)
+		      (cffi:foreign-slot-value ptr '(:struct ,name) ',slot))
+		    (defun (setf ,fun-name) (value ptr)
+		      (setf (cffi:foreign-slot-value ptr '(:struct ,name) ',slot)
+			    value))
+		    (export ',fun-name))))
 
 (defmacro deflsp-type (name &body body)
   (let* ((cslots (mapcar #'first body))
@@ -78,6 +88,7 @@
        ;; todo expand
        ;; ,(generate-expand-to-foreign name translate-type cslots lsp-funs)
        ;; ,(generate-expand-from-foreign name translate-type cslots lsp-funs)
+       ,@(generate-ptr-slot-funs name cslots)
        (export ',name)
        (export ',lsp-funs))))
 
