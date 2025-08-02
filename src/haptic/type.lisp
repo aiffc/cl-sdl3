@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype haptic-id :uint32)
+(defctype haptic-id :uint32)
 
 (deflsp-type haptic-direction
   (type :uint8)

@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype properties-id :uint32)
+(defctype properties-id :uint32)
 
 (deflsp-type storage-interface
   (version :uint32)

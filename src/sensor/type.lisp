@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype sensor-id :uint32)
+(defctype sensor-id :uint32)
 
 (defcenum sensor-type 
   (:invalid -1)

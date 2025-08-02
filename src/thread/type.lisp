@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype thread-id :uint64)
+(defctype thread-id :uint64)
 
 (defcenum thread-properties
   :low

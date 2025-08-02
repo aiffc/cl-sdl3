@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype audio-device-id :uint32)
+(defctype audio-device-id :uint32)
 
 (defcenum audio-format
   (:unknown  #x0000)

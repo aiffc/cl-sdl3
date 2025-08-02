@@ -236,7 +236,7 @@
   (mouse-x :float)
   (mouse-y :float))
 
-(cffi:defctype joystick-id :uint32)
+(defctype joystick-id :uint32)
 (deflsp-type joy-device-event
   (type event-type)
   (reserved :uint32)
@@ -381,8 +381,8 @@
   (data1 :pointer)
   (data2 :pointer))
 
-(cffi:defctype touch-id :uint64)
-(cffi:defctype finger-id :uint64)
+(defctype touch-id :uint64)
+(defctype finger-id :uint64)
 (deflsp-type touch-finger-event
   (type event-type)
   (reserved :uint32)
@@ -396,7 +396,7 @@
   (pressure :float)
   (window-id window-id))
 
-(cffi:defctype pen-id :uint32)
+(defctype pen-id :uint32)
 (deflsp-type pen-proximity-event
   (type event-type)
   (reserved :uint32)

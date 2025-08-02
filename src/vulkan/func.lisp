@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype vk-surface-khr
+(defctype vk-surface-khr
   #. (if (= 8 (cffi:foreign-type-size :pointer))
 	 :pointer
 	 :uint64))

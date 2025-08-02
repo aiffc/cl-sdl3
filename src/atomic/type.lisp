@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype spin-lock :int)
+(defctype spin-lock :int)
 
 (deflsp-type atomic-int
   (value :int))

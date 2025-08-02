@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype mouse-id :uint32)
+(defctype mouse-id :uint32)
 
 (defbitfield mouse-button-flags
   (:button-left 1)
