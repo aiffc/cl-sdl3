@@ -1,13 +1,13 @@
 (in-package :sdl3)
 
-(cffi:defctype window-id :uint32)
+(defctype window-id :uint32)
 
 (defcenum system-theme
   :unknown
   :light
   :dark)
 
-(cffi:defctype display-id :uint32)
+(defctype display-id :uint32)
 
 (defcenum display-operation
   :unknown

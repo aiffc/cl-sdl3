@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype keyboard-id :uint32)
+(defctype keyboard-id :uint32)
 
 (defcenum scancode
   (:unknown 0)

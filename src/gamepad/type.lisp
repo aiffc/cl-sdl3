@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype joystick-id :uint32)
+(defctype joystick-id :uint32)
 
 (defcenum gamepad-type
   (:unknown 0)

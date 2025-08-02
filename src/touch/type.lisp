@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype touch-id :uint64)
+(defctype touch-id :uint64)
 
 (defcenum touch-device-type
   (:touch_device_invalid  -1)

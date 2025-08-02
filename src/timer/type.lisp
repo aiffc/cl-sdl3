@@ -1,3 +1,3 @@
 (in-package :sdl3)
 
-(cffi:defctype timer-id :uint32)
+(defctype timer-id :uint32)

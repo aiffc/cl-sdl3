@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype stime :int64)
+(defctype stime :int64)
 
 (defcenum data-format 
   (:yyyymmdd 0)

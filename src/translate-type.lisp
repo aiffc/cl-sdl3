@@ -104,19 +104,29 @@
        (deftype ,name ()
          `(member ,,@keywords)))))
 
-(defun convert-ctype-to-lisp (typespec)
-  "Convert CFFI type specifier to lisp one.
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun convert-ctype-to-lisp (typespec)
+    "Convert CFFI type specifier to lisp one.
 This doesn't handle all cases but works fine for our use."
-  (cond ((keywordp typespec) ;; basic types
-         (ecase typespec
-           ((:int :int8 :int16 :int32 :int64) 'integer)
-           ((:uint :uint8 :uint16 :uint32 :uint64) 'unsigned-byte)))
-        ((eql (first typespec) :struct)
-         ;; Since all structs in this library are defined by deflsp-type
-         ;; struct have their corresponding lisp type with same name
-         (assert (find-class (second typespec)))
-         (second typespec))
-        (t (error "Can't convert ~a to lisp type" typespec))))
+    (cond ((keywordp typespec) ;; basic types
+           (ecase typespec
+             (:uint 'unsigned-byte)
+             (:uint8 '(unsigned-byte 8))
+             (:uint16 '(unsigned-byte 16))
+             (:uint32 '(unsigned-byte 32))
+             (:uint64 '(unsigned-byte 64))
+             (:int 'fixnum)
+             (:int8 '(signed-byte 8))
+             (:int16 '(signed-byte 16))
+             (:int32 '(signed-byte 32))
+             (:int64 '(signed-byte 64))
+             (:pointer 'cffi:foreign-pointer)))
+          ((eql (first typespec) :struct)
+           ;; Since all structs in this library are defined by deflsp-type
+           ;; struct have their corresponding lisp type with same name
+           (assert (find-class (second typespec)))
+           (second typespec))
+          (t (error "Can't convert ~a to lisp type" typespec)))))
 
 (defmacro defcunion (name-and-options &body union-list)
   (let ((name (first-or-identity name-and-options)))
@@ -134,3 +144,11 @@ This doesn't handle all cases but works fine for our use."
                          collect `(array ,lisp-type (,array-size))
                        when (and lisp-type (not array-size))
                          collect lisp-type)))))))
+
+(defmacro defctype (name base-type &optional documentation)
+  `(progn
+     (cffi:defctype ,name ,base-type ,documentation)
+     (deftype ,name ()
+       ',(convert-ctype-to-lisp base-type))))
+
+(defctype size-t #.(if (= 4 (cffi:foreign-type-size :pointer)) :uint32 :uint64))

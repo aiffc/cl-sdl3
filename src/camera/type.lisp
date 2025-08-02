@@ -1,6 +1,6 @@
 (in-package :sdl3)
 
-(cffi:defctype camera-id :uint32)
+(defctype camera-id :uint32)
 
 (deflsp-type camera-spec
   (format pixel-format)
