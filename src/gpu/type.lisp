@@ -298,7 +298,7 @@
  :min
  :max)
 
-(defbitfield color-component-flags
+(defbitfield (color-component-flags :uint8)
   (:r #x1)
   (:g #x2)
   (:b #x4)
