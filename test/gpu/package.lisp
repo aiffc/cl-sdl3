@@ -51,7 +51,7 @@
 		 :%vertex-attributes (cffi:null-pointer)
 		 :%num-vertex-attributes 0))
 
-(defun make-rasterizer-statge ()
+(defun make-rasterizer-state ()
   "todo"
   (make-instance 'sdl3:gpu-rasterizer-state
 		 :%fill-mode :fill
