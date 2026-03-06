@@ -258,7 +258,7 @@
 			   :direction :input :bind-count num-storage-buffer-bindings)
   (num-storage-buffer-bindings :uint32 :bind-val storage-buffer-bindings))
 
-(defexport-fun "sdl_bindgpucomputepipeline" :void
+(defexport-fun "SDL_BindGPUComputePipeline" :void
   (compute-pass :pointer)
   (compute-pipeline :pointer))
 
@@ -469,4 +469,3 @@
 
 (defexport-fun "SDL_GDKResumeGPU" :void
   (device :pointer))
-
