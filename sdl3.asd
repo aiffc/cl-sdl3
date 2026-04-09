@@ -276,5 +276,6 @@
 		 (:module "file-dialog"
 		  :components
 		  ((:file "package")
-		   (:file "01open-file-dialog"))))))
+		   (:file "01open-file-dialog")
+		   (:file "02open-file-dialog-multi"))))))
   :description "test function here")
