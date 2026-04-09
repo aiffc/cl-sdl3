@@ -272,5 +272,9 @@
 		 (:module "gpu"
 		  :components
 		  ((:file "package")
-		   (:file "triangle"))))))
+		   (:file "triangle")))
+		 (:module "file-dialog"
+		  :components
+		  ((:file "package")
+		   (:file "01open-file-dialog"))))))
   :description "test function here")
