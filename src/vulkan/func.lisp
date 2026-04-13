@@ -12,8 +12,8 @@
 
 (defexport-fun "SDL_Vulkan_UnloadLibrary" :void)
 
-(defexport-fun "SDL_Vulkan_GetInstanceExtensions" (:pointer :string)
-  (count :uint32))
+(defexport-fun "SDL_Vulkan_GetInstanceExtensions" (:pointer (:pointer :string))
+  (count (:pointer :uint32)))
 
 (defexport-fun "SDL_Vulkan_CreateSurface" :bool
   (window :pointer)
