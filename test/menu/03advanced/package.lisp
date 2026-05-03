@@ -1,5 +1,7 @@
-(defpackage :sdl3.gui.menu
-  (:nicknames :gui.menu)
+(defpackage :sdl3.gui.menu.model
+  (:nicknames :gui.menu.model
+              :sdl3.gui.menu
+              :gui.menu)
   (:use #:cl)
   (:export
    ;; classes
@@ -55,3 +57,17 @@
    #:submenu-panel-origin
    #:open-menu
    #:close-menu))
+
+(defpackage :sdl3.gui.menu.controller
+  (:nicknames :gui.menu.controller)
+  (:use #:cl)
+  (:export
+   #:handle-left-click
+   #:handle-mouse-motion))
+
+(defpackage :sdl3.gui.menu.sdl3-renderer
+  (:nicknames :gui.menu.sdl3-renderer)
+  (:use #:cl)
+  (:export
+   #:render-debug-text
+   #:draw-menu-bar))

@@ -286,5 +286,7 @@
 		   (:file "02screen-menu")
 		   (:file "03advanced/package")
 		   (:file "03advanced/menu-model")
+		   (:file "03advanced/menu-controller")
+		   (:file "03advanced/sdl3-renderer")
 		   (:file "03advanced/screen-menu-classes"))))))
   :description "test function here")

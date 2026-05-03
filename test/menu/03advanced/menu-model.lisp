@@ -1,4 +1,4 @@
-(in-package :sdl3.gui.menu)
+(in-package :sdl3.gui.menu.model)
 
 ;;;; Layout constants
 
