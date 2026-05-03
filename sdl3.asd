@@ -278,5 +278,11 @@
 		  ((:file "package")
 		   (:file "01open-file-dialog")
 		   (:file "02open-file-dialog-multi")
-		   (:file "03open-folder-dialog"))))))
+		   (:file "03open-folder-dialog")))
+		 (:module "menu"
+		  :components
+		  ((:file "package")
+		   (:file "01system-menu")
+
+		   (:file "02screen-menu"))))))
   :description "test function here")
