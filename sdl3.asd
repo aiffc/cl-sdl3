@@ -278,5 +278,16 @@
 		  ((:file "package")
 		   (:file "01open-file-dialog")
 		   (:file "02open-file-dialog-multi")
-		   (:file "03open-folder-dialog"))))))
+		   (:file "03open-folder-dialog")))
+		 (:module "menu"
+		  :components
+		  ((:file "package")
+		   (:file "01system-menu")
+		   (:file "02screen-menu")
+		   (:file "03advanced/package")
+		   (:file "03advanced/menu-model")
+		   (:file "03advanced/menu-controller")
+		   (:file "03advanced/sdl3-renderer")
+		   (:file "03advanced/action-handlers")
+		   (:file "03advanced/screen-menu-classes"))))))
   :description "test function here")
