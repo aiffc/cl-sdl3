@@ -8,13 +8,6 @@
 
 (defconstant +mouse-button-left+ 1)
 
-(defun execute-command-action (action label)
-  (setf *status-message-classes* (format nil "Action: ~a" label))
-  (format t "screen menu class action: ~a (~a)~%" label action)
-  (if (eq action :quit)
-      :success
-      :continue))
-
 (defun make-demo-menu-bar ()
   (let* ((recent-submenu
            (make-instance 'sdl3.gui.menu.model:dropdown-menu
@@ -88,7 +81,7 @@
     (format t "~a~%" (sdl3:get-error))
     (return-from screen-menu-classes-init :failure))
   (multiple-value-bind (ok window renderer)
-      (sdl3:create-window-and-renderer "Screen Menu - Class Based" 760 420 0)
+      (sdl3:create-window-and-renderer "Screen Menu - Class Based" 760 520 0)
     (if (not ok)
         (progn
           (format t "~a~%" (sdl3:get-error))
