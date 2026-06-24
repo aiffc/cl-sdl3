@@ -9,8 +9,11 @@
 name -> callback name
 aragc -> argument count
 argv -> list of argument"
-  `(cffi:defcallback ,name :int ((,argc :int) (,argv (:pointer :string)))
-     ,@body))
+  `(progn
+     (defun ,name (,argc ,argv)
+       ,@body)
+     (cffi:defcallback ,name :int ((,argc :int) (,argv (:pointer :string)))
+       (funcall (symbol-function ',name) ,argc ,argv))))
 (export 'defmain-fun)
 
 (defun run-app (callback &rest args)
@@ -43,20 +46,28 @@ appstate -> a place where the app can optionally store a pointer for future use.
 aragc -> the standard ANSI C main's argc; number of elements in argv.
 argv -> the standard ANSI C main's argv; array of command line arguments.
 "
-  `(cffi:defcallback ,name app-result ((appstate (:pointer :pointer))
-				       (,argc :int)
-				       (,argv (:pointer :string)))
-     (declare (ignore appstate))
-     ,@body))
+  `(progn
+     (defun ,name (appstate ,argc ,argv)
+       (declare (ignore appstate))
+       ,@body)
+     (cffi:defcallback ,name app-result ((appstate (:pointer :pointer))
+                                          (,argc :int)
+                                          (,argv (:pointer :string)))
+       (declare (ignore appstate))
+       (funcall (symbol-function ',name) appstate ,argc ,argv))))
 (export 'def-app-init)
 
 (defmacro def-app-iterate (name () &body body)
   "ret[app-result]
 appstate an optional pointer, provided by the app in SDL_AppInit.
 "
-  `(cffi:defcallback ,name app-result ((appstate :pointer))
-     (declare (ignore appstate))
-     ,@body))
+  `(progn
+     (defun ,name (appstate)
+       (declare (ignore appstate))
+       ,@body)
+     (cffi:defcallback ,name app-result ((appstate :pointer))
+       (declare (ignore appstate))
+       (funcall (symbol-function ',name) appstate))))
 (export 'def-app-iterate)
 
 (defmacro def-app-event (name (event-type pevent) &body body)
@@ -65,15 +76,19 @@ app-state -> an optional pointer, provided by the app in SDL_AppInit.
 event -> the new event for the app to examine.
 event-type -> sdl event
 "
-  (let ((event-type-val (gensym)))
-    `(cffi:defcallback ,name app-result ((appstate :pointer) (,pevent (:pointer (:union event))))
-       (declare (ignore appstate))
-       (cffi:with-foreign-slots (((,event-type-val type))
-				 ,pevent
-				 (:union event))
-	 (let ((,event-type (cffi:foreign-enum-keyword 'event-type ,event-type-val)))
-	   ,@body)))))
-(export 'def-app-event)
+      (let ((event-type-val (gensym)))
+        `(progn
+           (defun ,name (appstate ,pevent)
+             (declare (ignore appstate))
+             (cffi:with-foreign-slots (((,event-type-val type))
+                                       ,pevent
+                                       (:union event))
+               (let ((,event-type (cffi:foreign-enum-keyword 'event-type ,event-type-val)))
+                 ,@body)))
+           (cffi:defcallback ,name app-result ((appstate :pointer) (,pevent (:pointer (:union event))))
+             (declare (ignore appstate))
+             (funcall (symbol-function ',name) appstate ,pevent)))))
+    (export 'def-app-event)
 
 
 (defmacro def-app-quit (name (result) &body body)
@@ -81,9 +96,13 @@ event-type -> sdl event
 app-state -> an optional pointer, provided by the app in SDL_AppInit. 
 result -> the result code that terminated the app (success or failure).
 "
-  `(cffi:defcallback ,name :void ((appstate :pointer) (,result app-result))
-     (declare (ignore appstate))
-     ,@body))
+  `(progn
+     (defun ,name (appstate ,result)
+       (declare (ignore appstate))
+       ,@body)
+     (cffi:defcallback ,name :void ((appstate :pointer) (,result app-result))
+       (declare (ignore appstate))
+       (funcall (symbol-function ',name) appstate ,result))))
 (export 'def-app-quit)
 
 (defun enter-app-main-callbacks (appinit appiter appevent appquit &rest args)

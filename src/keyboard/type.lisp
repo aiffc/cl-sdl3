@@ -350,7 +350,7 @@
   (:insert #x40000049)
   (:home #x4000004a)
   (:pageup #x4000004b)
-  (:end #x4000004)
+  (:end #x4000004d)
   (:pagedown #x4000004e)
   (:right #x4000004f)
   (:left #x40000050)
