@@ -1,13 +1,13 @@
 (in-package :sdl3)
 
 (defbitfield gpu-shader-format
-  (:invalid  #x0)
-  (:private  #x1)
-  (:spirv    #x2)
-  (:dxbc     #x4)
-  (:dxil     #x8)
-  (:msl      #x16)
-  (:metallib #x32))
+  (:invalid  #x00)
+  (:private  #x01)
+  (:spirv    #x02)
+  (:dxbc     #x04)
+  (:dxil     #x08)
+  (:msl      #x10)
+  (:metallib #x20))
 
 (deflsp-type gpu-compute-pipeline-create-info
   (code-size size-t)                       
