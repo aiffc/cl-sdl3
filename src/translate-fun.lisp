@@ -261,11 +261,7 @@ get args list like (foo :int :direction :output)"
 			  `(,name ,%lsp-fun))
 	   ,ret
 	 ,@cffi-body)
-       ;; Export the raw cffi binding so consumers can call the pointer-arg
-       ;; function directly without paying for the wrapper's per-call
-       ;; foreign-object allocation. Note that the (name %sym) list form
-       ;; does NOT make the binding reachable by itself: %lsp-fun is always
-       ;; (create-symbol '% lsp-fun), so it must be exported here.
+       ;; export raw binding; the (name %sym) list form alone doesn't do it
        (export ',%lsp-fun)
        ,(when translate
 	  (do-translate
