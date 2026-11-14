@@ -255,12 +255,18 @@ get args list like (foo :int :direction :output)"
 		      (second name)
 		      (read-from-string (sdl->lsp name)))) ;; export lsp-fun
 	 (%lsp-fun (create-symbol '% lsp-fun)))
-    `(eval-when (:compile-toplevel :load-toplevel :execute) 
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
        (cffi:defcfun ,(if (listp name)
 			  `(,(first name) ,%lsp-fun)
 			  `(,name ,%lsp-fun))
 	   ,ret
 	 ,@cffi-body)
+       ;; Export the raw cffi binding so consumers can call the pointer-arg
+       ;; function directly without paying for the wrapper's per-call
+       ;; foreign-object allocation. Note that the (name %sym) list form
+       ;; does NOT make the binding reachable by itself: %lsp-fun is always
+       ;; (create-symbol '% lsp-fun), so it must be exported here.
+       (export ',%lsp-fun)
        ,(when translate
 	  (do-translate
 	    lsp-fun
