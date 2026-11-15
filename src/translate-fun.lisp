@@ -250,17 +250,30 @@ get args list like (foo :int :direction :output)"
 			  (translate-return nil))
 		       &body body
 		       &aux (cffi-body (gen-cffi-struct-body body)))
-  "function define use this, this function need wrap, the translate indiced the function auto translate"
+  "Define an SDL function with a raw cffi binding plus an optional wrapper.
+
+NAME is \"SDL_Foo\" or (\"SDL_Foo\" raw-name); RET is the return type.
+BODY is the argument list, each element (:name ctype :direction dir
+:bind-val v :ret-count type) with dir either :input (default) or
+:output. The raw binding is always defined and exported as %foo;
+when TRANSLATE is non-nil, a wrapper is also generated that allocates
+foreign objects for each call, fills :output slots, and returns the
+translated values. RETURN-RET makes the wrapper return the raw C
+return value (or, for a :ret-count arg, the counted list) as the first
+value; when it is non-nil and RET is a struct type, the value is
+translated with cffi:mem-ref of RET's type."
   (let* ((lsp-fun (if (listp name)
 		      (second name)
 		      (read-from-string (sdl->lsp name)))) ;; export lsp-fun
 	 (%lsp-fun (create-symbol '% lsp-fun)))
-    `(eval-when (:compile-toplevel :load-toplevel :execute) 
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
        (cffi:defcfun ,(if (listp name)
 			  `(,(first name) ,%lsp-fun)
 			  `(,name ,%lsp-fun))
 	   ,ret
 	 ,@cffi-body)
+       ;; export raw binding; the (name %sym) list form alone doesn't do it
+       (export ',%lsp-fun)
        ,(when translate
 	  (do-translate
 	    lsp-fun

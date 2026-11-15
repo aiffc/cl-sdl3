@@ -203,7 +203,9 @@
 		  ((:file "type")
 		   (:file "func")
 		   (:file "wrap")))
-		 ;;(:module "stdinc")
+		 (:module "stdinc"
+		  :components
+		  ((:file "func")))
 		 (:module "extr"
 		  :components
 		  ((:module "sdl-image"
@@ -236,6 +238,7 @@
   :components ((:module "test"
 		:components
 		((:file "util")
+		 (:file "smoke")
 		 (:module "rendertest"
 		  :components
 		  ((:file "package")
