@@ -238,6 +238,7 @@
   :components ((:module "test"
 		:components
 		((:file "util")
+		 (:file "smoke")
 		 (:module "rendertest"
 		  :components
 		  ((:file "package")
