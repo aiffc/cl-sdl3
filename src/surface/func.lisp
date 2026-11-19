@@ -293,10 +293,10 @@
   (surface (:pointer (:struct surface)))
   (x :int)
   (y :int)
-  (r (:pointer :uint8) :direcion :output)
-  (g (:pointer :uint8) :direcion :output)
-  (b (:pointer :uint8) :direcion :output)
-  (a (:pointer :uint8) :direcion :output))
+  (r (:pointer :uint8) :direction :output)
+  (g (:pointer :uint8) :direction :output)
+  (b (:pointer :uint8) :direction :output)
+  (a (:pointer :uint8) :direction :output))
 
 (defwrap-fun "SDL_ReadSurfacePixelFloat" :bool
     (t t)
