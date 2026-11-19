@@ -3,14 +3,14 @@
 (defexport-fun "SDL_SetClipboardText" :bool
   (text :string))
 
-(defexport-fun "SDL_GetClipboardText" :string)
+(defexport-fun "SDL_GetClipboardText" sdl-owned-string)
 
 (defexport-fun "SDL_HasClipboardText" :bool)
 
 (defexport-fun "SDL_SetPrimarySelectionText" :bool
   (text :string))
 
-(defexport-fun "SDL_GetPrimarySelectionText" :char)
+(defexport-fun "SDL_GetPrimarySelectionText" sdl-owned-string)
 
 (defexport-fun "SDL_HasPrimarySelectionText" :bool)
 

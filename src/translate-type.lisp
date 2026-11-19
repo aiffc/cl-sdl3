@@ -1,5 +1,18 @@
 (in-package :sdl3)
 
+;; Strings SDL allocates and the caller must SDL_free, such as the result
+;; of SDL_GetClipboardText.  A :string return would copy them and leak the
+;; original; this type copies them to a lisp string, then frees them.
+(cffi:define-foreign-type sdl-owned-string ()
+  ()
+  (:actual-type :pointer)
+  (:simple-parser sdl-owned-string))
+
+(defmethod cffi:translate-from-foreign (pointer (type sdl-owned-string))
+  (unless (cffi:null-pointer-p pointer)
+    (unwind-protect (cffi:foreign-string-to-lisp pointer :encoding :utf-8)
+      (cffi:foreign-funcall "SDL_free" :pointer pointer :void))))
+
 (defun type-is-struct-p (lst)
   (and (listp (second lst))
        (eql (first (second lst)) :struct)))
