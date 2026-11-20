@@ -2,7 +2,7 @@
 
 (defexport-fun "SDL_GetBasePath" :string)
 
-(defexport-fun "SDL_GetPrefPath" :string
+(defexport-fun "SDL_GetPrefPath" sdl-owned-string
   (org :string)
   (app :string))
 
@@ -40,4 +40,4 @@
   (flags glob-flags)
   (count (:pointer :int) :ret-count :string))
 
-(defexport-fun "SDL_GetCurrentDirectory" :string)
+(defexport-fun "SDL_GetCurrentDirectory" sdl-owned-string)
